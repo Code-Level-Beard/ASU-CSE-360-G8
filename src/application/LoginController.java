@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 
-public class SampleController {
+public class LoginController {
 	
 		@FXML
 		private Button exitButton;
