@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.DropdownButton?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+   <center>
+      <VBox prefHeight="487.0" prefWidth="761.0" BorderPane.alignment="CENTER">
+         <children>
+            <TabPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                  <Tab text="Patient List">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Text layoutX="372.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font></Text>
+                              <Text layoutX="372.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font></Text>
+                              <DropdownButton layoutX="461.0" layoutY="214.0" minWidth="-Infinity" prefWidth="250.0">
+                                 <items>
+                                    <MenuItem text="Choice 1" />
+                                    <MenuItem text="Choice 2" />
+                                    <MenuItem text="Choice 3" />
+                                 </items>
+                              </DropdownButton>
+                              <DropdownButton layoutX="461.0" layoutY="272.0" minWidth="-Infinity" prefWidth="250.0">
+                                 <items>
+                                    <MenuItem text="Choice 1" />
+                                    <MenuItem text="Choice 2" />
+                                    <MenuItem text="Choice 3" />
+                                 </items>
+                              </DropdownButton>
+                              <ImageView fitHeight="229.0" fitWidth="299.0" layoutX="14.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../Downloads/image.png" />
+                                 </image>
+                              </ImageView>
+                              <Button layoutX="500.0" layoutY="333.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="127.0" text="Select" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Messages">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Text layoutX="397.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="397.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor Name">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="396.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="842.0" layoutY="457.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nurse Name">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="419.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is sample mesage text to demonstrate what messages would look like..." wrappingWidth="300.0" />
+                              <TextArea layoutX="390.0" layoutY="595.0" prefHeight="116.0" prefWidth="505.0" promptText="Type new message here..." />
+                              <Button layoutX="905.0" layoutY="685.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="81.0" text="Send" />
+                              <Line endX="20.0" endY="596.0" layoutX="328.0" layoutY="146.0" startX="20.0" startY="-150.0" />
+                              <Line endX="550.0" layoutX="450.0" layoutY="573.0" startX="-100.0" />
+                              <Text layoutX="419.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is sample mesage text to demonstrate what messages would look like..." wrappingWidth="300.0" />
+                              <Text layoutX="419.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is sample mesage text to demonstrate what messages would look like..." wrappingWidth="300.0" />
+                              <Text layoutX="579.0" layoutY="488.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is sample mesage text to demonstrate what messages would look like..." wrappingWidth="300.0" />
+                              <ScrollBar layoutX="956.0" layoutY="10.0" orientation="VERTICAL" prefHeight="550.0" prefWidth="30.0" />
+                              <ScrollBar layoutX="309.0" layoutY="10.0" orientation="VERTICAL" prefHeight="725.0" prefWidth="30.0" />
+                              <Line endX="173.0" layoutX="115.0" layoutY="70.0" startX="-115.0" />
+                              <Line endX="173.0" layoutX="115.0" layoutY="140.0" startX="-115.0" />
+                              <Line endX="173.0" layoutX="115.0" layoutY="210.0" startX="-115.0" />
+                              <Line endX="173.0" layoutX="115.0" layoutY="280.0" startX="-115.0" />
+                              <Line endX="173.0" layoutX="115.0" layoutY="350.0" startX="-115.0" />
+                              <Line endX="173.0" layoutX="115.0" layoutY="420.0" startX="-115.0" />
+                              <Line endX="173.0" layoutX="115.0" layoutY="490.0" startX="-115.0" />
+                              <Line endX="173.0" layoutX="115.0" layoutY="560.0" startX="-115.0" />
+                              <Line endX="173.0" layoutX="115.0" layoutY="630.0" startX="-115.0" />
+                              <Line endX="173.0" layoutX="115.0" layoutY="700.0" startX="-115.0" />
+                              <Text layoutX="70.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 1">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="70.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 2">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="70.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 3">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="70.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 4">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="70.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 5">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="70.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 6">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="70.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 7">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="70.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 8">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="70.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 9">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="70.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 10">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="70.0" layoutY="740.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 11">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Circle fill="DODGERBLUE" layoutX="40.0" layoutY="30.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Circle fill="DODGERBLUE" layoutX="40.0" layoutY="100.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="New Patient">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Text layoutX="500.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Immunizations" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="500.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allergies" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="500.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medications" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <TextField layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" promptText="Enter Name..." />
+                              <TextField layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" promptText="Enter D.O.B." />
+                              <TextField layoutX="140.0" layoutY="130.0" prefHeight="26.0" prefWidth="229.0" promptText="Enter Street Address..." />
+                              <TextField layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" promptText="Enter Phone..." />
+                              <TextField layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" promptText="Enter Provider..." />
+                              <TextField layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" promptText="Enter Policy Number..." />
+                              <TextField layoutX="140.0" layoutY="170.0" prefHeight="26.0" prefWidth="229.0" promptText="Enter City, State ZIP..." />
+                              <TextField layoutX="650.0" layoutY="90.0" prefWidth="175.0" promptText="Enter Immunization..." />
+                              <TextField layoutX="650.0" layoutY="130.0" prefWidth="175.0" promptText="Enter Allergy..." />
+                              <TextField layoutX="650.0" layoutY="170.0" prefWidth="175.0" promptText="Enter medication..." />
+                              <TextField layoutX="650.0" layoutY="50.0" prefWidth="175.0" promptText="Enter Condition..." />
+                              <Button layoutX="845.0" layoutY="90.0" mnemonicParsing="false" text="Add" />
+                              <Button layoutX="845.0" layoutY="50.0" mnemonicParsing="false" text="Add" />
+                              <Button layoutX="650.0" layoutY="248.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="127.0" text="Create Patient" />
+                              <TextField layoutX="140.0" layoutY="330.0" prefHeight="26.0" prefWidth="231.0" promptText="Enter Pharmacy..." />
+                              <Text layoutX="500.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Health History" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D.O.B." textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insurance Provider" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Policy Number" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Line endX="6.0" endY="602.0" layoutX="413.0" layoutY="140.0" startX="6.0" startY="-141.0" />
+                              <ScrollBar layoutX="960.0" layoutY="15.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="30.0" />
+                              <Button layoutX="845.0" layoutY="130.0" mnemonicParsing="false" text="Add" />
+                              <Button layoutX="845.0" layoutY="168.0" mnemonicParsing="false" text="Add" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Patient Record">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Text layoutX="500.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Immunizations" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="500.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allergies" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="500.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medications" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <TextField layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" promptText="Enter Name..." text="Patient Name" />
+                              <TextField layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" promptText="Enter D.O.B." text="**/**/****" />
+                              <TextField layoutX="140.0" layoutY="130.0" prefHeight="26.0" prefWidth="229.0" promptText="Enter Street Address..." text="Street Address" />
+                              <TextField layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" promptText="Enter Phone..." text="(***) ***-****" />
+                              <TextField layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" promptText="Enter Provider..." text="Insurance Company" />
+                              <TextField layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" promptText="Enter Policy Number..." text="Policy Number" />
+                              <TextField layoutX="140.0" layoutY="170.0" prefHeight="26.0" prefWidth="229.0" promptText="Enter City, State ZIP..." text="City, State ZIP" />
+                              <TextField layoutX="650.0" layoutY="90.0" prefWidth="175.0" promptText="Enter Immunization..." text="Condition 2" />
+                              <TextField layoutX="650.0" layoutY="130.0" prefWidth="175.0" promptText="Enter Allergy..." text="Immunization 1" />
+                              <TextField layoutX="650.0" layoutY="170.0" prefWidth="175.0" promptText="Enter medication..." text="Immunization 2" />
+                              <TextField layoutX="650.0" layoutY="50.0" prefWidth="175.0" promptText="Enter Condition..." text="Condition 1" />
+                              <TextField layoutX="140.0" layoutY="330.0" prefHeight="26.0" prefWidth="231.0" promptText="Enter Pharmacy..." text="Pharmacy" />
+                              <Text layoutX="500.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Health History" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D.O.B." textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insurance Provider" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Policy Number" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Line endX="6.0" endY="602.0" layoutX="413.0" layoutY="140.0" startX="6.0" startY="-141.0" />
+                              <ScrollBar layoutX="960.0" layoutY="15.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="30.0" />
+                              <TextField layoutX="650.0" layoutY="210.0" prefWidth="175.0" promptText="Enter medication..." text="Medication 1" />
+                              <TextField layoutX="650.0" layoutY="250.0" prefWidth="175.0" promptText="Enter medication..." text="Medication 2" />
+                              <TextField layoutX="650.0" layoutY="290.0" prefWidth="175.0" promptText="Enter medication..." text="Allergy 1" />
+                              <TextField layoutX="650.0" layoutY="330.0" prefWidth="175.0" promptText="Enter medication..." text="Allergy 2" />
+                              <Button layoutX="140.0" layoutY="392.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="127.0" text="Update">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Previous Visits">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Text layoutX="500.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Height" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="500.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weight" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="500.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperature" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="500.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Blood Pressure" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="506.0" layoutY="625.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Diagnoses: " textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="500.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Immunizations" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="500.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allergies" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="500.0" layoutY="553.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prescriptions:" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="500.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <TextField layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" text="Patient Name" />
+                              <TextField layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" text="**/**/****" />
+                              <TextField layoutX="140.0" layoutY="130.0" prefHeight="26.0" prefWidth="229.0" text="Street Address" />
+                              <TextField layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" text="(***) ***-****" />
+                              <TextField layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" text="Insurance Company" />
+                              <TextField layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" text="Policy Number" />
+                              <TextField layoutX="140.0" layoutY="170.0" prefHeight="26.0" prefWidth="229.0" text="City, State ZIP" />
+                              <TextField layoutX="650.0" layoutY="90.0" prefWidth="175.0" promptText="Enter height..." text="Height" />
+                              <TextField layoutX="650.0" layoutY="130.0" prefWidth="175.0" promptText="Enter weight..." text="Weight" />
+                              <TextField layoutX="650.0" layoutY="170.0" prefWidth="175.0" promptText="Enter temperature..." text="Temperature" />
+                              <TextField layoutX="650.0" layoutY="210.0" prefWidth="175.0" promptText="Enter blood pressure..." text="Blood pressure" />
+                              <TextField layoutX="650.0" layoutY="250.0" prefWidth="175.0" promptText="Add immunization..." text="Visit Immunization 1" />
+                              <TextField layoutX="650.0" layoutY="330.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Allergy 1" />
+                              <TextArea layoutX="650.0" layoutY="420.0" prefHeight="100.0" prefWidth="250.0" promptText="Add note..." text="Visit notes" />
+                              <TextField layoutX="650.0" layoutY="50.0" prefWidth="175.0" promptText="Enter date..." text="**/**/****" />
+                              <TextField layoutX="140.0" layoutY="330.0" prefHeight="26.0" prefWidth="231.0" text="Pharmacy" />
+                              <Text layoutX="500.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Visit" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D.O.B." textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insurance Provider" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Policy Number" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Line endX="6.0" endY="602.0" layoutX="413.0" layoutY="140.0" startX="6.0" startY="-141.0" />
+                              <Text layoutX="160.0" layoutY="426.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Visits">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="183.0" layoutY="465.0" strokeType="OUTSIDE" strokeWidth="0.0" text="**/**/****">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="183.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="**/**/****">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="183.0" layoutY="545.0" strokeType="OUTSIDE" strokeWidth="0.0" text="**/**/****">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="183.0" layoutY="585.0" strokeType="OUTSIDE" strokeWidth="0.0" text="**/**/****">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="183.0" layoutY="625.0" strokeType="OUTSIDE" strokeWidth="0.0" text="**/**/****">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Line endX="223.5" layoutX="195.0" layoutY="390.0" startX="-195.0" />
+                              <Circle fill="DODGERBLUE" layoutX="162.0" layoutY="497.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
+                              <TextField layoutX="650.0" layoutY="290.0" prefWidth="175.0" promptText="Add immunization..." text="Visit Immunization 2" />
+                              <TextField layoutX="650.0" layoutY="371.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Allergy 2" />
+                              <TextField layoutX="650.0" layoutY="535.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Prescription 1" />
+                              <TextField layoutX="650.0" layoutY="571.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Prescription 2" />
+                              <TextField layoutX="650.0" layoutY="607.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Diagnosis 1" />
+                              <TextField layoutX="650.0" layoutY="644.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Diagnosis 2" />
+                              <ScrollBar layoutX="960.0" layoutY="15.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="30.0" />
+                              <ScrollBar layoutX="378.0" layoutY="399.0" orientation="VERTICAL" prefHeight="325.0" prefWidth="30.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="New Visit">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Text layoutX="500.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Height" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="500.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weight" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="500.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperature" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="500.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Blood Pressure" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="500.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Immunizations" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="500.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allergies" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="500.0" layoutY="361.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <TextField layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" text="Patient Name" />
+                              <TextField layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" text="**/**/****" />
+                              <TextField layoutX="140.0" layoutY="130.0" prefHeight="26.0" prefWidth="229.0" text="Street Address" />
+                              <TextField layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" text="(***) ***-****" />
+                              <TextField layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" text="Insurance Company" />
+                              <TextField layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" text="Policy Number" />
+                              <TextField layoutX="140.0" layoutY="170.0" prefHeight="26.0" prefWidth="229.0" text="City, State ZIP" />
+                              <TextField layoutX="650.0" layoutY="90.0" prefWidth="175.0" promptText="Enter height..." />
+                              <TextField layoutX="650.0" layoutY="130.0" prefWidth="175.0" promptText="Enter weight..." />
+                              <TextField layoutX="650.0" layoutY="170.0" prefWidth="175.0" promptText="Enter temperature..." />
+                              <TextField layoutX="650.0" layoutY="210.0" prefWidth="175.0" promptText="Enter blood pressure..." />
+                              <TextField layoutX="650.0" layoutY="250.0" prefWidth="175.0" promptText="Add immunization..." />
+                              <TextField layoutX="650.0" layoutY="290.0" prefWidth="175.0" promptText="Add allergy..." />
+                              <TextArea layoutX="650.0" layoutY="340.0" prefHeight="100.0" prefWidth="250.0" promptText="Add note..." />
+                              <TextField layoutX="650.0" layoutY="50.0" prefWidth="175.0" promptText="Enter date..." />
+                              <Button layoutX="845.0" layoutY="291.0" mnemonicParsing="false" text="Add" />
+                              <Button layoutX="845.0" layoutY="249.0" mnemonicParsing="false" text="Add" />
+                              <Button layoutX="650.0" layoutY="482.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="127.0" text="Save Visit" />
+                              <TextField layoutX="140.0" layoutY="330.0" prefHeight="26.0" prefWidth="231.0" text="Pharmacy" />
+                              <Text layoutX="500.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Visit" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="15.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="15.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D.O.B." textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="15.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="15.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="15.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insurance Provider" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="15.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Policy Number" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Text layoutX="15.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Text>
+                              <Line endX="6.0" endY="602.0" layoutX="413.0" layoutY="140.0" startX="6.0" startY="-141.0" />
+                              <ScrollBar layoutX="960.0" layoutY="15.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="30.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
