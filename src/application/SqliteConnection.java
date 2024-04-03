@@ -9,7 +9,7 @@ public class SqliteConnection {
     public static Connection Connector() {
         try {
             Class.forName("org.sqlite.JDBC");
-            Connection connect = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\jaron\\OneDrive\\Desktop\\CSE_360_IntroSoftware_Engineering\\Program_Files\\GroupProject_SceneBuilder_LoginPanel_SQLiteDB\\SQLite_Database\\MainDatabase.sqlite");
+            Connection connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
             createTables(connect); // Create all tables
             insertDataIntoLoginTable(connect); // Insert initial data into the Login table
             return connect;
@@ -70,7 +70,7 @@ public class SqliteConnection {
         } catch (SQLException e) {
             // Check if the error is due to duplicate key violation
             if (e.getMessage().contains("UNIQUE constraint failed: Login.user_id")) {
-                // Ignores duplicate key errors 
+                // Ignores duplicate key errors
             } else {
                 // Re-throw other SQL exceptions
                 throw e;
