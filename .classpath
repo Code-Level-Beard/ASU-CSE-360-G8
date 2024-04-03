@@ -16,5 +16,15 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/jaron/OneDrive/Desktop/CSE_360_IntroSoftware_Engineering/Program_Files/GroupProject_SceneBuilder_LoginPanel_SQLiteDB/SQLite_JAR_File/sqlite-jdbc-3.45.2.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/jaron/OneDrive/Desktop/CSE_360_IntroSoftware_Engineering/Program_Files/GroupProject_SceneBuilder_LoginPanel_SQLiteDB/SQLite_JAR_File/slf4j-api-1.7.36.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
