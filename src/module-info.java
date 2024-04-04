@@ -1,4 +1,4 @@
-module GroupProject_SceneBuilder_LoginPanel_Backup {
+module GroupProject_SceneBuilder_LoginPanel_SQLiteDB {
 	requires javafx.controls;
 	requires javafx.fxml;
 	requires javafx.graphics;
