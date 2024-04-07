@@ -1,6 +1,5 @@
 package application;
 
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,12 +9,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class NursePanel extends Application {
+public class PhysicianController extends Application {
 
     @Override
     public void start(Stage primaryStage) {
         // Set the title of the application window
-        primaryStage.setTitle("Nurse Dashboard");
+        primaryStage.setTitle("Doctor Dashboard");
 
         // Create the root layout for the application using BorderPane
         BorderPane root = new BorderPane();
@@ -65,8 +64,8 @@ public class NursePanel extends Application {
 
         // Create tabs
         Tab patientTab = createTab("Patient");
-        Tab messageTab = createTab("Message Center");
-        Tab prescriptionsTab = createTab("New Patient / Vitals");
+        Tab messageTab = createTab("Message");
+        Tab prescriptionsTab = createTab("Prescriptions");
 
         // Create content for each tab
         VBox patientContent = new VBox();
@@ -76,7 +75,7 @@ public class NursePanel extends Application {
         messageContent.getChildren().add(createButton("Message Center"));
 
         VBox prescriptionsContent = new VBox();
-        prescriptionsContent.getChildren().add(createButton("New Patient / Vitals"));
+        prescriptionsContent.getChildren().add(createButton("Prescriptions & Orders"));
 
         // Set content for each tab
         patientTab.setContent(patientContent);

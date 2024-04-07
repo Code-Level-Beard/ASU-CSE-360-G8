@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +19,17 @@ import javafx.stage.Stage;
 
 
 public class LoginController {
-	public LoginModel loginModel = new LoginModel();
+	public String activeUser;
+	
+	public Parent root;
+	
+	public Stage stage;
+	
+	public Stage currentStage;
+	
+	public FXMLLoader loader;
+	
+	public PatientController pController;
 
 	@FXML
 	private Button exitButton;
@@ -37,6 +45,9 @@ public class LoginController {
 
 	@FXML
 	private Button loginButton;
+	
+	@FXML
+	private TextField nField;
 
 	public void exitButtonOnAction(javafx.event.ActionEvent e) {
 		Stage stage = (Stage) exitButton.getScene().getWindow();
@@ -60,13 +71,14 @@ public class LoginController {
 				
 				String sqlPWD = resultSet.getString("password");
 				if (password.equals(sqlPWD)) {
+					activeUser = username;
 					String sqlType = resultSet.getString("user_type");
 					if (sqlType.equals("Physician")) {
 						openPhysicianPanel();
 					} else if (sqlType.equals("Nurse")) {
 						openNursePanel();
 					} else if (sqlType.equals("Patient")) {
-						openPatientPanel();
+						openPatientPanel(activeUser);
 					}
 				} else {
 					// Handle invalid username format or unrecognized user type
@@ -95,15 +107,15 @@ public class LoginController {
 	// Method to open PhysicianPanel
 	private void openPhysicianPanel() {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("Doctor.fxml"));
-			Parent root = loader.load();
+			loader = new FXMLLoader(getClass().getResource("Doctor.fxml"));
+			root = loader.load();
 
-			Stage stage = new Stage();
+			stage = new Stage();
 			stage.setScene(new Scene(root));
 			stage.show();
 
 			// Close the current login window
-			Stage currentStage = (Stage) loginButton.getScene().getWindow();
+			currentStage = (Stage) loginButton.getScene().getWindow();
 			currentStage.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -112,33 +124,37 @@ public class LoginController {
 
 	private void openNursePanel() {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("Nurse.fxml"));
-			Parent root = loader.load();
+			loader = new FXMLLoader(getClass().getResource("Nurse.fxml"));
+			root = loader.load();
 
-			Stage stage = new Stage();
+			stage = new Stage();
 			stage.setScene(new Scene(root));
 			stage.show();
 
 			// Close the current login window
-			Stage currentStage = (Stage) loginButton.getScene().getWindow();
+			currentStage = (Stage) loginButton.getScene().getWindow();
 			currentStage.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void openPatientPanel() {
+	private void openPatientPanel(String activeUser) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("Patient.fxml"));
-			Parent root = loader.load();
+			loader = new FXMLLoader(getClass().getResource("Patient.fxml"));
+			root = loader.load();
+			
+			pController = loader.getController();
+			pController.updateText(activeUser);
 
-			Stage stage = new Stage();
+			stage = new Stage();
 			stage.setScene(new Scene(root));
 			stage.show();
 
 			// Close the current login window
-			Stage currentStage = (Stage) loginButton.getScene().getWindow();
+			currentStage = (Stage) loginButton.getScene().getWindow();
 			currentStage.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
