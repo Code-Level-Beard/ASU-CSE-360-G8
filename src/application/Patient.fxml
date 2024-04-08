@@ -276,8 +276,8 @@
                                  </font>
                               </Text>
                               <Text layoutX="256.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is sample mesage text to demonstrate what messages would look like..." wrappingWidth="300.0" />
-                              <TextArea layoutX="248.0" layoutY="599.0" prefHeight="116.0" prefWidth="505.0" promptText="Type new message here..." />
-                              <Button layoutX="777.0" layoutY="685.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="81.0" text="Send" />
+                              <TextArea fx:id="message"  layoutX="248.0" layoutY="599.0" prefHeight="116.0" prefWidth="505.0" promptText="Type new message here..." />
+                              <Button layoutX="777.0" layoutY="685.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="30.0" prefWidth="81.0" text="Send" />
                               <Line endX="550.0" layoutX="450.0" layoutY="573.0" startX="-452.0" />
                               <Text layoutX="256.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is sample mesage text to demonstrate what messages would look like..." wrappingWidth="300.0" />
                               <Text layoutX="256.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is sample mesage text to demonstrate what messages would look like..." wrappingWidth="300.0" />

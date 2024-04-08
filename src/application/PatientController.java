@@ -16,6 +16,8 @@ import java.sql.SQLException;
 public class PatientController {
 	String activeUser;
 
+	String messageID;
+
 	@FXML
 	private TextArea currRecord;
 
@@ -55,7 +57,27 @@ public class PatientController {
 	@FXML 
 	private Button update;
 
+	@FXML
+	private TextArea message;
 
+	@FXML
+	public void sendMessage(javafx.event.ActionEvent e){
+		System.out.println(message.getText().trim());
+		Connection connect;
+		try {
+			 connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			 // PreparedStatement object to run needed SQL Query
+			 PreparedStatement newMessageStatement = connect.prepareStatement("INSERT INTO Message (message_id, content) VALUES (?)");
+			 newMessageStatement.setString(2, genMessageID());
+		}
+		catch (SQLException e1){
+			e1.printStackTrace();
+		}
+	}
+
+	public String genMessageID(){
+		return messageID;
+	}
 
 	public void updateText(String user) {
 		activeUser = user;
