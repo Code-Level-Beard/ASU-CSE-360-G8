@@ -91,7 +91,6 @@ public class PatientController {
 
 	@FXML
 	public void updateDB(javafx.event.ActionEvent e) {
-		System.out.println("Button Pressed");
 		Connection connect;
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
@@ -154,7 +153,7 @@ public class PatientController {
 				}
 				if (!pharm.getText().isBlank() && !pharm.getText().isEmpty()) {
 					PreparedStatement setPHM = connect.prepareStatement("UPDATE PatientRecord SET pharmacy = ? WHERE patient_id = ?");
-					setPHM.setString(1, dob.getText().trim());
+					setPHM.setString(1, pharm.getText().trim());
 					setPHM.setString(2, activeUser);
 					setPHM.execute();
 					setPHM.close();
