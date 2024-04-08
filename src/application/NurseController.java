@@ -1,128 +1,281 @@
 package application;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Random;
 
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 
-public class NurseController extends Application {
+public class NurseController {
+	String activeUser;
+	
+	String selectedPatient;
+	
+	String selectedDoctor;
+	
+	String newPatientID;
 
-    @Override
-    public void start(Stage primaryStage) {
-        // Set the title of the application window
-        primaryStage.setTitle("Nurse Dashboard");
+	@FXML
+	private TextArea currRecord;
 
-        // Create the root layout for the application using BorderPane
-        BorderPane root = new BorderPane();
+	@FXML
+	private TextField firstName;
 
-        // Create a menu bar to hold different menus
-        MenuBar menuBar = new MenuBar();
+	@FXML
+	private TextField lastName;
 
-        // Create individual menus
-        Menu fileMenu = createMenu("File");
-        Menu homeMenu = createMenu("Home");
-        Menu searchMenu = createMenu("Search");
+	@FXML
+	private TextField dob;
 
-        // Create menu items for each menu
-        MenuItem openItem = createMenuItem("Open");
-        MenuItem saveItem = createMenuItem("Save");
-        MenuItem signOutItem = createMenuItem("Sign Out");
-        
-        // Set an event handler to handle sign out action
-        signOutItem.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                // Close the current window
-                primaryStage.close();
-                // Start a new instance of the login screen (assuming Main is the login class)
-                Main returnLogin = new Main();
-                returnLogin.start(new Stage());
-            }
-        });
+	@FXML
+	private TextField address;
 
-       //Menu Items for home and search " they have no functionality as of right now "
-        MenuItem homeItem1 = createMenuItem("Option 1");
-        MenuItem homeItem2 = createMenuItem("Option 2");
+	@FXML
+	private TextField pNum;
 
-        MenuItem searchItem1 = createMenuItem("Search 1");
-        MenuItem searchItem2 = createMenuItem("Search 2");
+	@FXML
+	private TextField insID;
 
-        // Add menu items to the corresponding menus
-        fileMenu.getItems().addAll(openItem, saveItem, new SeparatorMenuItem(), signOutItem);
-        homeMenu.getItems().addAll(homeItem1, homeItem2);
-        searchMenu.getItems().addAll(searchItem1, searchItem2);
+	@FXML
+	private TextField pharm;
 
-        // Add menus to the menu bar
-        menuBar.getMenus().addAll(fileMenu, homeMenu, searchMenu);
+	@FXML
+	private TextField hHistory;
 
-        // Create a tab-style menu bar
-        TabPane tabPane = new TabPane();
-        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+	@FXML
+	private TextField immuni;
 
-        // Create tabs
-        Tab patientTab = createTab("Patient");
-        Tab messageTab = createTab("Message Center");
-        Tab prescriptionsTab = createTab("New Patient / Vitals");
+	@FXML
+	private TextField med;
 
-        // Create content for each tab
-        VBox patientContent = new VBox();
-        patientContent.getChildren().add(createButton("Patient Records"));
+	@FXML
+	private TextField allergies;
+	@FXML
+	private TextArea selectedPatientRecord;
 
-        VBox messageContent = new VBox();
-        messageContent.getChildren().add(createButton("Message Center"));
-
-        VBox prescriptionsContent = new VBox();
-        prescriptionsContent.getChildren().add(createButton("New Patient / Vitals"));
-
-        // Set content for each tab
-        patientTab.setContent(patientContent);
-        messageTab.setContent(messageContent);
-        prescriptionsTab.setContent(prescriptionsContent);
-
-        // Add tabs to the tab pane
-        tabPane.getTabs().addAll(patientTab, messageTab, prescriptionsTab);
-
-        // Set the layout for the root BorderPane
-        root.setTop(menuBar);
-        root.setCenter(tabPane);
-
-        // Create the main scene with the root layout
-        Scene scene = new Scene(root, 600, 400);
-        primaryStage.setScene(scene);
-
-        // Show the primary stage
-        primaryStage.show();
-    }
-
-    // Helper methods to create Menu, MenuItem, Tab, and Button
-    private Menu createMenu(String text) {
-        Menu menu = new Menu(text);
-        return menu;
-    }
-
-    private MenuItem createMenuItem(String text) {
-        MenuItem menuItem = new MenuItem(text);
-        return menuItem;
-    }
-
-    private Tab createTab(String text) {
-        Tab tab = new Tab(text);
-        return tab;
-    }
-
-    private Button createButton(String text) {
-        Button button = new Button(text);
-        button.setPrefWidth(Double.MAX_VALUE);
-        button.setStyle("-fx-background-color: #555; -fx-text-fill: white;");
-        return button;
-    }
-
-    // Entry point for the JavaFX application
-    public static void main(String[] args) {
-        launch(args);
-    }
+	@FXML 
+	private Button newPatient;
+	
+	@FXML
+	private ComboBox<String> selDoctor;
+	
+	@FXML
+	private ComboBox<String> selPLDoctor;
+	
+	@FXML
+	private ComboBox<String> selPLPatient;
+	
+	@FXML
+	private Tab newPatientTab;
+	@FXML
+	private Tab patientListTab;
+	@FXML
+	private Tab messageTab;
+	@FXML
+	private Tab patientRecordTab;
+	@FXML
+	private Tab prevVisitTab;
+	@FXML
+	private Tab newVisitTab;
+	@FXML
+	private Button selectPatient;
+	
+	
+	@FXML
+	public void newPatient(javafx.event.ActionEvent e) {
+		Connection connect;
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement newPatientStatement = connect.prepareStatement("INSERT INTO PatientRecord (first_name, last_name, address," +
+					"phone_number, ins_id, pharmacy, health_history,immunizations,"
+					+" medications, allergies, assigned_doctor,DOB,patient_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			if (!((dob.getText().isBlank() && dob.getText().isEmpty()) && (address.getText().isBlank() && address.getText().isEmpty()) && (pNum.getText().isBlank() && pNum.getText().isEmpty())
+					&& (insID.getText().isBlank() && insID.getText().isEmpty()) && (immuni.getText().isBlank() && immuni.getText().isEmpty()) && (hHistory.getText().isBlank() && hHistory.getText().isEmpty())
+					&& (med.getText().isBlank() && med.getText().isEmpty()) && (allergies.getText().isBlank() && allergies.getText().isEmpty()) && (firstName.getText().isBlank() && firstName.getText().isEmpty())
+					&& (lastName.getText().isBlank() && lastName.getText().isEmpty()))) {
+				newPatientStatement.setString(1, firstName.getText().trim());
+				newPatientStatement.setString(2, lastName.getText().trim());
+				newPatientStatement.setString(3, address.getText().trim());
+				newPatientStatement.setString(4, pNum.getText().trim());
+				newPatientStatement.setString(5, insID.getText().trim());
+				newPatientStatement.setString(6, pharm.getText().trim());
+				newPatientStatement.setString(7, hHistory.getText().trim());
+				newPatientStatement.setString(8, immuni.getText().trim());
+				newPatientStatement.setString(9, med.getText().trim());
+				newPatientStatement.setString(10, allergies.getText().trim() );
+				newPatientStatement.setString(11, selDoctor.getValue());
+				newPatientStatement.setString(12, dob.getText().trim());
+				newPatientStatement.setString(13, genPatientID(firstName.getText().trim(),lastName.getText().trim()));
+				
+				PreparedStatement newPatientUser = connect.prepareStatement("INSERT INTO UserType (user_id, user_type, first_name, last_name) VALUES (?,?,?,?)");
+				newPatientUser.setString(1, newPatientID);
+				newPatientUser.setString(2, "Patient");
+				newPatientUser.setString(3, firstName.getText().trim());
+				newPatientUser.setString(4, lastName.getText().trim());
+				
+				PreparedStatement newPatientLogin = connect.prepareStatement("INSERT INTO Login (user_id, user_type, password) VALUES (?,?,?)");
+				newPatientLogin.setString(1, newPatientID);
+				newPatientLogin.setString(2, "Patient");
+				newPatientLogin.setString(3, newPatientID);
+				
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Share Username and Password with Patient");
+				alert.setHeaderText(null);
+				alert.setContentText("Please inform the patient of their username and password\nUsername: " + newPatientID + "\nUsername: " + newPatientID);
+				alert.showAndWait();
+				
+				newPatientUser.executeUpdate();
+				newPatientLogin.executeUpdate();
+				newPatientStatement.executeUpdate();
+				newPatientLogin.close();
+				newPatientUser.close();
+				newPatientStatement.close();
+				connect.close();
+				firstName.clear();
+				lastName.clear();
+				address.clear();
+				pNum.clear();
+				insID.clear();
+				pharm.clear();
+				hHistory.clear();
+				immuni.clear();
+				med.clear();
+				allergies.clear();
+				dob.clear();
+			} else {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("No Data Entered");
+				alert.setHeaderText(null);
+				alert.setContentText("Please enter text into each field. If there is nothing to enter, enter N/A");
+				alert.showAndWait();
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	public String genPatientID(String fName, String lName) {
+		Random ranInt = new Random();
+		int randomInt = ranInt.nextInt(9000);
+		randomInt += 1000;
+		
+		newPatientID = (fName.substring(0, 1) + lName.substring(0, 1) + randomInt);
+		
+		return newPatientID;
+	}
+	
+	public void genNPComboBox() {
+		Connection connect;
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement doctors = connect.prepareStatement("SELECT first_name, last_name FROM UserType WHERE user_type = ?");
+			doctors.setString(1, "Physician");
+			ResultSet doctorList = doctors.executeQuery();
+			while (doctorList.next()) {
+				selDoctor.getItems().add(doctorList.getString("first_name") + " " +doctorList.getString("last_name"));
+			}
+			doctorList.close();
+			doctors.close();
+			connect.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	public void genPLComboBox() {
+		Connection connect;
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement doctors = connect.prepareStatement("SELECT first_name, last_name FROM UserType WHERE user_type = ?");
+			doctors.setString(1, "Physician");
+			ResultSet doctorList = doctors.executeQuery();
+			while (doctorList.next()) {
+				selPLDoctor.getItems().add(doctorList.getString("first_name") + " " +doctorList.getString("last_name"));
+			}
+			doctorList.close();
+			doctors.close();
+			connect.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void getDoctor(javafx.event.ActionEvent e) {
+		selectedDoctor = selPLDoctor.getValue();
+		genPLPatientComboBox();
+	}
+	
+	@FXML
+	public void getSelectedPatient(javafx.event.ActionEvent e) {
+		selectedPatient = selPLPatient.getValue().substring(selPLPatient.getValue().length()-6, selPLPatient.getValue().length());
+	}
+	
+	public void genPLPatientComboBox() {
+		Connection connect;
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement patients = connect.prepareStatement("SELECT first_name, last_name, patient_id FROM PatientRecord WHERE assigned_doctor = ?");
+			patients.setString(1, selectedDoctor);
+			ResultSet patientList = patients.executeQuery();
+			while (patientList.next()) {
+				selPLPatient.getItems().add(patientList.getString("first_name") + " " + patientList.getString("last_name") + " Patient ID: " + patientList.getString("patient_id"));
+			}
+			patientList.close();
+			patients.close();
+			connect.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void patientRecordSelected(javafx.event.ActionEvent e) {
+		updatePatientRecordText();
+	}
+	public void updatePatientRecordText() {
+		Connection connect;
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement statement = connect.prepareStatement("SELECT patient_id, first_name, last_name, address, "
+					+ "phone_number, ins_id, pharmacy, health_history,immunizations, "
+					+ "medications, allergies, assigned_doctor,DOB FROM PatientRecord WHERE patient_id = ?");
+			statement.setString(1, selectedPatient);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				currRecord.appendText("Name: " + resultSet.getString("first_name") + " " + resultSet.getString("last_name")+"\n\n");
+				currRecord.appendText("Date of Birth: " + resultSet.getString("DOB") + "\n\n");
+				currRecord.appendText("Address: " + resultSet.getString("address") + "\n\n");
+				currRecord.appendText("Phone Number: " + resultSet.getString("phone_number") + "\n\n");
+				currRecord.appendText("Insurance Provider: " + resultSet.getString("ins_id") + "\n\n");
+				currRecord.appendText("Pharmacy: " + resultSet.getString("pharmacy") + "\n\n");
+				currRecord.appendText("Health History: " + resultSet.getString("health_history") + "\n\n");
+				currRecord.appendText("Immunizations: " + resultSet.getString("immunizations") + "\n\n");
+				currRecord.appendText("Medications: " + resultSet.getString("medications") + "\n\n");
+				currRecord.appendText("Allergies: " + resultSet.getString("allergies") + "\n\n");
+				currRecord.appendText("Assigned Doctor: " + resultSet.getString("assigned_doctor") + "\n\n");
+			}
+			resultSet.close();
+			statement.close();
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }
