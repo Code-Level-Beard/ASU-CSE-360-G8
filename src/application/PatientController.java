@@ -67,8 +67,27 @@ public class PatientController {
 		try {
 			 connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 			 // PreparedStatement object to run needed SQL Query
-			 PreparedStatement newMessageStatement = connect.prepareStatement("INSERT INTO Message (message_id, content) VALUES (?)");
-			 newMessageStatement.setString(2, genMessageID());
+			 PreparedStatement newMessageStatement = connect.prepareStatement("INSERT INTO Message (patient_id, message_id, sender, recipient, header, content) VALUES (?, ?, ?, ?, ?, ?)");
+			 if (!(message.getText().isBlank() && message.getText().isEmpty())){
+				 // insert patientID
+				 newMessageStatement.setString(2, genMessageID());
+				 // insert sender
+				 // insert recipient
+				 // insert header
+				 newMessageStatement.setString(6, message.getText().trim());
+
+				 newMessageStatement.executeUpdate();
+				 newMessageStatement.close();
+				 connect.close();
+				 message.clear();
+			 }
+			 else {
+				 Alert alert = new Alert(AlertType.WARNING);
+				 alert.setTitle("No Message Entered");
+				 alert.setHeaderText(null);
+				 alert.setContentText("Enter a message before clicking attempting to send");
+				 alert.showAndWait();
+			 }
 		}
 		catch (SQLException e1){
 			e1.printStackTrace();
@@ -76,6 +95,7 @@ public class PatientController {
 	}
 
 	public String genMessageID(){
+
 		return messageID;
 	}
 
