@@ -10,7 +10,14 @@ See class tutorial for help.
 
 The jar files are included and the classpath is set to relative so it shouldn't require any setup.
 
-## Login Credentials Guide 
+## Module Not Found Troubleshooting
+
+1. Delete project from eclipse by right-clicking and pressing delete.
+1. Don't check "delete project contents from disk."
+1. Click file>open projects from file system>open top-level folder.
+1. If it still doesn't work click run>run configurations>java>main>red x to delete
+
+## Login Credentials Test Guide 
  
 - To Login as Doctor:
     - UserName: MD1234
