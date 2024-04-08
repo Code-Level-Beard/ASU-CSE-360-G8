@@ -30,6 +30,10 @@ public class LoginController {
 	public FXMLLoader loader;
 	
 	public PatientController pController;
+	
+	public NurseController nController;
+	
+	public PhysicianController phyController;
 
 	@FXML
 	private Button exitButton;
@@ -54,7 +58,6 @@ public class LoginController {
 		stage.close();
 	}
 
-	@SuppressWarnings("unused")
 	@FXML
 	public void loginButtonAction(javafx.event.ActionEvent e) {
 		try {
@@ -126,6 +129,10 @@ public class LoginController {
 		try {
 			loader = new FXMLLoader(getClass().getResource("Nurse.fxml"));
 			root = loader.load();
+			
+			nController = loader.getController();
+			nController.genNPComboBox();
+			nController.genPLComboBox();
 
 			stage = new Stage();
 			stage.setScene(new Scene(root));

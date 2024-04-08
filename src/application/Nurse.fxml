@@ -26,7 +26,7 @@
          <children>
             <TabPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                  <Tab text="Patient List">
+                  <Tab fx:id="patientListTab" text="Patient List">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -44,13 +44,13 @@
                                  </image>
                               </ImageView>
                               <Button layoutX="500.0" layoutY="333.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="127.0" text="Select" />
-                              <ComboBox layoutX="453.0" layoutY="214.0" prefWidth="150.0" />
+                              <ComboBox fx:id="selPLDoctor" layoutX="453.0" layoutY="214.0" prefWidth="150.0" />
                               <ComboBox layoutX="453.0" layoutY="272.0" prefWidth="150.0" />
                            </children>
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab text="Messages">
+                  <Tab fx:id="messageTab" text="Messages">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -155,7 +155,7 @@
                         </AnchorPane>
                     </content>
                   </Tab>
-                  <Tab text="New Patient">
+                  <Tab fx:id="newPatientTab" text="New Patient">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -178,12 +178,16 @@
                               <TextField fx:id="firstName" layoutX="269.0" layoutY="200.0" prefHeight="26.0" prefWidth="229.0" promptText="e.g, &quot;John&quot;" />
                               <TextField fx:id="lastName" layoutX="269.0" layoutY="240.0" prefHeight="26.0" prefWidth="230.0" promptText="e.g. &quot;Doe&quot;" />
                               <TextField fx:id="dob" layoutX="269.0" layoutY="277.0" prefHeight="26.0" prefWidth="229.0" promptText="e.g. &quot;1/11/2024&quot;" />
+                              <TextField fx:id="address" layoutX="269.0" layoutY="312.0" prefHeight="26.0" prefWidth="229.0" promptText="e.g. &quot;1234 W Street City, State Zip" />
                               <TextField fx:id="pNum" layoutX="269.0" layoutY="345.0" prefHeight="26.0" prefWidth="230.0" promptText="e.g. &quot;480-123-4567&quot;" />
                               <TextField fx:id="insID" layoutX="269.0" layoutY="379.0" prefHeight="26.0" prefWidth="231.0" promptText="e.g. &quot;Provider 123456789&quot;" />
                               <TextField fx:id="pharm" layoutX="268.0" layoutY="414.0" prefHeight="26.0" prefWidth="231.0" promptText="e.g. &quot;Walgreens CITY&quot;" />
-                              <TextField fx:id="address" layoutX="269.0" layoutY="312.0" prefHeight="26.0" prefWidth="229.0" promptText="e.g. &quot;1234 W Street City, State Zip" />
-                              <TextField fx:id="immuni" layoutX="269.0" layoutY="480.0" prefWidth="175.0" promptText="e.g. &quot;Flu Shot YEAR&quot;" />
                               <TextField fx:id="hHistory" layoutX="269.0" layoutY="447.0" prefHeight="26.0" prefWidth="231.0" promptText="e.g. &quot;Medical Condition&quot;" />
+                              <TextField fx:id="immuni" layoutX="269.0" layoutY="480.0" prefWidth="175.0" promptText="e.g. &quot;Flu Shot YEAR&quot;" />
+                              <TextField fx:id="med" layoutX="269.0" layoutY="513.0" prefWidth="175.0" promptText="e.g. &quot;Tylenon 500mg&quot;" />
+                              <TextField fx:id="allergies" layoutX="269.0" layoutY="546.0" prefWidth="175.0" promptText="e.g. &quot;Peanuts&quot;" />
+                              <ComboBox fx:id="selDoctor" layoutX="268.0" layoutY="581.0" prefWidth="150.0" promptText="Select a doctor" />
+                              <Button fx:id="newPatient" layoutX="707.0" layoutY="621.0" mnemonicParsing="false" onAction="#newPatient" prefHeight="86.0" prefWidth="175.0" text="Create Patient" />
                               <Text layoutX="142.0" layoutY="465.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Health History" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
@@ -224,10 +228,6 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <TextField fx:id="med" layoutX="269.0" layoutY="513.0" prefWidth="175.0" promptText="e.g. &quot;Tylenon 500mg&quot;" />
-                              <TextField fx:id="allergies" layoutX="269.0" layoutY="546.0" prefWidth="175.0" promptText="e.g. &quot;Peanuts&quot;" />
-                              <Button fx:id="newPatient" layoutX="707.0" layoutY="621.0" mnemonicParsing="false" onAction="#newPatient" prefHeight="86.0" prefWidth="175.0" text="Create Patient" />
-                              <ComboBox fx:id="selDoctor" layoutX="268.0" layoutY="581.0" prefWidth="150.0" promptText="Select a doctor" />
                               <Text layoutX="142.0" layoutY="599.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Doctor" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
@@ -237,7 +237,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Patient Record">
+                  <Tab fx:id="patientRecordTab" text="Patient Record">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -259,10 +259,10 @@
                               <TextField layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" promptText="e.g, &quot;John&quot;" />
                               <TextField layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" promptText="e.g. &quot;Doe&quot;" />
                               <TextField layoutX="140.0" layoutY="130.0" prefHeight="26.0" prefWidth="229.0" promptText="e.g. &quot;1/11/2024&quot;" />
+                              <TextField layoutX="140.0" layoutY="170.0" prefHeight="26.0" prefWidth="229.0" promptText="e.g. &quot;1234 W Street City, State Zip" />
                               <TextField layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" promptText="e.g. &quot;480-123-4567&quot;" />
                               <TextField layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" promptText="e.g. &quot;Provider 123456789&quot;" />
                               <TextField layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" promptText="e.g. &quot;Walgreens CITY&quot;" />
-                              <TextField layoutX="140.0" layoutY="170.0" prefHeight="26.0" prefWidth="229.0" promptText="e.g. &quot;1234 W Street City, State Zip" />
                               <TextField layoutX="140.0" layoutY="367.0" prefWidth="175.0" promptText="e.g. &quot;Flu Shot YEAR&quot;" />
                               <TextField layoutX="140.0" layoutY="330.0" prefHeight="26.0" prefWidth="231.0" promptText="e.g. &quot;Medical Condition&quot;" />
                               <Text layoutX="15.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Health History" textAlignment="RIGHT" wrappingWidth="115.0">
@@ -306,7 +306,6 @@
                                  </font>
                               </Text>
                               <Line endX="6.0" endY="602.0" layoutX="413.0" layoutY="140.0" startX="6.0" startY="-141.0" />
-                              <ScrollBar layoutX="960.0" layoutY="15.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="30.0" />
                               <TextField layoutX="140.0" layoutY="403.0" prefWidth="175.0" promptText="e.g. &quot;Tylenon 500mg&quot;" />
                               <TextField layoutX="140.0" layoutY="438.0" prefWidth="175.0" promptText="e.g. &quot;Peanuts&quot;" />
                               <Button fx:id="update" layoutX="140.0" layoutY="517.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="175.0" text="Update Info" />
@@ -316,7 +315,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Previous Visits">
+                  <Tab fx:id="prevVisitTab" text="Previous Visits">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -466,7 +465,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="New Visit">
+                  <Tab fx:id="newVisitTab" text="New Visit">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
