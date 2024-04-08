@@ -21,6 +21,8 @@ public class NurseController {
 	
 	String selectedPatient;
 	
+	String selectedDoctor;
+	
 	String newPatientID;
 
 	@FXML
@@ -58,6 +60,8 @@ public class NurseController {
 
 	@FXML
 	private TextField allergies;
+	@FXML
+	private TextArea selectedPatientRecord;
 
 	@FXML 
 	private Button newPatient;
@@ -67,6 +71,9 @@ public class NurseController {
 	
 	@FXML
 	private ComboBox<String> selPLDoctor;
+	
+	@FXML
+	private ComboBox<String> selPLPatient;
 	
 	@FXML
 	private Tab newPatientTab;
@@ -80,6 +87,8 @@ public class NurseController {
 	private Tab prevVisitTab;
 	@FXML
 	private Tab newVisitTab;
+	@FXML
+	private Button selectPatient;
 	
 	
 	@FXML
@@ -132,6 +141,17 @@ public class NurseController {
 				newPatientUser.close();
 				newPatientStatement.close();
 				connect.close();
+				firstName.clear();
+				lastName.clear();
+				address.clear();
+				pNum.clear();
+				insID.clear();
+				pharm.clear();
+				hHistory.clear();
+				immuni.clear();
+				med.clear();
+				allergies.clear();
+				dob.clear();
 			} else {
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle("No Data Entered");
@@ -163,7 +183,7 @@ public class NurseController {
 			doctors.setString(1, "Physician");
 			ResultSet doctorList = doctors.executeQuery();
 			while (doctorList.next()) {
-				selPLDoctor.getItems().add(doctorList.getString("first_name") + " " +doctorList.getString("last_name"));
+				selDoctor.getItems().add(doctorList.getString("first_name") + " " +doctorList.getString("last_name"));
 			}
 			doctorList.close();
 			doctors.close();
@@ -182,7 +202,7 @@ public class NurseController {
 			doctors.setString(1, "Physician");
 			ResultSet doctorList = doctors.executeQuery();
 			while (doctorList.next()) {
-				selDoctor.getItems().add(doctorList.getString("first_name") + " " +doctorList.getString("last_name"));
+				selPLDoctor.getItems().add(doctorList.getString("first_name") + " " +doctorList.getString("last_name"));
 			}
 			doctorList.close();
 			doctors.close();
@@ -190,6 +210,71 @@ public class NurseController {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void getDoctor(javafx.event.ActionEvent e) {
+		selectedDoctor = selPLDoctor.getValue();
+		genPLPatientComboBox();
+	}
+	
+	@FXML
+	public void getSelectedPatient(javafx.event.ActionEvent e) {
+		selectedPatient = selPLPatient.getValue().substring(selPLPatient.getValue().length()-6, selPLPatient.getValue().length());
+	}
+	
+	public void genPLPatientComboBox() {
+		Connection connect;
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement patients = connect.prepareStatement("SELECT first_name, last_name, patient_id FROM PatientRecord WHERE assigned_doctor = ?");
+			patients.setString(1, selectedDoctor);
+			ResultSet patientList = patients.executeQuery();
+			while (patientList.next()) {
+				selPLPatient.getItems().add(patientList.getString("first_name") + " " + patientList.getString("last_name") + " Patient ID: " + patientList.getString("patient_id"));
+			}
+			patientList.close();
+			patients.close();
+			connect.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void patientRecordSelected(javafx.event.ActionEvent e) {
+		updatePatientRecordText();
+	}
+	public void updatePatientRecordText() {
+		Connection connect;
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement statement = connect.prepareStatement("SELECT patient_id, first_name, last_name, address, "
+					+ "phone_number, ins_id, pharmacy, health_history,immunizations, "
+					+ "medications, allergies, assigned_doctor,DOB FROM PatientRecord WHERE patient_id = ?");
+			statement.setString(1, selectedPatient);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				currRecord.appendText("Name: " + resultSet.getString("first_name") + " " + resultSet.getString("last_name")+"\n\n");
+				currRecord.appendText("Date of Birth: " + resultSet.getString("DOB") + "\n\n");
+				currRecord.appendText("Address: " + resultSet.getString("address") + "\n\n");
+				currRecord.appendText("Phone Number: " + resultSet.getString("phone_number") + "\n\n");
+				currRecord.appendText("Insurance Provider: " + resultSet.getString("ins_id") + "\n\n");
+				currRecord.appendText("Pharmacy: " + resultSet.getString("pharmacy") + "\n\n");
+				currRecord.appendText("Health History: " + resultSet.getString("health_history") + "\n\n");
+				currRecord.appendText("Immunizations: " + resultSet.getString("immunizations") + "\n\n");
+				currRecord.appendText("Medications: " + resultSet.getString("medications") + "\n\n");
+				currRecord.appendText("Allergies: " + resultSet.getString("allergies") + "\n\n");
+				currRecord.appendText("Assigned Doctor: " + resultSet.getString("assigned_doctor") + "\n\n");
+			}
+			resultSet.close();
+			statement.close();
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

@@ -43,9 +43,9 @@
                                     <Image url="@../../../../Downloads/image.png" />
                                  </image>
                               </ImageView>
-                              <Button layoutX="500.0" layoutY="333.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="127.0" text="Select" />
-                              <ComboBox fx:id="selPLDoctor" layoutX="453.0" layoutY="214.0" prefWidth="150.0" />
-                              <ComboBox layoutX="453.0" layoutY="272.0" prefWidth="150.0" />
+                              <Button fx:id="selectPatient" layoutX="500.0" layoutY="333.0" mnemonicParsing="false" onAction="#getSelectedPatient" prefHeight="30.0" prefWidth="127.0" text="Select" />
+                              <ComboBox fx:id="selPLDoctor" layoutX="453.0" layoutY="214.0" onAction="#getDoctor" prefWidth="150.0" />
+                              <ComboBox fx:id="selPLPatient" layoutX="453.0" layoutY="272.0" prefWidth="150.0" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -237,7 +237,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="patientRecordTab" text="Patient Record">
+                  <Tab fx:id="patientRecordTab" onSelectionChanged="#patientRecordSelected" text="Patient Record">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
