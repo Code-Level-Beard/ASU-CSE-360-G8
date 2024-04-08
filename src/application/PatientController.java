@@ -68,6 +68,7 @@ public class PatientController {
 			 connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 			 // PreparedStatement object to run needed SQL Query
 			 PreparedStatement newMessageStatement = connect.prepareStatement("INSERT INTO Message (patient_id, message_id, sender, recipient, header, content) VALUES (?, ?, ?, ?, ?, ?)");
+			 // Run a 2nd query to grab Patient's name and his/her Doctor + Nurse
 			 if (!(message.getText().isBlank() && message.getText().isEmpty())){
 				 // insert patientID
 				 newMessageStatement.setString(2, genMessageID());
