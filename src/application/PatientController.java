@@ -15,7 +15,7 @@ import java.sql.SQLException;
 
 public class PatientController {
 	String activeUser;
-
+//Patient Record Tab
 	@FXML
 	private TextArea currRecord;
 
@@ -54,6 +54,71 @@ public class PatientController {
 
 	@FXML 
 	private Button update;
+//Previous Visits Tab
+	@FXML
+	private TextArea PvisitPnotes;
+
+	@FXML
+	private TextField PvisitPname;
+
+	@FXML
+	private TextField Pvisitdob;
+
+	@FXML
+	private TextField Pvisitaddress;
+
+	@FXML
+	private TextField PvisitPnumber;
+
+	@FXML
+	private TextField PvisitInsurance;
+
+	@FXML
+	private TextField PvisitPolnumber;
+
+	@FXML
+	private TextField Pvisitcitystatezip;
+
+	@FXML
+	private TextField PvisitPheight;
+
+	@FXML
+	private TextField PvisitPweight;
+
+	@FXML
+	private TextField PvisitPtemperature;
+
+	@FXML
+	private TextField PvisitPbloodpressure;
+	
+	@FXML
+	private TextField PvisitPimmunization1;
+
+	@FXML
+	private TextField PvisitPAllergy1;
+
+	@FXML
+	private TextField PvisitPdateofvisit;
+
+	@FXML
+	private TextField PvisitPpharmacy;
+
+	@FXML
+	private TextField PvisitPimmunization2;
+
+	@FXML
+	private TextField PvisitPallergy2;
+	@FXML
+	private TextField PvisitPperscription1;
+
+	@FXML
+	private TextField PvisitPperscription2;
+
+	@FXML
+	private TextField PvisitPdiagnosis1;
+
+	@FXML
+	private TextField PvisitPdiagnosis2;
 
 
 
