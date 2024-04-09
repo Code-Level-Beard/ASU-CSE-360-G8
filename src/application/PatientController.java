@@ -120,7 +120,18 @@ public class PatientController {
 	@FXML
 	private TextField PvisitPdiagnosis2;
 
-
+	public void pullPreviousVisit(String user) {
+		activeUser = user;
+		Connection connect;
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+		
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public void updateText(String user) {
 		activeUser = user;
