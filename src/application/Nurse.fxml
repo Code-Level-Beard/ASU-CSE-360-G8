@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
@@ -19,6 +20,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NurseController">
    <center>
@@ -54,103 +56,16 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Text layoutX="397.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="397.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor Name">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="396.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="842.0" layoutY="457.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nurse Name">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="419.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is sample mesage text to demonstrate what messages would look like..." wrappingWidth="300.0" />
                               <TextArea layoutX="390.0" layoutY="595.0" prefHeight="116.0" prefWidth="505.0" promptText="Type new message here..." />
                               <Button layoutX="905.0" layoutY="685.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="81.0" text="Send" />
                               <Line endX="20.0" endY="596.0" layoutX="328.0" layoutY="146.0" startX="20.0" startY="-150.0" />
                               <Line endX="550.0" layoutX="450.0" layoutY="573.0" startX="-100.0" />
-                              <Text layoutX="419.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is sample mesage text to demonstrate what messages would look like..." wrappingWidth="300.0" />
-                              <Text layoutX="419.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is sample mesage text to demonstrate what messages would look like..." wrappingWidth="300.0" />
-                              <Text layoutX="579.0" layoutY="488.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is sample mesage text to demonstrate what messages would look like..." wrappingWidth="300.0" />
-                              <ScrollBar layoutX="956.0" layoutY="10.0" orientation="VERTICAL" prefHeight="550.0" prefWidth="30.0" />
-                              <ScrollBar layoutX="309.0" layoutY="10.0" orientation="VERTICAL" prefHeight="725.0" prefWidth="30.0" />
-                              <Line endX="173.0" layoutX="115.0" layoutY="70.0" startX="-115.0" />
-                              <Line endX="173.0" layoutX="115.0" layoutY="140.0" startX="-115.0" />
-                              <Line endX="173.0" layoutX="115.0" layoutY="210.0" startX="-115.0" />
-                              <Line endX="173.0" layoutX="115.0" layoutY="280.0" startX="-115.0" />
-                              <Line endX="173.0" layoutX="115.0" layoutY="350.0" startX="-115.0" />
-                              <Line endX="173.0" layoutX="115.0" layoutY="420.0" startX="-115.0" />
-                              <Line endX="173.0" layoutX="115.0" layoutY="490.0" startX="-115.0" />
-                              <Line endX="173.0" layoutX="115.0" layoutY="560.0" startX="-115.0" />
-                              <Line endX="173.0" layoutX="115.0" layoutY="630.0" startX="-115.0" />
-                              <Line endX="173.0" layoutX="115.0" layoutY="700.0" startX="-115.0" />
-                              <Text layoutX="70.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 1">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="70.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 2">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="70.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 3">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="70.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 4">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="70.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 5">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="70.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 6">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="70.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 7">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="70.0" layoutY="530.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 8">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="70.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 9">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="70.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 10">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="70.0" layoutY="740.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name 11">
-                                 <font>
-                                    <Font name="System Bold" size="18.0" />
-                                 </font>
-                              </Text>
-                              <Circle fill="DODGERBLUE" layoutX="40.0" layoutY="30.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
-                              <Circle fill="DODGERBLUE" layoutX="40.0" layoutY="100.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                              <ScrollPane fx:id="messageThreadArea" layoutX="6.0" layoutY="10.0" prefHeight="747.0" prefWidth="338.0">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                </content>
+                              </ScrollPane>
+                              <TextFlow fx:id="messageText" layoutX="371.0" layoutY="24.0" prefHeight="521.0" prefWidth="605.0" />
                            </children>
                         </AnchorPane>
                     </content>

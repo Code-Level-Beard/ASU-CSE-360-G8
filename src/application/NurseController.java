@@ -15,6 +15,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 public class NurseController {
 	String activeUser;
@@ -89,6 +91,8 @@ public class NurseController {
 	private Tab newVisitTab;
 	@FXML
 	private Button selectPatient;
+	@FXML
+	private TextFlow messageText;
 	
 	
 	@FXML
@@ -274,6 +278,31 @@ public class NurseController {
 			connect.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void displayMessages(String user) {
+		Connection connect;
+		//composeMessage.setText("test");
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement statement = connect.prepareStatement("SELECT message_id, sender, content FROM Message WHERE patient_id = ?");
+			statement.setString(1, user);
+			ResultSet resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				//sender.setText(resultSet.getString("sender") + "\n");
+				//content.setText(resultSet.getString("content" + "\n"));
+				messageText.getChildren().addAll(new Text(resultSet.getString("sender") + "\n" + "\n" + resultSet.getString("content") + "\n" + "\n" + "\n" + "\n"));
+				
+			}
+			resultSet.close();
+			statement.close();
+			connect.close();
+		} catch(SQLException e) {
+			// TODO error message
 			e.printStackTrace();
 		}
 	}

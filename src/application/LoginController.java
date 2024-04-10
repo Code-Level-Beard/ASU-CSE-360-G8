@@ -112,7 +112,10 @@ public class LoginController {
 		try {
 			loader = new FXMLLoader(getClass().getResource("Doctor.fxml"));
 			root = loader.load();
-
+			
+			phyController = loader.getController();
+			phyController.displayMessages("JD0119");
+			
 			stage = new Stage();
 			stage.setScene(new Scene(root));
 			stage.show();
@@ -133,6 +136,7 @@ public class LoginController {
 			nController = loader.getController();
 			nController.genNPComboBox();
 			nController.genPLComboBox();
+			nController.displayMessages("JD0119");
 
 			stage = new Stage();
 			stage.setScene(new Scene(root));
@@ -152,7 +156,8 @@ public class LoginController {
 			root = loader.load();
 			
 			pController = loader.getController();
-			pController.updateText(activeUser);
+			pController.updateText("JD0119");
+			pController.displayMessages("JD0119");
 
 			stage = new Stage();
 			stage.setScene(new Scene(root));
