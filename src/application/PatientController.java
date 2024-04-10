@@ -18,6 +18,10 @@ public class PatientController {
 
 	String messageID;
 
+	Integer messageNum;
+
+	String patientName;
+
 	@FXML
 	private TextArea currRecord;
 
@@ -58,35 +62,46 @@ public class PatientController {
 	private Button update;
 
 	@FXML
-	private TextArea message;
+	private TextArea composeMessage;
 
 	@FXML
 	public void sendMessage(javafx.event.ActionEvent e){
-		System.out.println(message.getText().trim());
-		Connection connect;
+		System.out.println(composeMessage.getText().trim()); // test output
+		Connection connectMessage;
+		Connection connectRecord;
+		System.out.println(activeUser); // test output
 		try {
-			 connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-			 // PreparedStatement object to run needed SQL Query
-			 PreparedStatement newMessageStatement = connect.prepareStatement("INSERT INTO Message (patient_id, message_id, sender, recipient, header, content) VALUES (?, ?, ?, ?, ?, ?)");
-			 // Run a 2nd query to grab Patient's name and his/her Doctor + Nurse
-			 if (!(message.getText().isBlank() && message.getText().isEmpty())){
-				 // insert patientID
+			 connectRecord = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			 // Run a query to grab Patient's name and his/her Doctor + Nurse
+			 PreparedStatement retrieveDataStatement = connectRecord.prepareStatement("SELECT first_name, last_name, assigned_doctor FROM PatientRecord WHERE patient_id = ?");
+			 retrieveDataStatement.setString(1, activeUser);
+			 ResultSet resultSet = retrieveDataStatement.executeQuery();
+			 patientName = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+			 resultSet.close();
+			 retrieveDataStatement.close();
+			 connectRecord.close();
+			 // Bottom connection + query to add the new message to the database
+			 connectMessage = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			 PreparedStatement newMessageStatement = connectMessage.prepareStatement("INSERT INTO Message (patient_id, message_id, sender, content) VALUES (?, ?, ?, ?)");
+			 if (!(composeMessage.getText().isBlank() && composeMessage.getText().isEmpty())){
+				 newMessageStatement.setString(1, activeUser);// insert patientID
 				 newMessageStatement.setString(2, genMessageID());
-				 // insert sender
+				 System.out.println(patientName); // test output
+				 newMessageStatement.setString(3, patientName);// insert sender
 				 // insert recipient
 				 // insert header
-				 newMessageStatement.setString(6, message.getText().trim());
+				 newMessageStatement.setString(4, composeMessage.getText().trim());
 
 				 newMessageStatement.executeUpdate();
 				 newMessageStatement.close();
-				 connect.close();
-				 message.clear();
+				 connectMessage.close();
+				 composeMessage.clear();
 			 }
 			 else {
 				 Alert alert = new Alert(AlertType.WARNING);
 				 alert.setTitle("No Message Entered");
 				 alert.setHeaderText(null);
-				 alert.setContentText("Enter a message before clicking attempting to send");
+				 alert.setContentText("Enter a message before attempting to send");
 				 alert.showAndWait();
 			 }
 		}
@@ -96,7 +111,41 @@ public class PatientController {
 	}
 
 	public String genMessageID(){
+		// load previous message's ID and increment by 1
+		Connection connection;
+		messageNum = 0;
+		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement statement = connection.prepareStatement("SELECT message_id FROM Message WHERE patient_id = ?");
+			statement.setString(1, activeUser);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()){
+				try {
+					messageNum = Integer.valueOf(resultSet.getString("message_id"));
+				}
+				catch (NumberFormatException e){
+					messageID = "0";
+				}
+			}
+			resultSet.close();
+			statement.close();
+			connection.close();
+			if ("0".equals(messageID)){
+				System.out.println(messageID); // test output
+				return messageID;
+			}
+			else {
+				messageNum = messageNum + 1;
+				messageID = String.valueOf(messageNum);
+				System.out.println(messageID); // test output
+				return messageID;
+			}
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
 
+		System.out.println(messageID); // test output
 		return messageID;
 	}
 
