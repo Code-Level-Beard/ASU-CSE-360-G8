@@ -90,7 +90,8 @@ public class NurseController {
 	@FXML
 	private Button selectPatient;
 	
-	
+
+
 	@FXML
 	public void newPatient(javafx.event.ActionEvent e) {
 		Connection connect;
