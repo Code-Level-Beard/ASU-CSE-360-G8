@@ -112,6 +112,10 @@ public class LoginController {
 		try {
 			loader = new FXMLLoader(getClass().getResource("Doctor.fxml"));
 			root = loader.load();
+			
+			phyController = loader.getController();
+			phyController.activeUser = activeUser;
+			phyController.genPLPatientComboBox();
 
 			stage = new Stage();
 			stage.setScene(new Scene(root));
@@ -153,6 +157,7 @@ public class LoginController {
 			
 			pController = loader.getController();
 			pController.updateText(activeUser);
+			pController.activeUser = activeUser;
 
 			stage = new Stage();
 			stage.setScene(new Scene(root));
