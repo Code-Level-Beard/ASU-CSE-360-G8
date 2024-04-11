@@ -251,6 +251,7 @@ public class PatientController {
 				}
 				if (!med.getText().isBlank() && !med.getText().isEmpty()) {
 					PreparedStatement setMED = connect.prepareStatement("UPDATE PatientRecord SET medications = ? WHERE patient_id = ?");
+					PreparedStatement getMED = connect.prepareStatement("SELECT medications FROM PatientRecord where patient_id = ?");
 					setMED.setString(1, med.getText().trim());
 					setMED.setString(2, activeUser);
 					setMED.execute();
