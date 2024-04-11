@@ -113,7 +113,7 @@ public class NurseController {
 				newPatientStatement.setString(8, immuni.getText().trim());
 				newPatientStatement.setString(9, med.getText().trim());
 				newPatientStatement.setString(10, allergies.getText().trim() );
-				newPatientStatement.setString(11, selDoctor.getValue());
+				newPatientStatement.setString(11, selDoctor.getValue().substring(selDoctor.getValue().length()-6,selDoctor.getValue().length()));
 				newPatientStatement.setString(12, dob.getText().trim());
 				newPatientStatement.setString(13, genPatientID(firstName.getText().trim(),lastName.getText().trim()));
 				
@@ -179,11 +179,11 @@ public class NurseController {
 		Connection connect;
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-			PreparedStatement doctors = connect.prepareStatement("SELECT first_name, last_name FROM UserType WHERE user_type = ?");
+			PreparedStatement doctors = connect.prepareStatement("SELECT first_name, last_name,user_id FROM UserType WHERE user_type = ?");
 			doctors.setString(1, "Physician");
 			ResultSet doctorList = doctors.executeQuery();
 			while (doctorList.next()) {
-				selDoctor.getItems().add(doctorList.getString("first_name") + " " +doctorList.getString("last_name"));
+				selDoctor.getItems().add(doctorList.getString("first_name") + " " +doctorList.getString("last_name") + " ID: " + doctorList.getString("user_id"));
 			}
 			doctorList.close();
 			doctors.close();
@@ -225,6 +225,7 @@ public class NurseController {
 	}
 	
 	public void genPLPatientComboBox() {
+		selPLPatient.getItems().clear();
 		Connection connect;
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
@@ -247,7 +248,10 @@ public class NurseController {
 	public void patientRecordSelected(javafx.event.ActionEvent e) {
 		updatePatientRecordText();
 	}
+	
 	public void updatePatientRecordText() {
+		currRecord.clear();
+		System.out.println("Generating");
 		Connection connect;
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
@@ -272,9 +276,9 @@ public class NurseController {
 			resultSet.close();
 			statement.close();
 			connect.close();
-		} catch (SQLException e) {
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
 	}
 	

@@ -98,7 +98,6 @@ public class PatientController {
 			userState.setString(1, activeUser);
 			ResultSet userSQL = userState.executeQuery();
 			while (userSQL.next()) {
-				System.out.println("Sucess");
 				activeUser = userSQL.getString("patient_id");
 			}
 			userSQL.close();
@@ -174,35 +173,25 @@ public class PatientController {
 				}
 				if (!firstName.getText().isBlank() && !firstName.getText().isEmpty()) {
 					PreparedStatement setFN = connect.prepareStatement("UPDATE PatientRecord SET first_name = ? WHERE patient_id = ?");
-					PreparedStatement setLFN = connect.prepareStatement("UPDATE Login SET first_name = ? WHERE user_id = ?");
 					PreparedStatement setUFN = connect.prepareStatement("UPDATE UserType SET first_name = ? WHERE user_id = ?");
-					setLFN.setString(1, firstName.getText().trim());
-					setLFN.setString(2, activeUser);
 					setUFN.setString(1, firstName.getText().trim());
 					setUFN.setString(2, activeUser);
 					setFN.setString(1, firstName.getText().trim());
 					setFN.setString(2, activeUser);
 					setFN.execute();
-					setLFN.execute();
 					setUFN.execute();
-					setLFN.close();
 					setUFN.close();
 					setFN.close();
 				}
 				if (!lastName.getText().isBlank() && !lastName.getText().isEmpty()) {
 					PreparedStatement setLN = connect.prepareStatement("UPDATE PatientRecord SET last_name = ? WHERE patient_id = ?");
-					PreparedStatement setLLN = connect.prepareStatement("UPDATE Login SET first_name = ? WHERE user_id = ?");
-					PreparedStatement setULN = connect.prepareStatement("UPDATE UserType SET first_name = ? WHERE user_id = ?");
-					setLLN.setString(1, firstName.getText().trim());
-					setLLN.setString(2, activeUser);
+					PreparedStatement setULN = connect.prepareStatement("UPDATE UserType SET last_name = ? WHERE user_id = ?");
 					setULN.setString(1, firstName.getText().trim());
 					setULN.setString(2, activeUser);
 					setLN.setString(1, lastName.getText().trim());
 					setLN.setString(2, activeUser);
-					setLLN.execute();
 					setULN.execute();
 					setLN.execute();
-					setLLN.close();
 					setULN.close();
 					setLN.close();
 				}
