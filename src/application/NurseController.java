@@ -13,6 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 public class NurseController {
 	String activeUser;
@@ -88,6 +89,12 @@ public class NurseController {
 	private Tab newVisitTab;
 	@FXML
 	private Button selectPatient;
+
+	@FXML
+	private TextFlow messageText;
+
+	@FXML
+	private TextFlow messageThreadArea;
 
 
 	public void displayMessages(String user) {

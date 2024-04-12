@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -68,7 +69,11 @@ public class PatientController {
 	@FXML
 	private TextArea composeMessage;
 
+	@FXML
+	private TextFlow messageText;
+
 	public void displayMessages(String user) {
+		messageText.getChildren().clear();
 		Connection connect;
 		//composeMessage.setText("test");
 		try {
@@ -131,6 +136,7 @@ public class PatientController {
 				 composeMessage.clear();
 
 				 // call Ryan's display method to update messages with new messages
+				 displayMessages(activeUser);
 			 }
 			 else {
 				 Alert alert = new Alert(AlertType.WARNING);
