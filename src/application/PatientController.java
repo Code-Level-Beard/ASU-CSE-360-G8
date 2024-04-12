@@ -236,8 +236,9 @@ public class PatientController {
 
   @FXML
   public void updateDB() {
-    PatientRecord.writeWith(activeUser, firstName, lastName, dob, address, pNum,
-        insID, pharm, hHistory, immuni, med, allergies);
+    PatientRecord.updateWith(activeUser, firstName, lastName, dob, address,
+        pNum, insID, pharm, hHistory, immuni, med,
+        allergies);
     currRecord.clear();
     updateText(activeUser);
   }
