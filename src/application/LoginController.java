@@ -158,6 +158,7 @@ public class LoginController {
 			pController = loader.getController();
 			pController.updateText(activeUser);
 			pController.activeUser = activeUser;
+			pController.displayMessages(activeUser);
 
 			stage = new Stage();
 			stage.setScene(new Scene(root));

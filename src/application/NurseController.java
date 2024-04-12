@@ -8,13 +8,11 @@ import java.sql.SQLException;
 import java.util.Random;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 public class NurseController {
 	String activeUser;
@@ -24,6 +22,7 @@ public class NurseController {
 	String selectedDoctor;
 	
 	String newPatientID;
+
 
 	@FXML
 	private TextArea currRecord;
@@ -89,8 +88,82 @@ public class NurseController {
 	private Tab newVisitTab;
 	@FXML
 	private Button selectPatient;
-	
 
+
+	public void displayMessages(String user) {
+		messageText.getChildren().clear();
+		Connection connect;
+		//composeMessage.setText("test");
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement statement = connect.prepareStatement("SELECT message_id, sender, content FROM Message WHERE patient_id = ?");
+			statement.setString(1, user);
+			ResultSet resultSet = statement.executeQuery();
+
+			while(resultSet.next()) {
+				Text sender = new Text();
+				Text content = new Text();
+				sender.setText(resultSet.getString("sender") + "\n");
+				sender.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
+				content.setText(resultSet.getString("content") + "\n\n\n");
+				content.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
+				messageText.getChildren().addAll(sender, content);
+				//messageText.getChildren().addAll(new Text(resultSet.getString("sender") + "\n" + "\n" + resultSet.getString("content") + "\n" + "\n" + "\n" + "\n"));
+
+			}
+			resultSet.close();
+			statement.close();
+			connect.close();
+		} catch(SQLException e) {
+			// TODO error message
+			e.printStackTrace();
+		}
+	}
+
+	public void messageSelect() {
+		Connection connect;
+		//composeMessage.setText("test");
+		try {
+
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement statement = connect.prepareStatement("SELECT patient_id, MAX(message_id), sender, header FROM Message GROUP BY patient_id");
+			ResultSet resultSet = statement.executeQuery();
+
+			while(resultSet.next()) {
+
+				Hyperlink sender = new Hyperlink();
+				Hyperlink unread = new Hyperlink();
+				Text	  spacer = new Text("\n");
+				String    patient = resultSet.getString("patient_id");
+				sender.setText(resultSet.getString("sender") + "\n\n\n");
+				sender.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
+				sender.setFocusTraversable(false);
+				sender.setOnAction(e -> {
+					displayMessages(patient);
+				});
+				if(resultSet.getString("header").equals("new")) {
+					unread.setText("NEW");
+					unread.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+					unread.setFocusTraversable(false);
+					unread.setOnAction(e -> {
+						displayMessages(patient);
+					});
+					messageThreadArea.getChildren().addAll(unread, sender, spacer);
+				}
+				else {
+					messageThreadArea.getChildren().addAll(sender, spacer);
+				}
+				//
+
+			}
+			resultSet.close();
+			statement.close();
+			connect.close();
+		} catch(SQLException e) {
+			// TODO error message
+			e.printStackTrace();
+		}
+	}
 
 	@FXML
 	public void newPatient(javafx.event.ActionEvent e) {
