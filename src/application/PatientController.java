@@ -4,6 +4,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.control.Alert.AlertType;
@@ -107,9 +109,14 @@ public class PatientController {
 			
 			while(resultSet.next()) {
 				
-				//sender.setText(resultSet.getString("sender") + "\n");
-				//content.setText(resultSet.getString("content" + "\n"));
-				messageText.getChildren().addAll(new Text(resultSet.getString("sender") + "\n" + "\n" + resultSet.getString("content") + "\n" + "\n" + "\n" + "\n"));
+				Text sender = new Text();
+				Text content = new Text();
+				sender.setText(resultSet.getString("sender") + "\n");
+				sender.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
+				content.setText(resultSet.getString("content") + "\n\n\n");
+				content.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
+				messageText.getChildren().addAll(sender, content);
+				//messageText.getChildren().addAll(new Text(resultSet.getString("sender") + "\n" + "\n" + resultSet.getString("content") + "\n" + "\n" + "\n" + "\n"));
 				
 			}
 			resultSet.close();

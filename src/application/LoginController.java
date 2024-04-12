@@ -137,6 +137,7 @@ public class LoginController {
 			nController.genNPComboBox();
 			nController.genPLComboBox();
 			nController.displayMessages("JD0119");
+			nController.messageSelect();
 
 			stage = new Stage();
 			stage.setScene(new Scene(root));
@@ -156,8 +157,8 @@ public class LoginController {
 			root = loader.load();
 			
 			pController = loader.getController();
-			pController.updateText("JD0119");
-			pController.displayMessages("JD0119");
+			pController.updateText(activeUser);
+			pController.displayMessages(activeUser);
 
 			stage = new Stage();
 			stage.setScene(new Scene(root));
