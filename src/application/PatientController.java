@@ -19,7 +19,13 @@ import java.sql.SQLException;
 
 public class PatientController {
 	String activeUser;
-	
+
+	String messageID;
+
+	Integer messageNum;
+
+	String patientName;
+
 	@FXML
 	private TextArea currRecord;
 
@@ -63,7 +69,93 @@ public class PatientController {
 	private TextFlow messageText;
 	
 
+	@FXML
+	private TextArea composeMessage;
 
+	@FXML
+	public void sendMessage(javafx.event.ActionEvent e){
+		System.out.println(composeMessage.getText().trim()); // test output
+		Connection connectMessage;
+		Connection connectRecord;
+		System.out.println(activeUser); // test output
+		try {
+			 connectRecord = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			 // Run a query to grab Patient's name and his/her Doctor + Nurse
+			 PreparedStatement retrieveDataStatement = connectRecord.prepareStatement("SELECT first_name, last_name, assigned_doctor FROM PatientRecord WHERE patient_id = ?");
+			 retrieveDataStatement.setString(1, activeUser);
+			 ResultSet resultSet = retrieveDataStatement.executeQuery();
+			 patientName = resultSet.getString("first_name") + " " + resultSet.getString("last_name");
+			 resultSet.close();
+			 retrieveDataStatement.close();
+			 connectRecord.close();
+			 // Bottom connection + query to add the new message to the database
+			 connectMessage = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			 PreparedStatement newMessageStatement = connectMessage.prepareStatement("INSERT INTO Message (patient_id, message_id, sender, content) VALUES (?, ?, ?, ?)");
+			 if (!(composeMessage.getText().isBlank() && composeMessage.getText().isEmpty())){
+				 newMessageStatement.setString(1, activeUser);// insert patientID
+				 newMessageStatement.setString(2, genMessageID());
+				 System.out.println(patientName); // test output
+				 newMessageStatement.setString(3, patientName);// insert sender
+				 // insert recipient
+				 // insert header
+				 newMessageStatement.setString(4, composeMessage.getText().trim());
+
+				 newMessageStatement.executeUpdate();
+				 newMessageStatement.close();
+				 connectMessage.close();
+				 composeMessage.clear();
+			 }
+			 else {
+				 Alert alert = new Alert(AlertType.WARNING);
+				 alert.setTitle("No Message Entered");
+				 alert.setHeaderText(null);
+				 alert.setContentText("Enter a message before attempting to send");
+				 alert.showAndWait();
+			 }
+		}
+		catch (SQLException e1){
+			e1.printStackTrace();
+		}
+	}
+
+	public String genMessageID(){
+		// load previous message's ID and increment by 1
+		Connection connection;
+		messageNum = 0;
+		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement statement = connection.prepareStatement("SELECT message_id FROM Message WHERE patient_id = ?");
+			statement.setString(1, activeUser);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()){
+				try {
+					messageNum = Integer.valueOf(resultSet.getString("message_id"));
+				}
+				catch (NumberFormatException e){
+					messageID = "0";
+				}
+			}
+			resultSet.close();
+			statement.close();
+			connection.close();
+			if ("0".equals(messageID)){
+				System.out.println(messageID); // test output
+				return messageID;
+			}
+			else {
+				messageNum = messageNum + 1;
+				messageID = String.valueOf(messageNum);
+				System.out.println(messageID); // test output
+				return messageID;
+			}
+		}
+		catch (SQLException e){
+			e.printStackTrace();
+		}
+
+		System.out.println(messageID); // test output
+		return messageID;
+	}
 
 	public void updateText(String user) {
 		activeUser = user;
@@ -137,7 +229,6 @@ public class PatientController {
 			userState.setString(1, activeUser);
 			ResultSet userSQL = userState.executeQuery();
 			while (userSQL.next()) {
-				System.out.println("Sucess");
 				activeUser = userSQL.getString("patient_id");
 			}
 			userSQL.close();
@@ -178,14 +269,36 @@ public class PatientController {
 				} 
 				if (!immuni.getText().isBlank() && !immuni.getText().isEmpty()) {
 					PreparedStatement setIMM = connect.prepareStatement("UPDATE PatientRecord SET immunizations = ? WHERE patient_id = ?");
-					setIMM.setString(1, immuni.getText().trim());
+					PreparedStatement getIMM = connect.prepareStatement("SELECT immunizations FROM PatientRecord where patient_id = ?");
+					getIMM.setString(1, activeUser);
+					ResultSet currIMM = getIMM.executeQuery();
+					while(currIMM.next()) {
+						if(currIMM.getString("immunizations") == "N/A") {
+							setIMM.setString(1, immuni.getText().trim());
+						} else {
+							setIMM.setString(1, currIMM.getString("immunizations") + ", " + immuni.getText().trim());
+						}
+					}
+					currIMM.close();
+					getIMM.close();
 					setIMM.setString(2, activeUser);
 					setIMM.execute();
 					setIMM.close();
 				} 
 				if (!hHistory.getText().isBlank() && !hHistory.getText().isEmpty()) {
 					PreparedStatement setHHST = connect.prepareStatement("UPDATE PatientRecord SET health_history = ? WHERE patient_id = ?");
-					setHHST.setString(1, hHistory.getText().trim());
+					PreparedStatement getHHST = connect.prepareStatement("SELECT health_history FROM PatientRecord where patient_id = ?");
+					getHHST.setString(1, activeUser);
+					ResultSet currHHST = getHHST.executeQuery();
+					while (currHHST.next()) {
+						if (currHHST.getString("health_history") == "N/A") {
+							setHHST.setString(1, hHistory.getText().trim());
+						} else {
+							setHHST.setString(1, currHHST.getString("health_history") + ", " + hHistory.getText().trim());
+						}
+					}
+					currHHST.close();
+					getHHST.close();
 					setHHST.setString(2, activeUser);
 					setHHST.execute();
 					setHHST.close();
@@ -199,49 +312,61 @@ public class PatientController {
 				}
 				if (!med.getText().isBlank() && !med.getText().isEmpty()) {
 					PreparedStatement setMED = connect.prepareStatement("UPDATE PatientRecord SET medications = ? WHERE patient_id = ?");
-					setMED.setString(1, med.getText().trim());
+					PreparedStatement getMED = connect.prepareStatement("SELECT medications FROM PatientRecord where patient_id = ?");
+					getMED.setString(1, activeUser);
+					ResultSet currMED = getMED.executeQuery();
+					while (currMED.next()) {
+						if (currMED.getString("medications") == "N/A") {
+							setMED.setString(1, med.getText().trim());
+						} else {
+							setMED.setString(1, currMED.getString("medications") +", " + med.getText().trim());
+						}
+					}
+					currMED.close();
+					getMED.close();
 					setMED.setString(2, activeUser);
 					setMED.execute();
 					setMED.close();
 				}
 				if (!allergies.getText().isBlank() && !allergies.getText().isEmpty()) {
 					PreparedStatement setALG = connect.prepareStatement("UPDATE PatientRecord SET allergies = ? WHERE patient_id = ?");
-					setALG.setString(1, allergies.getText().trim());
+					PreparedStatement getALG = connect.prepareStatement("SELECT allergies FROM PatientRecord where patient_id = ?");
+					getALG.setString(1, activeUser);
+					ResultSet currALG = getALG.executeQuery();
+					while (currALG.next()) {
+						if (currALG.getString("allergies") == "N/A") {
+							setALG.setString(1, allergies.getText().trim());
+						} else {
+							setALG.setString(1, currALG.getString("allergies") + ", " + allergies.getText().trim());
+						}
+					}
+					currALG.close();
+					getALG.close();
 					setALG.setString(2, activeUser);
 					setALG.execute();
 					setALG.close();
 				}
 				if (!firstName.getText().isBlank() && !firstName.getText().isEmpty()) {
 					PreparedStatement setFN = connect.prepareStatement("UPDATE PatientRecord SET first_name = ? WHERE patient_id = ?");
-					PreparedStatement setLFN = connect.prepareStatement("UPDATE Login SET first_name = ? WHERE user_id = ?");
 					PreparedStatement setUFN = connect.prepareStatement("UPDATE UserType SET first_name = ? WHERE user_id = ?");
-					setLFN.setString(1, firstName.getText().trim());
-					setLFN.setString(2, activeUser);
 					setUFN.setString(1, firstName.getText().trim());
 					setUFN.setString(2, activeUser);
 					setFN.setString(1, firstName.getText().trim());
 					setFN.setString(2, activeUser);
 					setFN.execute();
-					setLFN.execute();
 					setUFN.execute();
-					setLFN.close();
 					setUFN.close();
 					setFN.close();
 				}
 				if (!lastName.getText().isBlank() && !lastName.getText().isEmpty()) {
 					PreparedStatement setLN = connect.prepareStatement("UPDATE PatientRecord SET last_name = ? WHERE patient_id = ?");
-					PreparedStatement setLLN = connect.prepareStatement("UPDATE Login SET first_name = ? WHERE user_id = ?");
-					PreparedStatement setULN = connect.prepareStatement("UPDATE UserType SET first_name = ? WHERE user_id = ?");
-					setLLN.setString(1, firstName.getText().trim());
-					setLLN.setString(2, activeUser);
+					PreparedStatement setULN = connect.prepareStatement("UPDATE UserType SET last_name = ? WHERE user_id = ?");
 					setULN.setString(1, firstName.getText().trim());
 					setULN.setString(2, activeUser);
 					setLN.setString(1, lastName.getText().trim());
 					setLN.setString(2, activeUser);
-					setLLN.execute();
 					setULN.execute();
 					setLN.execute();
-					setLLN.close();
 					setULN.close();
 					setLN.close();
 				}
@@ -260,4 +385,3 @@ public class PatientController {
 			e1.printStackTrace();
 		}
 	}
-}

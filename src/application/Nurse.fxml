@@ -171,15 +171,15 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <TextField layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" promptText="e.g, &quot;John&quot;" />
-                              <TextField layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" promptText="e.g. &quot;Doe&quot;" />
-                              <TextField layoutX="140.0" layoutY="130.0" prefHeight="26.0" prefWidth="229.0" promptText="e.g. &quot;1/11/2024&quot;" />
-                              <TextField layoutX="140.0" layoutY="170.0" prefHeight="26.0" prefWidth="229.0" promptText="e.g. &quot;1234 W Street City, State Zip" />
-                              <TextField layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" promptText="e.g. &quot;480-123-4567&quot;" />
-                              <TextField layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" promptText="e.g. &quot;Provider 123456789&quot;" />
-                              <TextField layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" promptText="e.g. &quot;Walgreens CITY&quot;" />
-                              <TextField layoutX="140.0" layoutY="367.0" prefWidth="175.0" promptText="e.g. &quot;Flu Shot YEAR&quot;" />
-                              <TextField layoutX="140.0" layoutY="330.0" prefHeight="26.0" prefWidth="231.0" promptText="e.g. &quot;Medical Condition&quot;" />
+                              <TextField fx:id="firstNameUpdate" layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" promptText="e.g, &quot;John&quot;" />
+                              <TextField fx:id="lastNameUpdate" layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" promptText="e.g. &quot;Doe&quot;" />
+                              <TextField fx:id="dobUpdate" layoutX="140.0" layoutY="130.0" prefHeight="26.0" prefWidth="229.0" promptText="e.g. &quot;1/11/2024&quot;" />
+                              <TextField fx:id="addressUpdate" layoutX="140.0" layoutY="170.0" prefHeight="26.0" prefWidth="229.0" promptText="e.g. &quot;1234 W Street City, State Zip" />
+                              <TextField fx:id="pNumUpdate" layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" promptText="e.g. &quot;480-123-4567&quot;" />
+                              <TextField fx:id="insIDUpdate" layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" promptText="e.g. &quot;Provider 123456789&quot;" />
+                              <TextField fx:id="pharmUpdate" layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" promptText="e.g. &quot;Walgreens CITY&quot;" />
+                              <TextField fx:id="immuniUpdate" layoutX="140.0" layoutY="367.0" prefWidth="175.0" promptText="e.g. &quot;Flu Shot YEAR&quot;" />
+                              <TextField fx:id="hHistoryUpdate" layoutX="140.0" layoutY="330.0" prefHeight="26.0" prefWidth="231.0" promptText="e.g. &quot;Medical Condition&quot;" />
                               <Text layoutX="15.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Health History" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
@@ -221,11 +221,17 @@
                                  </font>
                               </Text>
                               <Line endX="6.0" endY="602.0" layoutX="413.0" layoutY="140.0" startX="6.0" startY="-141.0" />
-                              <TextField layoutX="140.0" layoutY="403.0" prefWidth="175.0" promptText="e.g. &quot;Tylenon 500mg&quot;" />
-                              <TextField layoutX="140.0" layoutY="438.0" prefWidth="175.0" promptText="e.g. &quot;Peanuts&quot;" />
-                              <Button fx:id="update" layoutX="140.0" layoutY="517.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="175.0" text="Update Info" />
+                              <TextField fx:id="medUpdate" layoutX="140.0" layoutY="403.0" prefWidth="175.0" promptText="e.g. &quot;Tylenon 500mg&quot;" />
+                              <TextField fx:id="allergiesUpdate" layoutX="140.0" layoutY="438.0" prefWidth="175.0" promptText="e.g. &quot;Peanuts&quot;" />
+                              <Button fx:id="update" layoutX="140.0" layoutY="517.0" mnemonicParsing="false" onAction="#updateDB" prefHeight="86.0" prefWidth="175.0" text="Update Info" />
                               <TextArea fx:id="currRecord" editable="false" layoutX="505.0" layoutY="74.0" prefHeight="621.0" prefWidth="428.0" />
                               <Label contentDisplay="CENTER" layoutX="635.0" layoutY="35.0" prefHeight="30.0" prefWidth="168.0" text="Current Patient Record" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" underline="true" />
+                              <ComboBox fx:id="assignedDoctorUpdate" layoutX="140.0" layoutY="474.0" prefWidth="150.0" />
+                              <Text layoutX="15.0" layoutY="492.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assigned Doctor" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </AnchorPane>
                      </content>

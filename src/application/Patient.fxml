@@ -256,8 +256,29 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextArea id="composeMessage" layoutX="248.0" layoutY="599.0" prefHeight="116.0" prefWidth="505.0" promptText="Type new message here..." />
-                              <Button id="sendButton" layoutX="777.0" layoutY="685.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="81.0" text="Send" />
+                              <Text layoutX="234.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor Name">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="234.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nurse Name">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="233.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor Name">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="679.0" layoutY="454.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patient Name">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="256.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is sample mesage text to demonstrate what messages would look like..." wrappingWidth="300.0" />
+                              <TextArea fx:id="composeMessage"  layoutX="248.0" layoutY="599.0" prefHeight="116.0" prefWidth="505.0" promptText="Type new message here..." />
+                              <Button fx:id = "sendButton" layoutX="777.0" layoutY="685.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="30.0" prefWidth="81.0" text="Send" />
                               <Line endX="550.0" layoutX="450.0" layoutY="573.0" startX="-452.0" />
                               <ImageView fitHeight="185.0" fitWidth="277.0" layoutY="574.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

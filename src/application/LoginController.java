@@ -116,6 +116,9 @@ public class LoginController {
 			phyController = loader.getController();
 			phyController.displayMessages("JD0119");
 			
+			phyController.activeUser = activeUser;
+			phyController.genPLPatientComboBox();
+
 			stage = new Stage();
 			stage.setScene(new Scene(root));
 			stage.show();
@@ -159,6 +162,7 @@ public class LoginController {
 			pController = loader.getController();
 			pController.updateText(activeUser);
 			pController.displayMessages(activeUser);
+			pController.activeUser = activeUser;
 
 			stage = new Stage();
 			stage.setScene(new Scene(root));

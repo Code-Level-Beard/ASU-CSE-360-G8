@@ -30,55 +30,37 @@ public class NurseController {
 	
 	String newPatientID;
 
-	@FXML
-	private TextArea currRecord;
+	@FXML private TextArea currRecord;
 
-	@FXML
-	private TextField firstName;
+	@FXML private TextField firstName;
 
-	@FXML
-	private TextField lastName;
+	@FXML private TextField lastName;
 
-	@FXML
-	private TextField dob;
+	@FXML private TextField dob;
 
-	@FXML
-	private TextField address;
+	@FXML private TextField address;
 
-	@FXML
-	private TextField pNum;
+	@FXML private TextField pNum;
 
-	@FXML
-	private TextField insID;
+	@FXML private TextField insID;
 
-	@FXML
-	private TextField pharm;
+	@FXML private TextField pharm;
 
-	@FXML
-	private TextField hHistory;
+	@FXML private TextField hHistory;
 
-	@FXML
-	private TextField immuni;
+	@FXML private TextField immuni;
 
-	@FXML
-	private TextField med;
+	@FXML private TextField med;
 
-	@FXML
-	private TextField allergies;
-	@FXML
-	private TextArea selectedPatientRecord;
-
-	@FXML 
-	private Button newPatient;
+	@FXML private TextField allergies;
 	
-	@FXML
-	private ComboBox<String> selDoctor;
+	@FXML private TextArea selectedPatientRecord;
+
+	@FXML private Button newPatient;
 	
-	@FXML
-	private ComboBox<String> selPLDoctor;
+	@FXML private ComboBox<String> selDoctor;
 	
-	@FXML
-	private ComboBox<String> selPLPatient;
+	@FXML private ComboBox<String> selPLDoctor;
 	
 	@FXML
 	private Tab newPatientTab;
@@ -98,8 +80,46 @@ public class NurseController {
 	private TextFlow messageText;
 	@FXML
 	private TextFlow messageThreadArea;
+	@FXML private ComboBox<String> selPLPatient;
 	
+	@FXML private Tab newPatientTab;
 	
+	@FXML private Tab patientListTab;
+	
+	@FXML private Tab messageTab;
+	
+	@FXML private Tab patientRecordTab;
+	
+	@FXML private Tab prevVisitTab;
+	
+	@FXML private Tab newVisitTab;
+	
+	@FXML private Button selectPatient;
+	
+	@FXML private TextField firstNameUpdate;
+
+	@FXML private TextField lastNameUpdate;
+
+	@FXML private TextField dobUpdate;
+
+	@FXML private TextField addressUpdate;
+
+	@FXML private TextField pNumUpdate;
+
+	@FXML private TextField insIDUpdate;
+
+	@FXML private TextField pharmUpdate;
+
+	@FXML private TextField hHistoryUpdate;
+
+	@FXML private TextField immuniUpdate;
+
+	@FXML private TextField medUpdate;
+
+	@FXML private TextField allergiesUpdate;
+	
+	@FXML private ComboBox<String> assignedDoctorUpdate;
+
 	@FXML
 	public void newPatient(javafx.event.ActionEvent e) {
 		Connection connect;
@@ -122,7 +142,7 @@ public class NurseController {
 				newPatientStatement.setString(8, immuni.getText().trim());
 				newPatientStatement.setString(9, med.getText().trim());
 				newPatientStatement.setString(10, allergies.getText().trim() );
-				newPatientStatement.setString(11, selDoctor.getValue());
+				newPatientStatement.setString(11, selDoctor.getValue().substring(selDoctor.getValue().length()-6,selDoctor.getValue().length()));
 				newPatientStatement.setString(12, dob.getText().trim());
 				newPatientStatement.setString(13, genPatientID(firstName.getText().trim(),lastName.getText().trim()));
 				
@@ -188,11 +208,11 @@ public class NurseController {
 		Connection connect;
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-			PreparedStatement doctors = connect.prepareStatement("SELECT first_name, last_name FROM UserType WHERE user_type = ?");
+			PreparedStatement doctors = connect.prepareStatement("SELECT first_name, last_name,user_id FROM UserType WHERE user_type = ?");
 			doctors.setString(1, "Physician");
 			ResultSet doctorList = doctors.executeQuery();
 			while (doctorList.next()) {
-				selDoctor.getItems().add(doctorList.getString("first_name") + " " +doctorList.getString("last_name"));
+				selDoctor.getItems().add(doctorList.getString("first_name") + " " +doctorList.getString("last_name") + " ID: " + doctorList.getString("user_id"));
 			}
 			doctorList.close();
 			doctors.close();
@@ -207,11 +227,11 @@ public class NurseController {
 		Connection connect;
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-			PreparedStatement doctors = connect.prepareStatement("SELECT first_name, last_name FROM UserType WHERE user_type = ?");
+			PreparedStatement doctors = connect.prepareStatement("SELECT first_name, last_name,user_id FROM UserType WHERE user_type = ?");
 			doctors.setString(1, "Physician");
 			ResultSet doctorList = doctors.executeQuery();
 			while (doctorList.next()) {
-				selPLDoctor.getItems().add(doctorList.getString("first_name") + " " +doctorList.getString("last_name"));
+				selPLDoctor.getItems().add(doctorList.getString("first_name") + " " +doctorList.getString("last_name") + " ID: " + doctorList.getString("user_id"));
 			}
 			doctorList.close();
 			doctors.close();
@@ -224,7 +244,7 @@ public class NurseController {
 	
 	@FXML
 	public void getDoctor(javafx.event.ActionEvent e) {
-		selectedDoctor = selPLDoctor.getValue();
+		selectedDoctor = selPLDoctor.getValue().substring(selPLDoctor.getValue().length() - 6, selPLDoctor.getValue().length());
 		genPLPatientComboBox();
 	}
 	
@@ -234,6 +254,7 @@ public class NurseController {
 	}
 	
 	public void genPLPatientComboBox() {
+		selPLPatient.getItems().clear();
 		Connection connect;
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
@@ -252,11 +273,13 @@ public class NurseController {
 		}
 	}
 	
-	@FXML
-	public void patientRecordSelected(javafx.event.ActionEvent e) {
+	public void patientRecordSelected() {
 		updatePatientRecordText();
+		genADUComboBox();
 	}
+	
 	public void updatePatientRecordText() {
+		currRecord.clear();
 		Connection connect;
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
@@ -281,9 +304,9 @@ public class NurseController {
 			resultSet.close();
 			statement.close();
 			connect.close();
-		} catch (SQLException e) {
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
 	}
 	
@@ -359,4 +382,187 @@ public class NurseController {
 		}
 	} 
 	
+}
+	@FXML
+	public void updateDB(javafx.event.ActionEvent e) {
+		Connection connect;
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			if (!((dobUpdate.getText().isBlank() && dobUpdate.getText().isEmpty()) && (addressUpdate.getText().isBlank() && addressUpdate.getText().isEmpty()) && (pNumUpdate.getText().isBlank() && pNumUpdate.getText().isEmpty())
+					&& (insIDUpdate.getText().isBlank() && insIDUpdate.getText().isEmpty()) && (immuniUpdate.getText().isBlank() && immuniUpdate.getText().isEmpty()) && (hHistoryUpdate.getText().isBlank() && hHistoryUpdate.getText().isEmpty())
+					&& (medUpdate.getText().isBlank() && medUpdate.getText().isEmpty()) && (allergiesUpdate.getText().isBlank() && allergiesUpdate.getText().isEmpty()) && (firstNameUpdate.getText().isBlank() && firstNameUpdate.getText().isEmpty())
+					&& (lastNameUpdate.getText().isBlank() && lastNameUpdate.getText().isEmpty()) && (assignedDoctorUpdate.getValue() == null))) {
+				if (!dobUpdate.getText().isBlank() && !dobUpdate.getText().isEmpty()) {
+					PreparedStatement setDOB = connect.prepareStatement("UPDATE PatientRecord SET dob = ? WHERE patient_id = ?");
+					setDOB.setString(1, dobUpdate.getText().trim());
+					setDOB.setString(2, selectedPatient);
+					setDOB.execute();
+					setDOB.close();
+				}
+				if (!addressUpdate.getText().isBlank() && !addressUpdate.getText().isEmpty()) {
+					PreparedStatement setADD = connect.prepareStatement("UPDATE PatientRecord SET address = ? WHERE patient_id = ?");
+					setADD.setString(1, addressUpdate.getText().trim());
+					setADD.setString(2, selectedPatient);
+					setADD.execute();
+					setADD.close();
+				}
+
+				if (!pNumUpdate.getText().isBlank() && !pNumUpdate.getText().isEmpty()) {
+					PreparedStatement setPNUM = connect.prepareStatement("UPDATE PatientRecord SET phone_number = ? WHERE patient_id = ?");
+					setPNUM.setString(1, pNumUpdate.getText().trim());
+					setPNUM.setString(2, selectedPatient);
+					setPNUM.execute();
+					setPNUM.close();
+				}
+				if (!insIDUpdate.getText().isBlank() && !insIDUpdate.getText().isEmpty()) {
+					PreparedStatement setIID = connect.prepareStatement("UPDATE PatientRecord SET ins_id = ? WHERE patient_id = ?");
+					setIID.setString(1, insIDUpdate.getText().trim());
+					setIID.setString(2, selectedPatient);
+					setIID.execute();
+					setIID.close();
+				} 
+				if (!immuniUpdate.getText().isBlank() && !immuniUpdate.getText().isEmpty()) {
+					PreparedStatement setIMM = connect.prepareStatement("UPDATE PatientRecord SET immunizations = ? WHERE patient_id = ?");
+					PreparedStatement getIMM = connect.prepareStatement("SELECT immunizations FROM PatientRecord WHERE patient_id = ?");
+					getIMM.setString(1, selectedPatient);
+					ResultSet currIMM = getIMM.executeQuery();
+					while(currIMM.next()) {
+						if(currIMM.getString("immunizations") == "N/A") {
+							setIMM.setString(1, immuniUpdate.getText().trim());
+						} else {
+							setIMM.setString(1, currIMM.getString("immunizations") + ", " + immuniUpdate.getText().trim());
+						}
+					}
+					currIMM.close();
+					getIMM.close();
+					setIMM.setString(2, selectedPatient);
+					setIMM.execute();
+					setIMM.close();
+				} 
+				if (!hHistoryUpdate.getText().isBlank() && !hHistoryUpdate.getText().isEmpty()) {
+					PreparedStatement setHHST = connect.prepareStatement("UPDATE PatientRecord SET health_history = ? WHERE patient_id = ?");
+					PreparedStatement getHHST = connect.prepareStatement("SELECT health_history FROM PatientRecord where patient_id = ?");
+					getHHST.setString(1, selectedPatient);
+					ResultSet currHHST = getHHST.executeQuery();
+					while (currHHST.next()) {
+						if (currHHST.getString("health_history") == "N/A") {
+							setHHST.setString(1, hHistoryUpdate.getText().trim());
+						} else {
+							setHHST.setString(1, currHHST.getString("health_history") + ", " + hHistoryUpdate.getText().trim());
+						}
+					}
+					currHHST.close();
+					getHHST.close();
+					setHHST.setString(2, selectedPatient);
+					setHHST.execute();
+					setHHST.close();
+				}
+				if (!pharmUpdate.getText().isBlank() && !pharmUpdate.getText().isEmpty()) {
+					PreparedStatement setPHM = connect.prepareStatement("UPDATE PatientRecord SET pharmacy = ? WHERE patient_id = ?");
+					setPHM.setString(1, pharmUpdate.getText().trim());
+					setPHM.setString(2, selectedPatient);
+					setPHM.execute();
+					setPHM.close();
+				}
+				if (!medUpdate.getText().isBlank() && !medUpdate.getText().isEmpty()) {
+					PreparedStatement setMED = connect.prepareStatement("UPDATE PatientRecord SET medications = ? WHERE patient_id = ?");
+					PreparedStatement getMED = connect.prepareStatement("SELECT medications FROM PatientRecord where patient_id = ?");
+					getMED.setString(1, selectedPatient);
+					ResultSet currMED = getMED.executeQuery();
+					while (currMED.next()) {
+						if (currMED.getString("medications") == "N/A") {
+							setMED.setString(1, medUpdate.getText().trim());
+						} else {
+							setMED.setString(1, currMED.getString("medications") +", " + medUpdate.getText().trim());
+						}
+					}
+					currMED.close();
+					getMED.close();
+					setMED.setString(2, selectedPatient);
+					setMED.execute();
+					setMED.close();
+				}
+				if (!allergiesUpdate.getText().isBlank() && !allergiesUpdate.getText().isEmpty()) {
+					PreparedStatement setALG = connect.prepareStatement("UPDATE PatientRecord SET allergies = ? WHERE patient_id = ?");
+					PreparedStatement getALG = connect.prepareStatement("SELECT allergies FROM PatientRecord where patient_id = ?");
+					getALG.setString(1, selectedPatient);
+					ResultSet currALG = getALG.executeQuery();
+					while (currALG.next()) {
+						if (currALG.getString("allergies") == "N/A") {
+							setALG.setString(1, allergiesUpdate.getText().trim());
+						} else {
+							setALG.setString(1, currALG.getString("allergies") + ", " + allergiesUpdate.getText().trim());
+						}
+					}
+					currALG.close();
+					getALG.close();
+					setALG.setString(2, selectedPatient);
+					setALG.execute();
+					setALG.close();
+				}
+				if (!firstNameUpdate.getText().isBlank() && !firstNameUpdate.getText().isEmpty()) {
+					PreparedStatement setFN = connect.prepareStatement("UPDATE PatientRecord SET first_name = ? WHERE patient_id = ?");
+					PreparedStatement setUFN = connect.prepareStatement("UPDATE UserType SET first_name = ? WHERE user_id = ?");
+					setUFN.setString(1, firstNameUpdate.getText().trim());
+					setUFN.setString(2, selectedPatient);
+					setFN.setString(1, firstNameUpdate.getText().trim());
+					setFN.setString(2, selectedPatient);
+					setFN.execute();
+					setUFN.execute();
+					setUFN.close();
+					setFN.close();
+				}
+				if (!lastNameUpdate.getText().isBlank() && !lastNameUpdate.getText().isEmpty()) {
+					PreparedStatement setLN = connect.prepareStatement("UPDATE PatientRecord SET last_name = ? WHERE patient_id = ?");
+					PreparedStatement setULN = connect.prepareStatement("UPDATE UserType SET last_name = ? WHERE user_id = ?");
+					setULN.setString(1, firstNameUpdate.getText().trim());
+					setULN.setString(2, selectedPatient);
+					setLN.setString(1, lastNameUpdate.getText().trim());
+					setLN.setString(2, selectedPatient);
+					setULN.execute();
+					setLN.execute();
+					setULN.close();
+					setLN.close();
+				}
+				if ((assignedDoctorUpdate.getValue() != null)) {
+					PreparedStatement updateDoctorStatement = connect.prepareStatement("UPDATE PatientRecord SET assigned_doctor = ? WHERE patient_id = ?");
+					updateDoctorStatement.setString(1, assignedDoctorUpdate.getValue().substring(assignedDoctorUpdate.getValue().length() - 6, assignedDoctorUpdate.getValue().length()));
+					updateDoctorStatement.setString(2, selectedPatient);
+					updateDoctorStatement.execute();
+					updateDoctorStatement.close();
+				}
+				currRecord.clear();
+				updatePatientRecordText();
+			} else {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("No Data Entered");
+				alert.setHeaderText(null);
+				alert.setContentText("Please enter text into the field you wish to update.");
+				alert.showAndWait();
+			}
+			connect.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	public void genADUComboBox() {
+		Connection connect;
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement doctors = connect.prepareStatement("SELECT first_name, last_name,user_id FROM UserType WHERE user_type = ?");
+			doctors.setString(1, "Physician");
+			ResultSet doctorList = doctors.executeQuery();
+			while (doctorList.next()) {
+				assignedDoctorUpdate.getItems().add(doctorList.getString("first_name") + " " +doctorList.getString("last_name") + " ID: " + doctorList.getString("user_id"));
+			}
+			doctorList.close();
+			doctors.close();
+			connect.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 }
