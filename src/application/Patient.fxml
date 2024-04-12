@@ -93,7 +93,7 @@
                               <TextArea fx:id="currRecord" editable="false" layoutX="500.0" layoutY="64.0" prefHeight="621.0" prefWidth="428.0" />
                               <Label contentDisplay="CENTER" layoutX="630.0" layoutY="22.0" prefHeight="30.0" prefWidth="168.0" text="Current Patient Record" textAlignment="CENTER" underline="true" />
                               <TextField fx:id="lastName" layoutX="140.0" layoutY="89.0" promptText="e.g. &quot;Doe&quot;" />
-                              <Text layoutX="58.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name">
+                              <Text layoutX="47.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -153,11 +153,9 @@
                               </Text>
                               <TextField fx:id="PvisitPname" layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" text="Patient Name" />
                               <TextField fx:id="Pvisitdob" layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" text="**/**/****" />
-                              <TextField fx:id="Pvisitaddress" layoutX="140.0" layoutY="130.0" prefHeight="26.0" prefWidth="229.0" text="Street Address" />
+                              <TextField fx:id="Pvisitaddress" layoutX="140.0" layoutY="130.0" prefHeight="62.0" prefWidth="229.0" text="Street Address" />
                               <TextField fx:id="PvisitPnumber" layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" text="(***) ***-****" />
                               <TextField fx:id="PvisitInsurance" layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" text="Insurance Company" />
-                              <TextField fx:id="PvisitPolnumber" layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" text="Policy Number" />
-                              <TextField fx:id="Pvisitcitystatezip" layoutX="140.0" layoutY="170.0" prefHeight="26.0" prefWidth="229.0" text="City, State ZIP" />
                               <TextField fx:id="PvisitPheight" layoutX="650.0" layoutY="90.0" prefWidth="175.0" promptText="Enter height..." text="Height" />
                               <TextField fx:id="PvisitPweight" layoutX="650.0" layoutY="130.0" prefWidth="175.0" promptText="Enter weight..." text="Weight" />
                               <TextField fx:id="PvisitPtemperature" layoutX="650.0" layoutY="170.0" prefWidth="175.0" promptText="Enter temperature..." text="Temperature" />
@@ -166,7 +164,7 @@
                               <TextField fx:id="PvisitPAllergy1" layoutX="650.0" layoutY="330.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Allergy 1" />
                               <TextArea fx:id="PvisitPnotes" layoutX="650.0" layoutY="420.0" prefHeight="100.0" prefWidth="250.0" promptText="Add note..." text="Visit notes" />
                               <TextField fx:id="PvisitPdateofvisit" layoutX="650.0" layoutY="50.0" prefWidth="175.0" promptText="Enter date..." text="**/**/****" />
-                              <TextField fx:id="PvisitPpharmacy" layoutX="140.0" layoutY="330.0" prefHeight="26.0" prefWidth="231.0" text="Pharmacy" />
+                              <TextField fx:id="PvisitPpharmacy" layoutX="136.0" layoutY="289.0" prefHeight="26.0" prefWidth="231.0" text="Pharmacy" />
                               <Text layoutX="500.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Visit" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
@@ -182,7 +180,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="15.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="15.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -192,17 +190,12 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="15.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insurance Provider" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="16.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insurance Provider" textAlignment="RIGHT" wrappingWidth="113.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="15.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Policy Number" textAlignment="RIGHT" wrappingWidth="115.0">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="15.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="15.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -277,8 +270,8 @@
                                  </font>
                               </Text>
                               <Text layoutX="256.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is sample mesage text to demonstrate what messages would look like..." wrappingWidth="300.0" />
-                              <TextArea fx:id="composeMessage"  layoutX="248.0" layoutY="599.0" prefHeight="116.0" prefWidth="505.0" promptText="Type new message here..." />
-                              <Button fx:id = "sendButton" layoutX="777.0" layoutY="685.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="30.0" prefWidth="81.0" text="Send" />
+                              <TextArea fx:id="composeMessage" layoutX="248.0" layoutY="599.0" prefHeight="116.0" prefWidth="505.0" promptText="Type new message here..." />
+                              <Button fx:id="sendButton" layoutX="777.0" layoutY="685.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="30.0" prefWidth="81.0" text="Send" />
                               <Line endX="550.0" layoutX="450.0" layoutY="573.0" startX="-452.0" />
                               <ImageView fitHeight="185.0" fitWidth="277.0" layoutY="574.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

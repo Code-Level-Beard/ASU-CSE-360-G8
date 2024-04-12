@@ -61,7 +61,7 @@
                               <Line endX="20.0" endY="596.0" layoutX="328.0" layoutY="146.0" startX="20.0" startY="-150.0" />
                               <Line endX="550.0" layoutX="450.0" layoutY="573.0" startX="-100.0" />
                               <TextFlow fx:id="messageThreadArea" layoutX="43.0" layoutY="33.0" prefHeight="716.0" prefWidth="253.0" />
-                              <ScrollPane layoutX="363.0" layoutY="17.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="544.0" prefWidth="625.0" >
+                              <ScrollPane layoutX="363.0" layoutY="17.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="544.0" prefWidth="625.0">
                                  <content>
                                     <TextFlow fx:id="messageText" prefHeight="521.0" prefWidth="600.0" />
                                  </content>
@@ -285,13 +285,11 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <TextField layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" text="Patient Name" />
-                              <TextField layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" text="**/**/****" />
-                              <TextField layoutX="140.0" layoutY="130.0" prefHeight="26.0" prefWidth="229.0" text="Street Address" />
-                              <TextField layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" text="(***) ***-****" />
-                              <TextField layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" text="Insurance Company" />
-                              <TextField layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" text="Policy Number" />
-                              <TextField layoutX="140.0" layoutY="170.0" prefHeight="26.0" prefWidth="229.0" text="City, State ZIP" />
+                              <TextField fx:id="prevVisitNameTxtField" layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" text="Patient Name" />
+                              <TextField fx:id="prevVisitDobTxtField" layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" text="**/**/****" />
+                              <TextField fx:id="prevVisitPtAddTxtField" layoutX="140.0" layoutY="130.0" prefHeight="69.0" prefWidth="229.0" text="Street Address" />
+                              <TextField fx:id="prevVisitPtPhTxtField" layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" text="(***) ***-****" />
+                              <TextField fx:id="prevVisitInsIdTxtField" layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" text="Insurance Company" />
                               <TextField layoutX="650.0" layoutY="90.0" prefWidth="175.0" promptText="Enter height..." text="Height" />
                               <TextField layoutX="650.0" layoutY="130.0" prefWidth="175.0" promptText="Enter weight..." text="Weight" />
                               <TextField layoutX="650.0" layoutY="170.0" prefWidth="175.0" promptText="Enter temperature..." text="Temperature" />
@@ -300,7 +298,7 @@
                               <TextField layoutX="650.0" layoutY="330.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Allergy 1" />
                               <TextArea layoutX="650.0" layoutY="420.0" prefHeight="100.0" prefWidth="250.0" promptText="Add note..." text="Visit notes" />
                               <TextField layoutX="650.0" layoutY="50.0" prefWidth="175.0" promptText="Enter date..." text="**/**/****" />
-                              <TextField layoutX="140.0" layoutY="330.0" prefHeight="26.0" prefWidth="231.0" text="Pharmacy" />
+                              <TextField fx:id="prevVisitPtPharmTxtField" layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" text="Pharmacy" />
                               <Text layoutX="500.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Visit" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
@@ -326,17 +324,12 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="15.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insurance Provider" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="6.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insurance Provider" textAlignment="RIGHT" wrappingWidth="124.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="15.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Policy Number" textAlignment="RIGHT" wrappingWidth="115.0">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="15.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="15.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
