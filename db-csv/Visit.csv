@@ -1,0 +1,1 @@
+patient_id,doctor_id,date,height,weight,temperature,blood_pressure,immunization,allergies,notes,prescription,visit_diag,completed
