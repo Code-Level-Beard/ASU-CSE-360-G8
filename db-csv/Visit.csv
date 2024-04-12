@@ -1,5 +1,0 @@
-patient_id,doctor_id,date,height,weight,temperature,blood_pressure,immunization,allergies,notes,prescription,visit_diag,completed
-AS3475,Joe Smith,4/10/2024,6'3,12LBS,200,900/12,VAX'd out the ass,Allergice to BS,"Patient came in complaining of ear pain, I told him he had no ears, he looked at me confused and said that's right, I don't have ears",,,
-AS3475,Joe Smith,4/11/2024,66,100,0,100/2,"Imm1, Immun2, immun 3,immun4,immun5","allergies1,allergies1,allergies2,allergies3,allergies3",notes...notes..notes,,,
-TT6891,Jane Doe,DD,DD,DD,DD,DD,DD,DD,DD,,,
-JM2103,Master Chief,04/21/2024,6,6,6,6,6,6,ASDFASDFASFD,,,

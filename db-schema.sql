@@ -1,0 +1,95 @@
+BEGIN TRANSACTION;
+DROP TABLE IF EXISTS "Login";
+CREATE TABLE IF NOT EXISTS "Login" (
+	"user_id"	STRING,
+	"password"	STRING NOT NULL,
+	"user_type"	STRING NOT NULL,
+	PRIMARY KEY("user_id")
+);
+DROP TABLE IF EXISTS "UserType";
+CREATE TABLE IF NOT EXISTS "UserType" (
+	"user_id"	STRING,
+	"user_type"	STRING,
+	"first_name"	STRING,
+	"last_name"	STRING,
+	PRIMARY KEY("user_id")
+);
+DROP TABLE IF EXISTS "Visit";
+CREATE TABLE IF NOT EXISTS "Visit" (
+	"patient_id"	STRING,
+	"doctor_id"	STRING,
+	"date"	STRING,
+	"height"	STRING,
+	"weight"	STRING,
+	"temperature"	STRING,
+	"blood_pressure"	STRING,
+	"immunization"	STRING,
+	"allergies"	STRING,
+	"notes"	STRING,
+	"prescription"	STRING,
+	"visit_diag"	STRING,
+	"completed"	STRING
+);
+DROP TABLE IF EXISTS "Message";
+CREATE TABLE IF NOT EXISTS "Message" (
+	"patient_id"	STRING,
+	"message_id"	STRING,
+	"sender"	STRING,
+	"recipients"	STRING,
+	"header"	STRING,
+	"content"	STRING
+);
+DROP TABLE IF EXISTS "PatientRecord";
+CREATE TABLE IF NOT EXISTS "PatientRecord" (
+	"patient_id"	STRING,
+	"first_name"	STRING,
+	"last_name"	STRING,
+	"address"	STRING,
+	"phone_number"	STRING,
+	"ins_id"	STRING,
+	"pharmacy"	STRING,
+	"health_history"	STRING,
+	"immunizations"	STRING,
+	"medications"	STRING,
+	"allergies"	STRING,
+	"assigned_doctor"	STRING,
+	"DOB"	STRING,
+	PRIMARY KEY("patient_id")
+);
+INSERT INTO "Login" VALUES ('MD1234','MD1234','Physician');
+INSERT INTO "Login" VALUES ('NR1234','NR1234','Nurse');
+INSERT INTO "Login" VALUES ('PT1234','PT1234','Patient');
+INSERT INTO "Login" VALUES ('JD0119','JD0119','Patient');
+INSERT INTO "Login" VALUES ('JD1256','JD1256','Physician');
+INSERT INTO "Login" VALUES ('JS1298','JS1298','Physician');
+INSERT INTO "Login" VALUES ('BB0918','BB0918','Patient');
+INSERT INTO "Login" VALUES ('JW0470','JW0470','Nurse');
+INSERT INTO "Login" VALUES ('MC0117','MC0117','Nurse');
+INSERT INTO "Login" VALUES ('AS3475','AS3475','Patient');
+INSERT INTO "Login" VALUES ('TD4298','TD4298','Nurse');
+INSERT INTO "Login" VALUES ('SF2157','SF2157','Patient');
+INSERT INTO "Login" VALUES ('as2259','as2259','Patient');
+INSERT INTO "UserType" VALUES ('JD1256','Physician','Jane','Doe');
+INSERT INTO "UserType" VALUES ('JS1298','Physician','Joe','Smith');
+INSERT INTO "UserType" VALUES ('BB0918','Patient','Bob','Builder');
+INSERT INTO "UserType" VALUES ('JW0470','Nurse','John','Wick');
+INSERT INTO "UserType" VALUES ('MC0117','Physician','Master','Chief');
+INSERT INTO "UserType" VALUES ('JD0119','Patient','Josh','Decker');
+INSERT INTO "UserType" VALUES ('AS3475','Patient','Agent','Smith');
+INSERT INTO "UserType" VALUES ('TD4298','Nurse','Tyler','Durden');
+INSERT INTO "UserType" VALUES ('SF2157','Patient','Sally','Fields');
+INSERT INTO "UserType" VALUES ('as2259','Patient','asld;fjksdf','sa''dkjg''sk');
+INSERT INTO "Message" VALUES ('JD0119',1,'Doctor','','read','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
+INSERT INTO "Message" VALUES ('JD0119',2,'Nurse',NULL,'read','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
+INSERT INTO "Message" VALUES ('JD0119',3,'Patient',NULL,'new','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
+INSERT INTO "Message" VALUES ('SF2157',1,'SF','','read','Message 1');
+INSERT INTO "Message" VALUES ('SF2157',2,'SF',NULL,'read','Message 2');
+INSERT INTO "Message" VALUES ('SF2157',3,'SF',NULL,'read','Message 3');
+INSERT INTO "Message" VALUES ('SF2157',4,'SF',NULL,'read','Message 4');
+INSERT INTO "PatientRecord" VALUES ('JD0119','Josh','Decker','1234 Street Tempe, AZ','480-000-0119','Aetna 123456789','CVS Tempe','Left Knee Pain','Fair weather fans','Aspirin 400mg','LA Fans','Jane Doe','11/05/1988');
+INSERT INTO "PatientRecord" VALUES ('AS3475','Agent','Smith','The Matirx','480-789-1234','Blue Cross 527895','3/31/1999','Tendency to split','The One','Red Pill','Neo','Joe Smith','3/31/1999');
+INSERT INTO "PatientRecord" VALUES ('BB0918','Bob','Builder','1234 Cartoon Lane Tempe, Az','480-123-4567','HomeDepot 123456789','Walgreens Mesa','Headache','Tetanus','None','Unbuilt Stuff','Master Chief','4/12/1999');
+INSERT INTO "PatientRecord" VALUES ('JM2103','Joe','McTester','Imaginary Land','480-456-4567','Aetna 123456789','Costco Chandler','N/A','TDAP 2024','N/A','Bugs','Master Chief','4/7/2024');
+INSERT INTO "PatientRecord" VALUES ('SF2157','Sally','Fields','123 Cookie Cutter Lane Tempe, Az 85284','480-266-5437','BlueCross 123456789','Walmart','Diabetes','N/A','Insulin 20mg','Hard Cookies','Master Chief','04/20/1969');
+INSERT INTO "PatientRecord" VALUES ('as2259','asld;fjksdf','sa''dkjg''sk','Test Tempe,Az 85301','480-123-4567','Aetna 123456789','Walgreens','N/A','N/A','N/A','N/A','Joe Smith','4/8/2023');
+COMMIT;
