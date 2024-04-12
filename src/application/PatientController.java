@@ -82,20 +82,22 @@ public class PatientController {
 			 connectRecord.close();
 			 // Bottom connection + query to add the new message to the database
 			 connectMessage = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-			 PreparedStatement newMessageStatement = connectMessage.prepareStatement("INSERT INTO Message (patient_id, message_id, sender, content) VALUES (?, ?, ?, ?)");
+			 PreparedStatement newMessageStatement = connectMessage.prepareStatement("INSERT INTO Message (patient_id, message_id, sender, header, content) VALUES (?, ?, ?, ?, ?)");
 			 if (!(composeMessage.getText().isBlank() && composeMessage.getText().isEmpty())){
 				 newMessageStatement.setString(1, activeUser);// insert patientID
 				 newMessageStatement.setString(2, genMessageID());
 				 System.out.println(patientName); // test output
 				 newMessageStatement.setString(3, patientName);// insert sender
 				 // insert recipient
-				 // insert header
-				 newMessageStatement.setString(4, composeMessage.getText().trim());
+				 newMessageStatement.setString(4, "new");
+				 newMessageStatement.setString(5, composeMessage.getText().trim());
 
 				 newMessageStatement.executeUpdate();
 				 newMessageStatement.close();
 				 connectMessage.close();
 				 composeMessage.clear();
+
+				 // call Ryan's display method to update messages with new messages
 			 }
 			 else {
 				 Alert alert = new Alert(AlertType.WARNING);
