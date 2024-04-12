@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -28,6 +31,10 @@ public class NurseController {
 	String selectedDoctor;
 
 	String newPatientID;
+
+	String messageID;
+
+	Integer messageNum;
 
 	@FXML
 	private Button newPatient;
@@ -103,6 +110,10 @@ public class NurseController {
 	private TextFlow messageText;
 	@FXML
 	private TextFlow messageThreadArea;
+	@FXML
+	private TextArea composeMessage;
+	@FXML
+	private Button sendButton;
 
 	@FXML
 	private TextField prevVisitNameTxtField, prevVisitDobTxtField,
@@ -333,6 +344,82 @@ public class NurseController {
 				newVisitPtPharmTxtField);
 	}
 
+	@FXML
+	public void sendMessage(String patient) {
+		EventHandler<ActionEvent> send = new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				Connection connectMessage;
+				try {
+					// Bottom connection + query to add the new message to the database
+					connectMessage = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+					PreparedStatement newMessageStatement = connectMessage.prepareStatement(
+							"INSERT INTO Message (patient_id, message_id, sender, header, content) VALUES (?, ?, ?, ?, ?)");
+					if (!(composeMessage.getText().isBlank() && composeMessage.getText().isEmpty())) {
+						newMessageStatement.setString(1, patient); // insert patientID
+						newMessageStatement.setString(2, genMessageID(patient));
+						newMessageStatement.setString(3, "Nurse"); // insert sender
+						newMessageStatement.setString(4, "read");// insert header
+						newMessageStatement.setString(5, composeMessage.getText().trim());
+						newMessageStatement.executeUpdate();
+						newMessageStatement.close();
+						connectMessage.close();
+						composeMessage.clear();
+						messageText.getChildren().clear();
+						displayMessages(patient); // call display message to properly display the newly-sent text
+					} else {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setTitle("No Message Entered");
+						alert.setHeaderText(null);
+						alert.setContentText("Enter a message before attempting to send");
+						alert.showAndWait();
+					}
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+					}
+				}
+			};
+		sendButton.setOnAction(send);
+	}
+
+
+
+	public String genMessageID(String patient) {
+		// load previous message's ID and increment by 1
+		Connection connection;
+		messageNum = 0;
+		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement statement = connection.prepareStatement(
+					"SELECT message_id FROM Message WHERE patient_id = ?");
+			statement.setString(1, patient);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				try {
+					messageNum = Integer.valueOf(resultSet.getString("message_id"));
+				} catch (NumberFormatException e) {
+					messageID = "0";
+				}
+			}
+			resultSet.close();
+			statement.close();
+			connection.close();
+			if ("0".equals(messageID)) {
+				System.out.println(messageID); // test output
+				return messageID;
+			} else {
+				messageNum = messageNum + 1;
+				messageID = String.valueOf(messageNum);
+				System.out.println(messageID); // test output
+				return messageID;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println(messageID); // test output
+		return messageID;
+	}
 	public void displayMessages(String user) {
 		messageText.getChildren().clear();
 		Connection connect;
@@ -395,6 +482,7 @@ public class NurseController {
 				sender.setFocusTraversable(false);
 				sender.setOnAction(e -> {
 					displayMessages(patient);
+					sendMessage(patient);
 				});
 				if (resultSet.getString("header").equals("new")) {
 					unread.setText("NEW");
