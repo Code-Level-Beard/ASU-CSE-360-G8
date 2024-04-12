@@ -85,10 +85,27 @@ public class NurseController {
 	private Tab patientRecordTab;
 	@FXML
 	private Tab prevVisitTab;
-	@FXML
-	private Tab newVisitTab;
+
 	@FXML
 	private Button selectPatient;
+	
+//****Team #3	Fx:id for New Visit tab of the nurseController Panel******
+	@FXML
+	private Tab newVisitTab;
+//	Team #3 fx:id thats getting the data from the SQL database and setting it in the text Field on New Visit tab
+	@FXML
+	private TextField	newVisitNameTxtField,newVisitDobTxtField,newVisitPtAddTxtField,newVisitPtPhTxtField,
+	newVisitInsIdTxtField,newVisitPtPharmTxtField;
+	
+//	Team #3 fx:id TextFields that are writing to the visit table in the SQL database
+	@FXML
+	private Button	newSaveVisitButtonOnAction;
+	
+	@FXML TextField newVisitBpTxtField,newVisitImmTxtField,newVisitAlrgTxtField,
+	newVisitDovTxtField, newVisitHeightTxtField,newVisitWeightTxtField,newVisitTempTxtField;
+	
+	@FXML
+	private TextArea	newVisitMedNotesTxtArea;
 	
 	
 	@FXML
@@ -222,6 +239,7 @@ public class NurseController {
 	@FXML
 	public void getSelectedPatient(javafx.event.ActionEvent e) {
 		selectedPatient = selPLPatient.getValue().substring(selPLPatient.getValue().length()-6, selPLPatient.getValue().length());
+		
 	}
 	
 	public void genPLPatientComboBox() {
@@ -231,6 +249,7 @@ public class NurseController {
 			PreparedStatement patients = connect.prepareStatement("SELECT first_name, last_name, patient_id FROM PatientRecord WHERE assigned_doctor = ?");
 			patients.setString(1, selectedDoctor);
 			ResultSet patientList = patients.executeQuery();
+			
 			while (patientList.next()) {
 				selPLPatient.getItems().add(patientList.getString("first_name") + " " + patientList.getString("last_name") + " Patient ID: " + patientList.getString("patient_id"));
 			}
@@ -243,10 +262,7 @@ public class NurseController {
 		}
 	}
 	
-	@FXML
-	public void patientRecordSelected(javafx.event.ActionEvent e) {
-		updatePatientRecordText();
-	}
+
 	public void updatePatientRecordText() {
 		Connection connect;
 		try {
@@ -256,6 +272,7 @@ public class NurseController {
 					+ "medications, allergies, assigned_doctor,DOB FROM PatientRecord WHERE patient_id = ?");
 			statement.setString(1, selectedPatient);
 			ResultSet resultSet = statement.executeQuery();
+			currRecord.clear();
 			while (resultSet.next()) {
 				currRecord.appendText("Name: " + resultSet.getString("first_name") + " " + resultSet.getString("last_name")+"\n\n");
 				currRecord.appendText("Date of Birth: " + resultSet.getString("DOB") + "\n\n");
@@ -268,6 +285,7 @@ public class NurseController {
 				currRecord.appendText("Medications: " + resultSet.getString("medications") + "\n\n");
 				currRecord.appendText("Allergies: " + resultSet.getString("allergies") + "\n\n");
 				currRecord.appendText("Assigned Doctor: " + resultSet.getString("assigned_doctor") + "\n\n");
+
 			}
 			resultSet.close();
 			statement.close();
@@ -278,4 +296,93 @@ public class NurseController {
 		}
 	}
 	
+//	Team #3 ********New Visit Tab Method*******
+	public void newVisitTabListener() {
+		Connection connect;
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement statement = connect.prepareStatement("SELECT patient_id, first_name, last_name, address, "
+					+ "phone_number, ins_id, pharmacy, health_history,immunizations, "
+					+ "medications, allergies, assigned_doctor,DOB FROM PatientRecord WHERE patient_id = ?");
+			statement.setString(1, selectedPatient);
+			ResultSet rs = statement.executeQuery();	
+			
+	        newVisitNameTxtField.clear();
+	        newVisitDobTxtField.clear();
+	        newVisitPtAddTxtField.clear();
+	        newVisitPtPhTxtField.clear();
+	        newVisitInsIdTxtField.clear();
+	        newVisitPtPharmTxtField.clear();
+	        
+			while (rs.next()) {
+				newVisitNameTxtField.appendText(rs.getString("first_name") + " " + rs.getString("last_name"));
+				newVisitDobTxtField.appendText(rs.getString("DOB"));
+				newVisitPtAddTxtField.appendText(rs.getString("address"));
+				newVisitPtPhTxtField.appendText(rs.getString("phone_number"));
+				newVisitInsIdTxtField.appendText(rs.getString("ins_id"));
+				newVisitPtPharmTxtField.appendText(rs.getString("pharmacy"));
+			}
+			
+			rs.close();
+			statement.close();
+			connect.close();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+	}
+	
+//	**** Team #3 New Visit Button to Save visit into SQL DB / Visit Table ******
+	@FXML
+	public void newSaveVisitButtonOnAction(javafx.event.ActionEvent e) {
+		
+		
+	    try {
+	        // Retrieve data from the text fields
+	        String bloodPressure = newVisitBpTxtField.getText().trim();
+	        String immunization = newVisitImmTxtField.getText().trim();
+	        String allergies = newVisitAlrgTxtField.getText().trim();
+	        String notes = newVisitMedNotesTxtArea.getText().trim();
+	        String dateOfVisit = newVisitDovTxtField.getText().trim();
+	        String height = newVisitHeightTxtField.getText().trim();
+	        String weight = newVisitWeightTxtField.getText().trim();
+	        String temperature = newVisitTempTxtField.getText().trim();
+
+	        // Establish a connection to the database
+	        Connection connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+
+	        // Prepare a SQL INSERT statement for Visit table
+	        PreparedStatement insertVisit = connect.prepareStatement(
+	                "INSERT INTO Visit (patient_id, doctor_id, date, height, weight, temperature, blood_pressure, immunization, allergies, notes) " +
+	                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+	        );
+
+	        // Set parameters for the prepared statement
+	        insertVisit.setString(1, selectedPatient); // Using the current patient ID
+	        insertVisit.setString(2, selectedDoctor); // Using the current  doctor ID
+	        insertVisit.setString(3, dateOfVisit);
+	        insertVisit.setString(4, height);
+	        insertVisit.setString(5, weight);
+	        insertVisit.setString(6, temperature);
+	        insertVisit.setString(7, bloodPressure);
+	        insertVisit.setString(8, immunization);
+	        insertVisit.setString(9, allergies);
+	        insertVisit.setString(10, notes);
+
+	        // Execute the INSERT statement into DB
+	        insertVisit.executeUpdate();
+
+	        // Closes out insert statements / closes DB connection
+	        insertVisit.close();
+	        connect.close();
+	        
+	    } catch (SQLException ex) {
+	        ex.printStackTrace(); // Handle exceptions appropriately
+	    }
+	}
+		
 }
+	
+
