@@ -136,7 +136,6 @@ public class LoginController {
 			nController = loader.getController();
 			nController.genNPComboBox();
 			nController.genPLComboBox();
-			nController.displayMessages("JD0119");
 			nController.messageSelect();
 
 			stage = new Stage();

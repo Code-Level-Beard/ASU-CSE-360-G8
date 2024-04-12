@@ -342,12 +342,15 @@ public class NurseController {
 					unread.setText("NEW");
 					unread.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 					unread.setFocusTraversable(false);
+					unread.setOnAction(e -> {
+						displayMessages(patient);
+				});
 					messageThreadArea.getChildren().addAll(unread, sender, spacer);
 				}
 				else {
 				messageThreadArea.getChildren().addAll(sender, spacer);
 				}
-				//messageText.getChildren().addAll(new Text(resultSet.getString("sender") + "\n" + "\n" + resultSet.getString("content") + "\n" + "\n" + "\n" + "\n"));
+				//
 				
 			}
 			resultSet.close();
