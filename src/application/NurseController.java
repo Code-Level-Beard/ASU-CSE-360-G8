@@ -295,10 +295,10 @@ public class NurseController {
 			if (!((dobUpdate.getText().isBlank() && dobUpdate.getText().isEmpty()) && (addressUpdate.getText().isBlank() && addressUpdate.getText().isEmpty()) && (pNumUpdate.getText().isBlank() && pNumUpdate.getText().isEmpty())
 					&& (insIDUpdate.getText().isBlank() && insIDUpdate.getText().isEmpty()) && (immuniUpdate.getText().isBlank() && immuniUpdate.getText().isEmpty()) && (hHistoryUpdate.getText().isBlank() && hHistoryUpdate.getText().isEmpty())
 					&& (medUpdate.getText().isBlank() && medUpdate.getText().isEmpty()) && (allergiesUpdate.getText().isBlank() && allergiesUpdate.getText().isEmpty()) && (firstNameUpdate.getText().isBlank() && firstNameUpdate.getText().isEmpty())
-					&& (lastNameUpdate.getText().isBlank() && lastNameUpdate.getText().isEmpty()) && assignedDoctorUpdate.getValue().isEmpty())) {
+					&& (lastNameUpdate.getText().isBlank() && lastNameUpdate.getText().isEmpty()) && (assignedDoctorUpdate.getValue() == null))) {
 				if (!dobUpdate.getText().isBlank() && !dobUpdate.getText().isEmpty()) {
 					PreparedStatement setDOB = connect.prepareStatement("UPDATE PatientRecord SET dob = ? WHERE patient_id = ?");
-					setDOB.setString(1, dob.getText().trim());
+					setDOB.setString(1, dobUpdate.getText().trim());
 					setDOB.setString(2, selectedPatient);
 					setDOB.execute();
 					setDOB.close();
@@ -327,7 +327,7 @@ public class NurseController {
 				} 
 				if (!immuniUpdate.getText().isBlank() && !immuniUpdate.getText().isEmpty()) {
 					PreparedStatement setIMM = connect.prepareStatement("UPDATE PatientRecord SET immunizations = ? WHERE patient_id = ?");
-					PreparedStatement getIMM = connect.prepareStatement("SELECT immunizations FROM PatientRecord where patient_id = ?");
+					PreparedStatement getIMM = connect.prepareStatement("SELECT immunizations FROM PatientRecord WHERE patient_id = ?");
 					getIMM.setString(1, selectedPatient);
 					ResultSet currIMM = getIMM.executeQuery();
 					while(currIMM.next()) {
@@ -428,9 +428,9 @@ public class NurseController {
 					setULN.close();
 					setLN.close();
 				}
-				if (!assignedDoctorUpdate.getValue().isEmpty()) {
+				if ((assignedDoctorUpdate.getValue() != null)) {
 					PreparedStatement updateDoctorStatement = connect.prepareStatement("UPDATE PatientRecord SET assigned_doctor = ? WHERE patient_id = ?");
-					updateDoctorStatement.setString(1, assignedDoctorUpdate.getValue());
+					updateDoctorStatement.setString(1, assignedDoctorUpdate.getValue().substring(assignedDoctorUpdate.getValue().length() - 6, assignedDoctorUpdate.getValue().length()));
 					updateDoctorStatement.setString(2, selectedPatient);
 					updateDoctorStatement.execute();
 					updateDoctorStatement.close();
