@@ -230,14 +230,36 @@ public class PatientController {
 				} 
 				if (!immuni.getText().isBlank() && !immuni.getText().isEmpty()) {
 					PreparedStatement setIMM = connect.prepareStatement("UPDATE PatientRecord SET immunizations = ? WHERE patient_id = ?");
-					setIMM.setString(1, immuni.getText().trim());
+					PreparedStatement getIMM = connect.prepareStatement("SELECT immunizations FROM PatientRecord where patient_id = ?");
+					getIMM.setString(1, activeUser);
+					ResultSet currIMM = getIMM.executeQuery();
+					while(currIMM.next()) {
+						if(currIMM.getString("immunizations") == "N/A") {
+							setIMM.setString(1, immuni.getText().trim());
+						} else {
+							setIMM.setString(1, currIMM.getString("immunizations") + ", " + immuni.getText().trim());
+						}
+					}
+					currIMM.close();
+					getIMM.close();
 					setIMM.setString(2, activeUser);
 					setIMM.execute();
 					setIMM.close();
 				} 
 				if (!hHistory.getText().isBlank() && !hHistory.getText().isEmpty()) {
 					PreparedStatement setHHST = connect.prepareStatement("UPDATE PatientRecord SET health_history = ? WHERE patient_id = ?");
-					setHHST.setString(1, hHistory.getText().trim());
+					PreparedStatement getHHST = connect.prepareStatement("SELECT health_history FROM PatientRecord where patient_id = ?");
+					getHHST.setString(1, activeUser);
+					ResultSet currHHST = getHHST.executeQuery();
+					while (currHHST.next()) {
+						if (currHHST.getString("health_history") == "N/A") {
+							setHHST.setString(1, hHistory.getText().trim());
+						} else {
+							setHHST.setString(1, currHHST.getString("health_history") + ", " + hHistory.getText().trim());
+						}
+					}
+					currHHST.close();
+					getHHST.close();
 					setHHST.setString(2, activeUser);
 					setHHST.execute();
 					setHHST.close();
@@ -252,14 +274,35 @@ public class PatientController {
 				if (!med.getText().isBlank() && !med.getText().isEmpty()) {
 					PreparedStatement setMED = connect.prepareStatement("UPDATE PatientRecord SET medications = ? WHERE patient_id = ?");
 					PreparedStatement getMED = connect.prepareStatement("SELECT medications FROM PatientRecord where patient_id = ?");
-					setMED.setString(1, med.getText().trim());
+					getMED.setString(1, activeUser);
+					ResultSet currMED = getMED.executeQuery();
+					while (currMED.next()) {
+						if (currMED.getString("medications") == "N/A") {
+							setMED.setString(1, med.getText().trim());
+						} else {
+							setMED.setString(1, currMED.getString("medications") +", " + med.getText().trim());
+						}
+					}
+					currMED.close();
+					getMED.close();
 					setMED.setString(2, activeUser);
 					setMED.execute();
 					setMED.close();
 				}
 				if (!allergies.getText().isBlank() && !allergies.getText().isEmpty()) {
 					PreparedStatement setALG = connect.prepareStatement("UPDATE PatientRecord SET allergies = ? WHERE patient_id = ?");
-					setALG.setString(1, allergies.getText().trim());
+					PreparedStatement getALG = connect.prepareStatement("SELECT allergies FROM PatientRecord where patient_id = ?");
+					getALG.setString(1, activeUser);
+					ResultSet currALG = getALG.executeQuery();
+					while (currALG.next()) {
+						if (currALG.getString("allergies") == "N/A") {
+							setALG.setString(1, allergies.getText().trim());
+						} else {
+							setALG.setString(1, currALG.getString("allergies") + ", " + allergies.getText().trim());
+						}
+					}
+					currALG.close();
+					getALG.close();
 					setALG.setString(2, activeUser);
 					setALG.execute();
 					setALG.close();
