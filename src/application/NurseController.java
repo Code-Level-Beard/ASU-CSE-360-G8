@@ -30,96 +30,46 @@ public class NurseController {
 	
 	String newPatientID;
 
-	@FXML private TextArea currRecord;
-
-	@FXML private TextField firstName;
-
-	@FXML private TextField lastName;
-
-	@FXML private TextField dob;
-
-	@FXML private TextField address;
-
-	@FXML private TextField pNum;
-
-	@FXML private TextField insID;
-
-	@FXML private TextField pharm;
-
-	@FXML private TextField hHistory;
-
-	@FXML private TextField immuni;
-
-	@FXML private TextField med;
-
-	@FXML private TextField allergies;
-	
-	@FXML private TextArea selectedPatientRecord;
-
 	@FXML private Button newPatient;
-	
-	@FXML private ComboBox<String> selDoctor;
-	
-	@FXML private ComboBox<String> selPLDoctor;
-	
-	@FXML
-	private Tab newPatientTab;
-	@FXML
-	private Tab patientListTab;
-	@FXML
-	private Tab messageTab;
-	@FXML
-	private Tab patientRecordTab;
-	@FXML
-	private Tab prevVisitTab;
-	@FXML
-	private Tab newVisitTab;
-	@FXML
-	private Button selectPatient;
-	@FXML
-	private TextFlow messageText;
-	@FXML
-	private TextFlow messageThreadArea;
-	@FXML private ComboBox<String> selPLPatient;
-	
-	@FXML private Tab newPatientTab;
-	
-	@FXML private Tab patientListTab;
-	
-	@FXML private Tab messageTab;
-	
-	@FXML private Tab patientRecordTab;
-	
-	@FXML private Tab prevVisitTab;
-	
-	@FXML private Tab newVisitTab;
-	
 	@FXML private Button selectPatient;
-	
-	@FXML private TextField firstNameUpdate;
-
-	@FXML private TextField lastNameUpdate;
-
-	@FXML private TextField dobUpdate;
-
+	@FXML private ComboBox<String> selDoctor;
+	@FXML private ComboBox<String> selPLDoctor;
+	@FXML private ComboBox<String> selPLPatient;
+	@FXML private Tab messageTab;
+	@FXML private Tab newPatientTab;
+	@FXML private Tab newVisitTab;
+	@FXML private Tab patientListTab;
+	@FXML private Tab patientRecordTab;
+	@FXML private Tab prevVisitTab;
+	@FXML private TextArea currRecord;
+	@FXML private TextArea selectedPatientRecord;
+	@FXML private TextField address;
 	@FXML private TextField addressUpdate;
-
-	@FXML private TextField pNumUpdate;
-
-	@FXML private TextField insIDUpdate;
-
-	@FXML private TextField pharmUpdate;
-
-	@FXML private TextField hHistoryUpdate;
-
-	@FXML private TextField immuniUpdate;
-
-	@FXML private TextField medUpdate;
-
+	@FXML private TextField allergies;
 	@FXML private TextField allergiesUpdate;
+	@FXML private TextField dob;
+	@FXML private TextField dobUpdate;
+	@FXML private TextField firstName;
+	@FXML private TextField firstNameUpdate;
+	@FXML private TextField hHistory;
+	@FXML private TextField hHistoryUpdate;
+	@FXML private TextField immuni;
+	@FXML private TextField immuniUpdate;
+	@FXML private TextField insID;
+	@FXML private TextField insIDUpdate;
+	@FXML private TextField lastName;
+	@FXML private TextField lastNameUpdate;
+	@FXML private TextField med;
+	@FXML private TextField medUpdate;
+	@FXML private TextField pNum;
+	@FXML private TextField pNumUpdate;
+	@FXML private TextField pharm;
+	@FXML private TextField pharmUpdate;
+	@FXML private TextFlow messageText;
+	@FXML private TextFlow messageThreadArea;
 	
 	@FXML private ComboBox<String> assignedDoctorUpdate;
-
+	
 	@FXML
 	public void newPatient(javafx.event.ActionEvent e) {
 		Connection connect;
@@ -338,50 +288,48 @@ public class NurseController {
 			// TODO error message
 			e.printStackTrace();
 		}
-	}
-	
-	public void messageSelect() {
-		Connection connect;
-		//composeMessage.setText("test");
-		try {
-			
-			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-			PreparedStatement statement = connect.prepareStatement("SELECT patient_id, MAX(message_id), sender, header FROM Message GROUP BY patient_id");
-			ResultSet resultSet = statement.executeQuery();
-			
-			while(resultSet.next()) {
-				
-				Hyperlink sender = new Hyperlink();
-				Hyperlink unread = new Hyperlink();
-				Text	  spacer = new Text("\n");
-				String    patient = resultSet.getString("patient_id");
-				sender.setText(resultSet.getString("sender") + "\n\n\n");
-				sender.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
-				sender.setFocusTraversable(false);
-				sender.setOnAction(e -> {
-						displayMessages(patient);
-				});
-				if(resultSet.getString("header").equals("new")) {
-					unread.setText("NEW");
-					unread.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
-					unread.setFocusTraversable(false);
-					messageThreadArea.getChildren().addAll(unread, sender, spacer);
-				}
-				else {
-				messageThreadArea.getChildren().addAll(sender, spacer);
-				}
-				//messageText.getChildren().addAll(new Text(resultSet.getString("sender") + "\n" + "\n" + resultSet.getString("content") + "\n" + "\n" + "\n" + "\n"));
-				
-			}
-			resultSet.close();
-			statement.close();
-			connect.close();
-		} catch(SQLException e) {
-			// TODO error message
-			e.printStackTrace();
-		}
 	} 
 	
+public void messageSelect() {
+	Connection connect;
+	//composeMessage.setText("test");
+	try {
+		
+		connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+		PreparedStatement statement = connect.prepareStatement("SELECT patient_id, MAX(message_id), sender, header FROM Message GROUP BY patient_id");
+		ResultSet resultSet = statement.executeQuery();
+		
+		while(resultSet.next()) {
+			
+			Hyperlink sender = new Hyperlink();
+			Hyperlink unread = new Hyperlink();
+			Text	  spacer = new Text("\n");
+			String    patient = resultSet.getString("patient_id");
+			sender.setText(resultSet.getString("sender") + "\n\n\n");
+			sender.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
+			sender.setFocusTraversable(false);
+			sender.setOnAction(e -> {
+					displayMessages(patient);
+			});
+			if(resultSet.getString("header").equals("new")) {
+				unread.setText("NEW");
+				unread.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+				unread.setFocusTraversable(false);
+				messageThreadArea.getChildren().addAll(unread, sender, spacer);
+			}
+			else {
+			messageThreadArea.getChildren().addAll(sender, spacer);
+			}
+			//messageText.getChildren().addAll(new Text(resultSet.getString("sender") + "\n" + "\n" + resultSet.getString("content") + "\n" + "\n" + "\n" + "\n"));
+			
+		}
+		resultSet.close();
+		statement.close();
+		connect.close();
+	} catch(SQLException e) {
+		// TODO error message
+		e.printStackTrace();
+	}
 }
 	@FXML
 	public void updateDB(javafx.event.ActionEvent e) {
