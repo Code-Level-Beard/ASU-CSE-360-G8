@@ -104,6 +104,11 @@ public class NurseController {
 	@FXML
 	private TextFlow messageThreadArea;
 
+	@FXML
+	private TextField prevVisitNameTxtField, prevVisitDobTxtField,
+			prevVisitPtAddTxtField, prevVisitPtPhTxtField, prevVisitInsIdTxtField,
+			prevVisitPtPharmTxtField;
+
 	// ****Team #3 Fx:id for New Visit tab of the nurseController Panel******
 	@FXML
 	private Tab newVisitTab;
@@ -317,7 +322,15 @@ public class NurseController {
 
 	public void updatePatientRecordText() {
 		currRecord.clear();
-		PatientRecord.readTo(selectPatient, currRecord);
+		PatientRecord.readTo(selectedPatient, currRecord);
+		PatientRecord.readTo(selectedPatient, prevVisitNameTxtField,
+				prevVisitDobTxtField, prevVisitPtAddTxtField,
+				prevVisitPtPhTxtField, prevVisitInsIdTxtField,
+				prevVisitPtPharmTxtField);
+		PatientRecord.readTo(selectedPatient, newVisitNameTxtField,
+				newVisitDobTxtField, newVisitPtAddTxtField,
+				newVisitPtPhTxtField, newVisitInsIdTxtField,
+				newVisitPtPharmTxtField);
 	}
 
 	public void displayMessages(String user) {

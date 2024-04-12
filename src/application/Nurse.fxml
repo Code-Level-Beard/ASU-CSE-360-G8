@@ -285,11 +285,11 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <TextField layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" text="Patient Name" />
-                              <TextField layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" text="**/**/****" />
-                              <TextField layoutX="140.0" layoutY="130.0" prefHeight="69.0" prefWidth="229.0" text="Street Address" />
-                              <TextField layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" text="(***) ***-****" />
-                              <TextField layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" text="Insurance Company" />
+                              <TextField fx:id="prevVisitNameTxtField" layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" text="Patient Name" />
+                              <TextField fx:id="prevVisitDobTxtField" layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" text="**/**/****" />
+                              <TextField fx:id="prevVisitPtAddTxtField" layoutX="140.0" layoutY="130.0" prefHeight="69.0" prefWidth="229.0" text="Street Address" />
+                              <TextField fx:id="prevVisitPtPhTxtField" layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" text="(***) ***-****" />
+                              <TextField fx:id="prevVisitInsIdTxtField" layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" text="Insurance Company" />
                               <TextField layoutX="650.0" layoutY="90.0" prefWidth="175.0" promptText="Enter height..." text="Height" />
                               <TextField layoutX="650.0" layoutY="130.0" prefWidth="175.0" promptText="Enter weight..." text="Weight" />
                               <TextField layoutX="650.0" layoutY="170.0" prefWidth="175.0" promptText="Enter temperature..." text="Temperature" />
@@ -298,7 +298,7 @@
                               <TextField layoutX="650.0" layoutY="330.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Allergy 1" />
                               <TextArea layoutX="650.0" layoutY="420.0" prefHeight="100.0" prefWidth="250.0" promptText="Add note..." text="Visit notes" />
                               <TextField layoutX="650.0" layoutY="50.0" prefWidth="175.0" promptText="Enter date..." text="**/**/****" />
-                              <TextField layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" text="Pharmacy" />
+                              <TextField fx:id="prevVisitPtPharmTxtField" layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" text="Pharmacy" />
                               <Text layoutX="500.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Visit" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
