@@ -36,6 +36,8 @@ public class NurseController {
 
 	Integer messageNum;
 
+	String nurseName;
+
 	@FXML
 	private Button newPatient;
 	@FXML
@@ -345,7 +347,21 @@ public class NurseController {
 	}
 
 	@FXML
-	public void sendMessage(String patient) {
+	public void sendMessage(String user, String patient) {
+		Connection connectNurse;
+		try{
+			connectNurse = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement nurseStatement = connectNurse.prepareStatement("SELECT first_name, last_name FROM UserType where user_id = ?");
+			nurseStatement.setString(1, user);
+			ResultSet resultSet = nurseStatement.executeQuery();
+			nurseName = resultSet.getString("first_name") + " " +
+					resultSet.getString("last_name");
+			resultSet.close();
+			nurseStatement.close();
+			connectNurse.close();
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
 		EventHandler<ActionEvent> send = new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
@@ -358,7 +374,7 @@ public class NurseController {
 					if (!(composeMessage.getText().isBlank() && composeMessage.getText().isEmpty())) {
 						newMessageStatement.setString(1, patient); // insert patientID
 						newMessageStatement.setString(2, genMessageID(patient));
-						newMessageStatement.setString(3, "Nurse"); // insert sender
+						newMessageStatement.setString(3, nurseName); // insert sender
 						newMessageStatement.setString(4, "read");// insert header
 						newMessageStatement.setString(5, composeMessage.getText().trim());
 						newMessageStatement.executeUpdate();
@@ -457,10 +473,10 @@ public class NurseController {
 			// TODO error message
 			e.printStackTrace();
 		}
-		messageSelect();
+		messageSelect(activeUser);
 	}
 
-	public void messageSelect() {
+	public void messageSelect(String activeUser) {
 		messageThreadArea.getChildren().clear();
 		Connection connect;
 		// composeMessage.setText("test");
@@ -482,7 +498,7 @@ public class NurseController {
 				sender.setFocusTraversable(false);
 				sender.setOnAction(e -> {
 					displayMessages(patient);
-					sendMessage(patient);
+					sendMessage(activeUser, patient);
 				});
 				if (resultSet.getString("header").equals("new")) {
 					unread.setText("NEW");

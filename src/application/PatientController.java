@@ -149,7 +149,6 @@ public class PatientController {
 				newMessageStatement.close();
 				connectMessage.close();
 				composeMessage.clear();
-				messageText.getChildren().clear();
 				displayMessages(activeUser); // call display message to properly display the newly-sent text
 			} else {
 				Alert alert = new Alert(AlertType.WARNING);
@@ -246,6 +245,7 @@ public class PatientController {
 	}
 
 	public void displayMessages(String user) {
+		messageText.getChildren().clear();
 		Connection connect;
 		// composeMessage.setText("test");
 		try {
