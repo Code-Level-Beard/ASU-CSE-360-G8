@@ -29,6 +29,7 @@ public class PatientController {
 	private Button update;
 	@FXML
 	private TextArea composeMessage;
+	// Patient Record Tab
 	@FXML
 	private TextArea currRecord;
 	@FXML
@@ -55,6 +56,63 @@ public class PatientController {
 	private TextField pharm;
 	@FXML
 	private TextFlow messageText;
+	// Previous Visits Tab
+	@FXML
+	private TextArea PvisitPnotes;
+	@FXML
+	private TextField PvisitPname;
+	@FXML
+	private TextField Pvisitdob;
+	@FXML
+	private TextField Pvisitaddress;
+	@FXML
+	private TextField PvisitPnumber;
+	@FXML
+	private TextField PvisitInsurance;
+	@FXML
+	private TextField PvisitPolnumber;
+	@FXML
+	private TextField Pvisitcitystatezip;
+	@FXML
+	private TextField PvisitPheight;
+	@FXML
+	private TextField PvisitPweight;
+	@FXML
+	private TextField PvisitPtemperature;
+	@FXML
+	private TextField PvisitPbloodpressure;
+	@FXML
+	private TextField PvisitPimmunization1;
+	@FXML
+	private TextField PvisitPAllergy1;
+	@FXML
+	private TextField PvisitPdateofvisit;
+	@FXML
+	private TextField PvisitPpharmacy;
+	@FXML
+	private TextField PvisitPimmunization2;
+	@FXML
+	private TextField PvisitPallergy2;
+	@FXML
+	private TextField PvisitPperscription1;
+	@FXML
+	private TextField PvisitPperscription2;
+	@FXML
+	private TextField PvisitPdiagnosis1;
+	@FXML
+	private TextField PvisitPdiagnosis2;
+
+	public void pullPreviousVisit(String user) {
+		activeUser = user;
+		Connection connect;
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	@FXML
 	public void sendMessage(javafx.event.ActionEvent e) {
