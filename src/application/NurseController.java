@@ -317,48 +317,7 @@ public class NurseController {
 
 	public void updatePatientRecordText() {
 		currRecord.clear();
-		Connection connect;
-		try {
-			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-			PreparedStatement statement = connect.prepareStatement(
-					"SELECT patient_id, first_name, last_name, address, "
-							+ "phone_number, ins_id, pharmacy, health_history,immunizations, "
-							+
-							"medications, allergies, assigned_doctor,DOB FROM PatientRecord WHERE patient_id = ?");
-			statement.setString(1, selectedPatient);
-			ResultSet resultSet = statement.executeQuery();
-			currRecord.clear();
-			while (resultSet.next()) {
-				currRecord.appendText("Name: " + resultSet.getString("first_name") +
-						" " + resultSet.getString("last_name") + "\n\n");
-				currRecord.appendText("Date of Birth: " + resultSet.getString("DOB") +
-						"\n\n");
-				currRecord.appendText("Address: " + resultSet.getString("address") +
-						"\n\n");
-				currRecord.appendText(
-						"Phone Number: " + resultSet.getString("phone_number") + "\n\n");
-				currRecord.appendText(
-						"Insurance Provider: " + resultSet.getString("ins_id") + "\n\n");
-				currRecord.appendText("Pharmacy: " + resultSet.getString("pharmacy") +
-						"\n\n");
-				currRecord.appendText("Health History: " +
-						resultSet.getString("health_history") + "\n\n");
-				currRecord.appendText(
-						"Immunizations: " + resultSet.getString("immunizations") + "\n\n");
-				currRecord.appendText(
-						"Medications: " + resultSet.getString("medications") + "\n\n");
-				currRecord.appendText("Allergies: " + resultSet.getString("allergies") +
-						"\n\n");
-				currRecord.appendText("Assigned Doctor: " +
-						resultSet.getString("assigned_doctor") + "\n\n");
-			}
-			resultSet.close();
-			statement.close();
-			connect.close();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		PatientRecord.readTo(selectPatient, currRecord);
 	}
 
 	public void displayMessages(String user) {
