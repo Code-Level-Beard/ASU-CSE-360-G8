@@ -131,7 +131,7 @@ public class PatientController {
       // Bottom connection + query to add the new message to the database
       connectMessage = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
       PreparedStatement newMessageStatement = connectMessage.prepareStatement(
-          "INSERT INTO Message (patient_id, message_id, sender, content) VALUES (?, ?, ?, ?)");
+          "INSERT INTO Message (patient_id, message_id, sender, header, content) VALUES (?, ?, ?, ?, ?)");
       if (!(composeMessage.getText().isBlank() &&
           composeMessage.getText().isEmpty())) {
         newMessageStatement.setString(1, activeUser); // insert patientID
@@ -139,13 +139,15 @@ public class PatientController {
         System.out.println(patientName); // test output
         newMessageStatement.setString(3, patientName); // insert sender
         // insert recipient
-        // insert header
-        newMessageStatement.setString(4, composeMessage.getText().trim());
+        newMessageStatement.setString(4, "new");// insert header
+        newMessageStatement.setString(5, composeMessage.getText().trim());
 
         newMessageStatement.executeUpdate();
         newMessageStatement.close();
         connectMessage.close();
         composeMessage.clear();
+
+        displayMessages(activeUser);
       } else {
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle("No Message Entered");
@@ -178,7 +180,7 @@ public class PatientController {
       resultSet.close();
       statement.close();
       connection.close();
-      if ("0".equals(messageID)) {
+      if ("0".equals(messageID)) { // error here - resolve
         System.out.println(messageID); // test output
         return messageID;
       } else {
@@ -203,6 +205,7 @@ public class PatientController {
   }
 
   public void displayMessages(String user) {
+    messageText.getChildren().clear();
     Connection connect;
     // composeMessage.setText("test");
     try {
