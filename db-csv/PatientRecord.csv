@@ -1,0 +1,7 @@
+patient_id,first_name,last_name,address,phone_number,ins_id,pharmacy,health_history,immunizations,medications,allergies,assigned_doctor,DOB
+JD0119,Josh,Decker,"1234 Street Tempe, AZ",480-000-0119,Aetna 123456789,CVS Tempe,Left Knee Pain,Fair weather fans,Aspirin 400mg,LA Fans,Jane Doe,11/05/1988
+AS3475,Agent,Smith,The Matirx,480-789-1234,Blue Cross 527895,3/31/1999,Tendency to split,The One,Red Pill,Neo,Joe Smith,3/31/1999
+BB0918,Bob,Builder,"1234 Cartoon Lane Tempe, Az",480-123-4567,HomeDepot 123456789,Walgreens Mesa,Headache,Tetanus,None,Unbuilt Stuff,Master Chief,4/12/1999
+JM2103,Joe,McTester,Imaginary Land,480-456-4567,Aetna 123456789,Costco Chandler,N/A,TDAP 2024,N/A,Bugs,Master Chief,4/7/2024
+SF2157,Sally,Fields,"123 Cookie Cutter Lane Tempe, Az 85284",480-266-5437,BlueCross 123456789,Walmart,Diabetes,N/A,Insulin 20mg,Hard Cookies,Master Chief,04/20/1969
+as2259,asld;fjksdf,sa'dkjg'sk,"Test Tempe,Az 85301",480-123-4567,Aetna 123456789,Walgreens,N/A,N/A,N/A,N/A,Joe Smith,4/8/2023

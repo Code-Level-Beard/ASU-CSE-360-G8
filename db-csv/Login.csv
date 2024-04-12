@@ -1,0 +1,14 @@
+user_id,password,user_type
+MD1234,MD1234,Physician
+NR1234,NR1234,Nurse
+PT1234,PT1234,Patient
+JD0119,JD0119,Patient
+JD1256,JD1256,Physician
+JS1298,JS1298,Physician
+BB0918,BB0918,Patient
+JW0470,JW0470,Nurse
+MC0117,MC0117,Nurse
+AS3475,AS3475,Patient
+TD4298,TD4298,Nurse
+SF2157,SF2157,Patient
+as2259,as2259,Patient
