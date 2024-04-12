@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
@@ -151,22 +152,22 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <TextField layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" text="Patient Name" />
-                              <TextField layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" text="**/**/****" />
-                              <TextField layoutX="140.0" layoutY="130.0" prefHeight="26.0" prefWidth="229.0" text="Street Address" />
-                              <TextField layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" text="(***) ***-****" />
-                              <TextField layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" text="Insurance Company" />
-                              <TextField layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" text="Policy Number" />
-                              <TextField layoutX="140.0" layoutY="170.0" prefHeight="26.0" prefWidth="229.0" text="City, State ZIP" />
-                              <TextField layoutX="650.0" layoutY="90.0" prefWidth="175.0" promptText="Enter height..." text="Height" />
-                              <TextField layoutX="650.0" layoutY="130.0" prefWidth="175.0" promptText="Enter weight..." text="Weight" />
-                              <TextField layoutX="650.0" layoutY="170.0" prefWidth="175.0" promptText="Enter temperature..." text="Temperature" />
-                              <TextField layoutX="650.0" layoutY="210.0" prefWidth="175.0" promptText="Enter blood pressure..." text="Blood pressure" />
-                              <TextField layoutX="650.0" layoutY="250.0" prefWidth="175.0" promptText="Add immunization..." text="Visit Immunization 1" />
-                              <TextField layoutX="650.0" layoutY="330.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Allergy 1" />
-                              <TextArea layoutX="650.0" layoutY="420.0" prefHeight="100.0" prefWidth="250.0" promptText="Add note..." text="Visit notes" />
-                              <TextField layoutX="650.0" layoutY="50.0" prefWidth="175.0" promptText="Enter date..." text="**/**/****" />
-                              <TextField layoutX="140.0" layoutY="330.0" prefHeight="26.0" prefWidth="231.0" text="Pharmacy" />
+                              <TextField fx:id="PvisitPname" layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" text="Patient Name" />
+                              <TextField fx:id="Pvisitdob" layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" text="**/**/****" />
+                              <TextField fx:id="Pvisitaddress" layoutX="140.0" layoutY="130.0" prefHeight="26.0" prefWidth="229.0" text="Street Address" />
+                              <TextField fx:id="PvisitPnumber" layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" text="(***) ***-****" />
+                              <TextField fx:id="PvisitInsurance" layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" text="Insurance Company" />
+                              <TextField fx:id="PvisitPolnumber" layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" text="Policy Number" />
+                              <TextField fx:id="Pvisitcitystatezip" layoutX="140.0" layoutY="170.0" prefHeight="26.0" prefWidth="229.0" text="City, State ZIP" />
+                              <TextField fx:id="PvisitPheight" layoutX="650.0" layoutY="90.0" prefWidth="175.0" promptText="Enter height..." text="Height" />
+                              <TextField fx:id="PvisitPweight" layoutX="650.0" layoutY="130.0" prefWidth="175.0" promptText="Enter weight..." text="Weight" />
+                              <TextField fx:id="PvisitPtemperature" layoutX="650.0" layoutY="170.0" prefWidth="175.0" promptText="Enter temperature..." text="Temperature" />
+                              <TextField fx:id="PvisitPbloodpressure" layoutX="650.0" layoutY="210.0" prefWidth="175.0" promptText="Enter blood pressure..." text="Blood pressure" />
+                              <TextField fx:id="PvisitPimmunization1" layoutX="650.0" layoutY="250.0" prefWidth="175.0" promptText="Add immunization..." text="Visit Immunization 1" />
+                              <TextField fx:id="PvisitPAllergy1" layoutX="650.0" layoutY="330.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Allergy 1" />
+                              <TextArea fx:id="PvisitPnotes" layoutX="650.0" layoutY="420.0" prefHeight="100.0" prefWidth="250.0" promptText="Add note..." text="Visit notes" />
+                              <TextField fx:id="PvisitPdateofvisit" layoutX="650.0" layoutY="50.0" prefWidth="175.0" promptText="Enter date..." text="**/**/****" />
+                              <TextField fx:id="PvisitPpharmacy" layoutX="140.0" layoutY="330.0" prefHeight="26.0" prefWidth="231.0" text="Pharmacy" />
                               <Text layoutX="500.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Visit" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
@@ -240,13 +241,13 @@
                               </Text>
                               <Line endX="223.5" layoutX="195.0" layoutY="390.0" startX="-195.0" />
                               <Circle fill="DODGERBLUE" layoutX="162.0" layoutY="497.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
-                              <TextField layoutX="650.0" layoutY="290.0" prefWidth="175.0" promptText="Add immunization..." text="Visit Immunization 2" />
-                              <TextField layoutX="650.0" layoutY="371.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Allergy 2" />
-                              <TextField layoutX="650.0" layoutY="535.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Prescription 1" />
-                              <TextField layoutX="650.0" layoutY="571.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Prescription 2" />
-                              <TextField layoutX="650.0" layoutY="607.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Diagnosis 1" />
-                              <TextField layoutX="650.0" layoutY="644.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Diagnosis 2" />
-                              <ScrollBar layoutX="960.0" layoutY="15.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="30.0" />
+                              <TextField fx:id="PvisitPimmunization2" layoutX="650.0" layoutY="290.0" prefWidth="175.0" promptText="Add immunization..." text="Visit Immunization 2" />
+                              <TextField fx:id="PvisitPallergy2" layoutX="650.0" layoutY="371.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Allergy 2" />
+                              <TextField fx:id="PvisitPperscription1" layoutX="650.0" layoutY="535.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Prescription 1" />
+                              <TextField fx:id="PvisitPperscription2" layoutX="650.0" layoutY="571.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Prescription 2" />
+                              <TextField fx:id="PvisitPdiagnosis1" layoutX="650.0" layoutY="607.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Diagnosis 1" />
+                              <TextField fx:id="PvisitPdiagnosis2" layoutX="650.0" layoutY="644.0" prefWidth="175.0" promptText="Add allergy..." text="Visit Diagnosis 2" />
+                              <ScrollBar layoutX="956.0" layoutY="14.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="30.0" />
                               <ScrollBar layoutX="378.0" layoutY="399.0" orientation="VERTICAL" prefHeight="325.0" prefWidth="30.0" />
                            </children>
                         </AnchorPane>
@@ -256,15 +257,19 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextArea id="composeMessage" layoutX="248.0" layoutY="599.0" prefHeight="116.0" prefWidth="505.0" promptText="Type new message here..." />
-                              <Button id="sendButton" layoutX="777.0" layoutY="685.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="81.0" text="Send" />
+                              <TextArea fx:id="composeMessage" layoutX="248.0" layoutY="599.0" prefHeight="116.0" prefWidth="505.0" promptText="Type new message here..." />
+                              <Button fx:id="sendButton" layoutX="777.0" layoutY="685.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="30.0" prefWidth="81.0" text="Send" />
                               <Line endX="550.0" layoutX="450.0" layoutY="573.0" startX="-452.0" />
                               <ImageView fitHeight="185.0" fitWidth="277.0" layoutY="574.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../../Downloads/image.png" />
                                  </image>
                               </ImageView>
-                              <TextFlow id="messageText" fx:id="messageText" layoutX="83.0" layoutY="45.0" prefHeight="483.0" prefWidth="830.0" />
+                              <ScrollPane layoutX="107.0" layoutY="54.0" prefHeight="498.0" prefWidth="766.0">
+                                 <content>
+                                    <TextFlow id="messageText" fx:id="messageText" prefHeight="483.0" prefWidth="830.0" />
+                                 </content>
+                              </ScrollPane>
                            </children>
                         </AnchorPane>
                     </content>
