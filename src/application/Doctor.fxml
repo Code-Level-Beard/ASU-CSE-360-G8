@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
@@ -52,8 +53,16 @@
                               <Button layoutX="905.0" layoutY="685.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="81.0" text="Send" />
                               <Line endX="20.0" endY="596.0" layoutX="328.0" layoutY="146.0" startX="20.0" startY="-150.0" />
                               <Line endX="550.0" layoutX="450.0" layoutY="573.0" startX="-100.0" />
-                              <TextFlow fx:id="messageText" layoutX="364.0" layoutY="14.0" prefHeight="537.0" prefWidth="618.0" />
-                              <TextFlow fx:id="messageThreadArea" layoutX="45.0" layoutY="40.0" prefHeight="694.0" prefWidth="246.0" />
+                              <ScrollPane layoutX="371.0" layoutY="16.0" prefHeight="525.0" prefWidth="602.0">
+                                 <content>
+                                    <TextFlow fx:id="messageText" prefHeight="537.0" prefWidth="618.0" />
+                                 </content>
+                              </ScrollPane>
+                              <ScrollPane layoutX="27.0" layoutY="23.0" prefHeight="718.0" prefWidth="290.0">
+                                 <content>
+                                    <TextFlow fx:id="messageThreadArea" prefHeight="694.0" prefWidth="246.0" />
+                                 </content>
+                              </ScrollPane>
                            </children>
                         </AnchorPane>
                     </content>

@@ -336,7 +336,8 @@ public class NurseController {
 	public void displayMessages(String user) {
 		messageText.getChildren().clear();
 		Connection connect;
-		// composeMessage.setText("test");
+		Connection connectUpdate;
+		
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 			PreparedStatement statement = connect.prepareStatement(
@@ -352,10 +353,16 @@ public class NurseController {
 				content.setText(resultSet.getString("content") + "\n\n\n");
 				content.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
 				messageText.getChildren().addAll(sender, content);
-				// messageText.getChildren().addAll(new
-				// Text(resultSet.getString("sender") + "\n" + "\n" +
-				// resultSet.getString("content") + "\n" + "\n" + "\n" + "\n"));
 			}
+			
+			connectUpdate = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement updateRead = connectUpdate.prepareStatement(
+					"UPDATE Message SET header = ? WHERE patient_id = ?");
+			updateRead.setString(1, "read");
+			updateRead.setString(2, user);
+			updateRead.execute();
+			updateRead.close();
+			
 			resultSet.close();
 			statement.close();
 			connect.close();
@@ -363,9 +370,11 @@ public class NurseController {
 			// TODO error message
 			e.printStackTrace();
 		}
+		messageSelect();
 	}
 
 	public void messageSelect() {
+		messageThreadArea.getChildren().clear();
 		Connection connect;
 		// composeMessage.setText("test");
 		try {
@@ -395,9 +404,6 @@ public class NurseController {
 				} else {
 					messageThreadArea.getChildren().addAll(sender, spacer);
 				}
-				// messageText.getChildren().addAll(new
-				// Text(resultSet.getString("sender") + "\n" + "\n" +
-				// resultSet.getString("content") + "\n" + "\n" + "\n" + "\n"));
 			}
 			resultSet.close();
 			statement.close();
