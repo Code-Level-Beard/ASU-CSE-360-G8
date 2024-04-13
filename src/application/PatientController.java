@@ -5,12 +5,25 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -98,17 +111,138 @@ public class PatientController {
   @FXML
   private TextField PvisitPdiagnosis2;
 
-  public void pullPreviousVisit(String user) {
-    activeUser = user;
-    Connection connect;
-    try {
-      connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+  @FXML
+	private Tab PrevVisitTab;
+  @FXML
+  private TableView<String> PrevVisitsTable;
+//Team #3 ********Previous Visit Tab Method*******
+	public void pullPreviousVisit() {
+		Connection connect;
+		
+		try {
+			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			//sqlite statement
+			PreparedStatement PreviousVisitstatement = connect.prepareStatement("SELECT * FROM Visit WHERE patient_id = ? AND completed IS NOT NULL");
+			PreviousVisitstatement.setString(1, activeUser);
+			ResultSet rs = PreviousVisitstatement.executeQuery();
+			//Clears Table data and columns
+			PrevVisitsTable.getColumns().clear();
+			PrevVisitsTable.getItems().clear();
+				// List to hold each row from query, visit data
+				List<Map<String, String>> visits = new ArrayList<>();
+				
+			    //creates Table column and adds it to Table
+				TableColumn<String, String> visitDateCol = new TableColumn<>("Visit Date");
+			    visitDateCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()));
+			    ObservableList<String> visitDates = FXCollections.observableArrayList();
+			    PrevVisitsTable.getColumns().add(visitDateCol);
+			    //Clears data from our Lists
+			    visitDates.clear();
+			    visits.clear();
+				// Process the result set and parse into a new Hash Map for each entry of visits Array List
+				while (rs.next()) {
+				    // Map to hold data for one visit
+				    Map<String, String> visitData = new HashMap<>();
+				    
+				    // Retrieve data from the result set for each visit
+				    visitData.put("date", rs.getString("date"));
+				    visitData.put("height", rs.getString("height"));
+				    visitData.put("weight", rs.getString("weight"));
+				    visitData.put("temperature", rs.getString("temperature"));
+				    visitData.put("blood_pressure", rs.getString("blood_pressure"));
+				    visitData.put("immunization", rs.getString("immunization"));
+				    visitData.put("allergies", rs.getString("allergies"));
+				    visitData.put("notes", rs.getString("notes"));
+				    visitData.put("prescription", rs.getString("prescription"));
+				    visitData.put("visit_diag", rs.getString("visit_diag"));
+				    
+				    //adds date into table
+				    visitDates.add(visitData.get("date"));
+				    PrevVisitsTable.setItems(visitDates);
+				    // Add data for the current visit to the list
+				    visits.add(visitData);
+				    
+				}
+				//Showing first visit in the table
+				Map<String, String> firstVisitData = visits.get(0);
+				if(firstVisitData == null) {
+					System.out.println("Empty visits List");
+				}
+				else {
+				PvisitPdateofvisit.clear();
+				PvisitPheight.clear();
+				PvisitPweight.clear();
+				PvisitPtemperature.clear();
+				PvisitPbloodpressure.clear();
+				PvisitPimmunization1.clear();
+				PvisitPAllergy1.clear();
+				PvisitPnotes.clear();
+				PvisitPperscription1.clear();
+				PvisitPdiagnosis1.clear();
+				
+				PvisitPdateofvisit.appendText(firstVisitData.get("date"));
+				PvisitPheight.appendText(firstVisitData.get("height"));
+				PvisitPweight.appendText(firstVisitData.get("weight"));
+				PvisitPtemperature.appendText(firstVisitData.get("temperature"));
+				PvisitPbloodpressure.appendText(firstVisitData.get("blood_pressure"));
+				PvisitPimmunization1.appendText(firstVisitData.get("immunization"));
+				PvisitPAllergy1.appendText(firstVisitData.get("allergies"));
+				PvisitPnotes.appendText(firstVisitData.get("notes"));
+				PvisitPperscription1.appendText(firstVisitData.get("prescription"));
+				PvisitPdiagnosis1.appendText(firstVisitData.get("visit_diag"));
+				
+				//Listener for each entry in the table. when one is selected, newVal equals that date
+				PrevVisitsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+		            if (newVal != null) {
+		            	String selectedDate = newVal; //Date selected in table
 
-    } catch (SQLException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-  }
+		                // Find the index of the visit with the selected date in the ArrayList
+		                int selectedIndex = -1;
+		                for (int i = 0; i < visits.size(); i++) {
+		                    String visitDate = visits.get(i).get("date"); 
+		                    if (visitDate.equals(selectedDate)) {
+		                        selectedIndex = i;
+		                        break;
+		                    }
+		                }
+		                // If a visit with the selected date was found, populate the text fields with its information
+		                if (selectedIndex != -1) {
+		                    Map<String, String> selectedVisitData = visits.get(selectedIndex);
+		                    // Populate text fields with selectedVisitData
+		                    PvisitPdateofvisit.clear();
+		    				PvisitPheight.clear();
+		    				PvisitPweight.clear();
+		    				PvisitPtemperature.clear();
+		    				PvisitPbloodpressure.clear();
+		    				PvisitPimmunization1.clear();
+		    				PvisitPAllergy1.clear();
+		    				PvisitPnotes.clear();
+		    				PvisitPperscription1.clear();
+		    				PvisitPdiagnosis1.clear();
+		    				
+		    				PvisitPdateofvisit.appendText(selectedVisitData.get("date"));
+		    				PvisitPheight.appendText(selectedVisitData.get("height"));
+		    				PvisitPweight.appendText(selectedVisitData.get("weight"));
+		    				PvisitPtemperature.appendText(selectedVisitData.get("temperature"));
+		    				PvisitPbloodpressure.appendText(selectedVisitData.get("blood_pressure"));
+		    				PvisitPimmunization1.appendText(selectedVisitData.get("immunization"));
+		    				PvisitPAllergy1.appendText(selectedVisitData.get("allergies"));
+		    				PvisitPnotes.appendText(selectedVisitData.get("notes"));
+		    				PvisitPperscription1.appendText(selectedVisitData.get("prescription"));
+		    				PvisitPdiagnosis1.appendText(selectedVisitData.get("visit_diag"));
+		                }
+		             
+		            }
+		        });
+				}
+			rs.close();
+			PreviousVisitstatement.close();
+			connect.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
   @FXML
   public void sendMessage(javafx.event.ActionEvent e) {
