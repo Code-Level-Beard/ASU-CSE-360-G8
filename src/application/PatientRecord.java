@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -90,6 +91,7 @@ public class PatientRecord {
     }
   }
 
+  //Method to update DB used in Patient Controller
   static public void updateWith(String userId, TextField firstName,
       TextField lastName, TextField dob,
       TextField address, TextField phone,
@@ -159,6 +161,97 @@ public class PatientRecord {
       e1.printStackTrace();
     }
   }
+  
+  //Overloaded method to updateDB in NurseController
+  static public void updateWith(String userId, TextField firstName,
+	      TextField lastName, TextField dob,
+	      TextField address, TextField phone,
+	      TextField insurance, TextField pharmacy,
+	      TextField history, TextField immunizations,
+	      TextField medications, TextField allergies, ComboBox<String> assignedDoctor) {
+
+	    TextField[] textFields = new TextField[] {
+	        firstName, lastName, dob, address, phone, insurance,
+	        pharmacy, history, immunizations, medications, allergies };
+	    int numOfTextFields = textFields.length + 1;
+	    int numOfEmptyFields = 0;
+	    
+	    if (assignedDoctor.getValue().toString().trim().isEmpty()) {
+	    	numOfEmptyFields ++;
+	    }
+	    
+	    //Checks whether each TextField is empty, if true, increments a value
+	    for (TextField textField: textFields) {
+	    	if (textField.getText().trim().isEmpty()) {
+	    		numOfEmptyFields ++;
+	    	}
+	    }
+	    
+	    //If all of the fields are empty, quit the method
+	    if (numOfEmptyFields == numOfTextFields) {
+	      Alert alert = new Alert(AlertType.WARNING);
+	      alert.setTitle("Form Invalid");
+	      alert.setHeaderText(null);
+	      alert.setContentText(
+	          "Please enter text into the field you wish to update.");
+	      alert.showAndWait();
+	      return;
+	    }
+
+	    //At least one of the fields is not empty
+	    Connection connect;
+	    try {
+	      connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+	      PreparedStatement dbCon = connect.prepareStatement(
+	          "update PatientRecord set first_name = ?, last_name = ?, DOB = ?, address = ?, phone_number = ?, ins_id = ?, pharmacy = ?," + 
+	    	  "health_history = ?, immunizations = ?, medications = ?, allergies = ?, assigned_doctor = ? where patient_id = ?");
+	      PreparedStatement dbResS = connect.prepareStatement ("SELECT first_name, last_name, DOB, address, phone_number, ins_id, pharmacy," + 
+	    	  "health_history, immunizations, medications, allergies, assigned_doctor FROM PatientRecord WHERE patient_id = ?");
+	      dbResS.setString(1, userId);
+	      ResultSet dbRes = dbResS.executeQuery();
+	      for (int i = 0; i < textFields.length + 1; i++) {
+	    	  //Data should be appended, not overwritten
+	    	  if(i == 8 || i == 9 || i == 10 || i == 11) {
+	    		  //Append data in DB with new values if textField is not empty
+	    		  if(textFields[i].getText().trim().isEmpty() == false) {
+	    			  dbCon.setString(i + 1, dbRes.getString(i + 1) + ", " + textFields[i].getText().trim());
+	    		  } 
+	    		//TextField is empty, save current data back into DB
+	    		  else { 
+	    			  dbCon.setString(i + 1, dbRes.getString(i + 1));
+	    		  }
+	    	  }
+	    	  //Check for ComboBox
+	    	  else if (i == 12) {
+	    		  //ComboBox has a value, write it to DB
+	    		  if (assignedDoctor.getValue().toString().trim().isEmpty() == false) {
+	    			  dbCon.setString(i + 1, assignedDoctor.getValue().substring(assignedDoctor.getValue().length() - 6, assignedDoctor.getValue().length()));
+	    		  }
+	    		  //ComboBox does not have a value, save current data back into DB
+	    		  else {
+	    			  dbCon.setString(i + 1, dbRes.getString(i + 1));
+	    		  }
+	    	  }
+	    	  //TextField does not requiring appending
+	    	  else {
+	    		  //Overwrite data in DB with new values if textField is not empty
+	    		  if(textFields[i].getText().trim().isEmpty() == false) {
+	    			  dbCon.setString(i + 1, textFields[i].getText().trim());
+	    		  } 
+	    		  //TextField is empty, save current data back into DB
+	    		  else { 
+	    			  dbCon.setString(i + 1, dbRes.getString(i + 1));
+	    		  }
+	    	  }
+	      }
+	      dbCon.setString(textFields.length + 1, userId);
+	      dbCon.execute();
+	      dbCon.close();
+	      connect.close();
+	    } catch (SQLException e1) {
+	      e1.printStackTrace();
+	    }
+	  }
   
   /* Method currently not required
   private static boolean isEmpty(TextField[] textFields) {
