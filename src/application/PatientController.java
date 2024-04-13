@@ -368,48 +368,9 @@ public class PatientController {
 		return messageID;
 	}
 
+	//Generates the text that shows the patient their current patient record
 	public void updateText(String user) {
-		activeUser = user;
-		Connection connect;
-		try {
-			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-			PreparedStatement statement = connect.prepareStatement(
-					"SELECT patient_id, first_name, last_name, address, "
-							+ "phone_number, ins_id, pharmacy, health_history,immunizations, "
-							+
-							"medications, allergies, assigned_doctor,DOB FROM PatientRecord WHERE patient_id = ?");
-			statement.setString(1, user);
-			ResultSet resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				currRecord.appendText("Name: " + resultSet.getString("first_name") +
-						" " + resultSet.getString("last_name") + "\n\n");
-				currRecord.appendText("Date of Birth: " + resultSet.getString("DOB") +
-						"\n\n");
-				currRecord.appendText("Address: " + resultSet.getString("address") +
-						"\n\n");
-				currRecord.appendText(
-						"Phone Number: " + resultSet.getString("phone_number") + "\n\n");
-				currRecord.appendText(
-						"Insurance Provider: " + resultSet.getString("ins_id") + "\n\n");
-				currRecord.appendText("Pharmacy: " + resultSet.getString("pharmacy") +
-						"\n\n");
-				currRecord.appendText("Health History: " +
-						resultSet.getString("health_history") + "\n\n");
-				currRecord.appendText(
-						"Immunizations: " + resultSet.getString("immunizations") + "\n\n");
-				currRecord.appendText(
-						"Medications: " + resultSet.getString("medications") + "\n\n");
-				currRecord.appendText("Allergies: " + resultSet.getString("allergies") +
-						"\n\n");
-				currRecord.appendText("Assigned Doctor: " +
-						resultSet.getString("assigned_doctor") + "\n\n");
-			}
-			resultSet.close();
-			statement.close();
-			connect.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		PatientRecord.readTo(user,currRecord);
 	}
 
 	public void displayMessages(String user) {
@@ -442,6 +403,7 @@ public class PatientController {
 		}
 	}
 
+	//Allows the patient to update their DB entry of their Patient Record with new information
 	@FXML
 	public void updateDB() {
 		PatientRecord.updateWith(activeUser, firstName, lastName, dob, address,

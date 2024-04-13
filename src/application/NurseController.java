@@ -37,104 +37,27 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 public class NurseController {
-	String activeUser;
-
-	String selectedPatient;
-
-	String selectedDoctor;
-
-	String newPatientID;
-
-	String messageID;
-
+	String activeUser, selectedPatient, selectedDoctor, newPatientID, messageID,
+	nurseName;
 	Integer messageNum;
-
-	String nurseName;
-
 	@FXML
-	private Button newPatient;
+	private Button newPatient, selectPatient, sendButton;
 	@FXML
-	private Button selectPatient;
+	private ComboBox<String> assignedDoctorUpdate, selDoctor, selPLDoctor, selPLPatient;
 	@FXML
-	private ComboBox<String> assignedDoctorUpdate;
+	private Tab messageTab,newPatientTab, patientListTab, patientRecordTab, prevVisitTab;
 	@FXML
-	private ComboBox<String> selDoctor;
+	private TextArea currRecord, selectedPatientRecord, composeMessage;
 	@FXML
-	private ComboBox<String> selPLDoctor;
-	@FXML
-	private ComboBox<String> selPLPatient;
-	@FXML
-	private Tab messageTab;
-	@FXML
-	private Tab newPatientTab;
-	@FXML
-	private Tab patientListTab;
-	@FXML
-	private Tab patientRecordTab;
-	@FXML
-	private Tab prevVisitTab;
-	@FXML
-	private TextArea currRecord;
-	@FXML
-	private TextArea selectedPatientRecord;
-	@FXML
-	private TextField address;
-	@FXML
-	private TextField addressUpdate;
-	@FXML
-	private TextField allergies;
-	@FXML
-	private TextField allergiesUpdate;
-	@FXML
-	private TextField dob;
-	@FXML
-	private TextField dobUpdate;
-	@FXML
-	private TextField firstName;
-	@FXML
-	private TextField firstNameUpdate;
-	@FXML
-	private TextField hHistory;
-	@FXML
-	private TextField hHistoryUpdate;
-	@FXML
-	private TextField immuni;
-	@FXML
-	private TextField immuniUpdate;
-	@FXML
-	private TextField insID;
-	@FXML
-	private TextField insIDUpdate;
-	@FXML
-	private TextField lastName;
-	@FXML
-	private TextField lastNameUpdate;
-	@FXML
-	private TextField med;
-	@FXML
-	private TextField medUpdate;
-	@FXML
-	private TextField pNum;
-	@FXML
-	private TextField pNumUpdate;
-	@FXML
-	private TextField pharm;
-	@FXML
-	private TextField pharmUpdate;
-	@FXML
-	private TextFlow messageText;
-	@FXML
-	private TextFlow messageThreadArea;
-	@FXML
-	private TextArea composeMessage;
-	@FXML
-	private Button sendButton;
+	private TextField address, addressUpdate, allergies, allergiesUpdate, dob, dobUpdate,
+	firstName, firstNameUpdate, hHistory, hHistoryUpdate, immuni, immuniUpdate,insID,
+	insIDUpdate, lastName, lastNameUpdate, med, medUpdate, pNum, pNumUpdate, pharm, pharmUpdate,
+	pharmUpdateprevVisitNameTxtField, prevVisitDobTxtField,
+	prevVisitPtAddTxtField, prevVisitPtPhTxtField, prevVisitInsIdTxtField,
+	prevVisitPtPharmTxtField;
 
 	@FXML
-	private TextField prevVisitNameTxtField, prevVisitDobTxtField,
-			prevVisitPtAddTxtField, prevVisitPtPhTxtField, prevVisitInsIdTxtField,
-			prevVisitPtPharmTxtField;
-
+	private TextFlow messageText, messageThreadArea;
 	// ****Team #3 Fx:id for New Visit tab of the nurseController Panel******
 	@FXML
 	private Tab newVisitTab;
@@ -142,8 +65,8 @@ public class NurseController {
 	// it in the text Field on New Visit tab
 	@FXML
 	private TextField newVisitNameTxtField, newVisitDobTxtField,
-			newVisitPtAddTxtField, newVisitPtPhTxtField, newVisitInsIdTxtField,
-			newVisitPtPharmTxtField;
+	newVisitPtAddTxtField, newVisitPtPhTxtField, newVisitInsIdTxtField,
+	newVisitPtPharmTxtField;
 
 	// Team #3 fx:id TextFields that are writing to the visit table in the SQL
 	// database
@@ -152,11 +75,11 @@ public class NurseController {
 
 	@FXML
 	TextField newVisitBpTxtField, newVisitDovTxtField, newVisitHeightTxtField,
-			newVisitWeightTxtField, newVisitTempTxtField;
+	newVisitWeightTxtField, newVisitTempTxtField;
 
 	@FXML
 	private TextArea newVisitMedNotesTxtArea, newVisitImmTxtArea,
-			newVisitAlrgTxtArea;
+	newVisitAlrgTxtArea;
 	// Log out Button for the log out functionality
 	@FXML
 	private Button nurLogOutButton;
@@ -164,11 +87,11 @@ public class NurseController {
 	// Previous Visits Tab
 	@FXML
 	private TextField PvisitPdateofvisit, PvisitPheight, PvisitPweight,
-			PvisitPtemperature, PvisitPbloodpressure, PvisitPname, Pvisitdob,
-			Pvisitaddress, PvisitPnumber, PvisitInsurance, PvisitPpharmacy;
+	PvisitPtemperature, PvisitPbloodpressure, PvisitPname, Pvisitdob,
+	Pvisitaddress, PvisitPnumber, PvisitInsurance, PvisitPpharmacy;
 	@FXML
 	private TextArea PvisitPimmunizations, PvisitPAllergies, PvisitPperscriptions,
-			PvisitPdiagnoses, PvisitPnotes;
+	PvisitPdiagnoses, PvisitPnotes;
 	@FXML
 	private TableView<String> PrevVisitsTable;
 
@@ -181,7 +104,7 @@ public class NurseController {
 					"INSERT INTO PatientRecord (first_name, last_name, address,"
 							+ "phone_number, ins_id, pharmacy, health_history,immunizations,"
 							+
-							" medications, allergies, assigned_doctor,DOB,patient_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					" medications, allergies, assigned_doctor,DOB,patient_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			if (!((dob.getText().isBlank() && dob.getText().isEmpty()) &&
 					(address.getText().isBlank() && address.getText().isEmpty()) &&
 					(pNum.getText().isBlank() && pNum.getText().isEmpty()) &&
@@ -328,6 +251,7 @@ public class NurseController {
 	public void getSelectedPatient(javafx.event.ActionEvent e) {
 		selectedPatient = selPLPatient.getValue().substring(
 				selPLPatient.getValue().length() - 6, selPLPatient.getValue().length());
+		patientRecordSelected();
 	}
 
 	public void genPLPatientComboBox() {
@@ -365,14 +289,14 @@ public class NurseController {
 	public void updatePatientRecordText() {
 		currRecord.clear();
 		PatientRecord.readTo(selectedPatient, currRecord);
-		PatientRecord.readTo(selectedPatient, prevVisitNameTxtField,
-				prevVisitDobTxtField, prevVisitPtAddTxtField,
-				prevVisitPtPhTxtField, prevVisitInsIdTxtField,
-				prevVisitPtPharmTxtField);
-		PatientRecord.readTo(selectedPatient, newVisitNameTxtField,
-				newVisitDobTxtField, newVisitPtAddTxtField,
-				newVisitPtPhTxtField, newVisitInsIdTxtField,
-				newVisitPtPharmTxtField);
+		//PatientRecord.readTo(selectedPatient, prevVisitNameTxtField,
+		//	prevVisitDobTxtField, prevVisitPtAddTxtField,
+		//prevVisitPtPhTxtField, prevVisitInsIdTxtField,
+		//prevVisitPtPharmTxtField);
+		//PatientRecord.readTo(selectedPatient, newVisitNameTxtField,
+		//	newVisitDobTxtField, newVisitPtAddTxtField,
+		//newVisitPtPhTxtField, newVisitInsIdTxtField,
+		//newVisitPtPharmTxtField);
 	}
 
 	@FXML
@@ -414,7 +338,7 @@ public class NurseController {
 						composeMessage.clear();
 						messageText.getChildren().clear();
 						displayMessages(patient); // call display message to properly
-																			// display the newly-sent text
+						// display the newly-sent text
 					} else {
 						Alert alert = new Alert(AlertType.WARNING);
 						alert.setTitle("No Message Entered");
@@ -549,228 +473,18 @@ public class NurseController {
 		}
 	}
 
+	//Updates the SelectedPatients Patient Record in the DB
 	@FXML
 	public void updateDB(javafx.event.ActionEvent e) {
-		Connection connect;
-		try {
-			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-			if (!((dobUpdate.getText().isBlank() && dobUpdate.getText().isEmpty()) &&
-					(addressUpdate.getText().isBlank() &&
-							addressUpdate.getText().isEmpty())
-					&&
-					(pNumUpdate.getText().isBlank() &&
-							pNumUpdate.getText().isEmpty())
-					&&
-					(insIDUpdate.getText().isBlank() &&
-							insIDUpdate.getText().isEmpty())
-					&&
-					(immuniUpdate.getText().isBlank() &&
-							immuniUpdate.getText().isEmpty())
-					&&
-					(hHistoryUpdate.getText().isBlank() &&
-							hHistoryUpdate.getText().isEmpty())
-					&&
-					(medUpdate.getText().isBlank() && medUpdate.getText().isEmpty()) &&
-					(allergiesUpdate.getText().isBlank() &&
-							allergiesUpdate.getText().isEmpty())
-					&&
-					(firstNameUpdate.getText().isBlank() &&
-							firstNameUpdate.getText().isEmpty())
-					&&
-					(lastNameUpdate.getText().isBlank() &&
-							lastNameUpdate.getText().isEmpty())
-					&&
-					(assignedDoctorUpdate.getValue() == null))) {
-				if (!dobUpdate.getText().isBlank() && !dobUpdate.getText().isEmpty()) {
-					PreparedStatement setDOB = connect.prepareStatement(
-							"UPDATE PatientRecord SET dob = ? WHERE patient_id = ?");
-					setDOB.setString(1, dobUpdate.getText().trim());
-					setDOB.setString(2, selectedPatient);
-					setDOB.execute();
-					setDOB.close();
-				}
-				if (!addressUpdate.getText().isBlank() &&
-						!addressUpdate.getText().isEmpty()) {
-					PreparedStatement setADD = connect.prepareStatement(
-							"UPDATE PatientRecord SET address = ? WHERE patient_id = ?");
-					setADD.setString(1, addressUpdate.getText().trim());
-					setADD.setString(2, selectedPatient);
-					setADD.execute();
-					setADD.close();
-				}
-
-				if (!pNumUpdate.getText().isBlank() &&
-						!pNumUpdate.getText().isEmpty()) {
-					PreparedStatement setPNUM = connect.prepareStatement(
-							"UPDATE PatientRecord SET phone_number = ? WHERE patient_id = ?");
-					setPNUM.setString(1, pNumUpdate.getText().trim());
-					setPNUM.setString(2, selectedPatient);
-					setPNUM.execute();
-					setPNUM.close();
-				}
-				if (!insIDUpdate.getText().isBlank() &&
-						!insIDUpdate.getText().isEmpty()) {
-					PreparedStatement setIID = connect.prepareStatement(
-							"UPDATE PatientRecord SET ins_id = ? WHERE patient_id = ?");
-					setIID.setString(1, insIDUpdate.getText().trim());
-					setIID.setString(2, selectedPatient);
-					setIID.execute();
-					setIID.close();
-				}
-				if (!immuniUpdate.getText().isBlank() &&
-						!immuniUpdate.getText().isEmpty()) {
-					PreparedStatement setIMM = connect.prepareStatement(
-							"UPDATE PatientRecord SET immunizations = ? WHERE patient_id = ?");
-					PreparedStatement getIMM = connect.prepareStatement(
-							"SELECT immunizations FROM PatientRecord WHERE patient_id = ?");
-					getIMM.setString(1, selectedPatient);
-					ResultSet currIMM = getIMM.executeQuery();
-					while (currIMM.next()) {
-						if (currIMM.getString("immunizations") == "N/A") {
-							setIMM.setString(1, immuniUpdate.getText().trim());
-						} else {
-							setIMM.setString(1, currIMM.getString("immunizations") + ", " +
-									immuniUpdate.getText().trim());
-						}
-					}
-					currIMM.close();
-					getIMM.close();
-					setIMM.setString(2, selectedPatient);
-					setIMM.execute();
-					setIMM.close();
-				}
-				if (!hHistoryUpdate.getText().isBlank() &&
-						!hHistoryUpdate.getText().isEmpty()) {
-					PreparedStatement setHHST = connect.prepareStatement(
-							"UPDATE PatientRecord SET health_history = ? WHERE patient_id = ?");
-					PreparedStatement getHHST = connect.prepareStatement(
-							"SELECT health_history FROM PatientRecord where patient_id = ?");
-					getHHST.setString(1, selectedPatient);
-					ResultSet currHHST = getHHST.executeQuery();
-					while (currHHST.next()) {
-						if (currHHST.getString("health_history") == "N/A") {
-							setHHST.setString(1, hHistoryUpdate.getText().trim());
-						} else {
-							setHHST.setString(1, currHHST.getString("health_history") + ", " +
-									hHistoryUpdate.getText().trim());
-						}
-					}
-					currHHST.close();
-					getHHST.close();
-					setHHST.setString(2, selectedPatient);
-					setHHST.execute();
-					setHHST.close();
-				}
-				if (!pharmUpdate.getText().isBlank() &&
-						!pharmUpdate.getText().isEmpty()) {
-					PreparedStatement setPHM = connect.prepareStatement(
-							"UPDATE PatientRecord SET pharmacy = ? WHERE patient_id = ?");
-					setPHM.setString(1, pharmUpdate.getText().trim());
-					setPHM.setString(2, selectedPatient);
-					setPHM.execute();
-					setPHM.close();
-				}
-				if (!medUpdate.getText().isBlank() && !medUpdate.getText().isEmpty()) {
-					PreparedStatement setMED = connect.prepareStatement(
-							"UPDATE PatientRecord SET medications = ? WHERE patient_id = ?");
-					PreparedStatement getMED = connect.prepareStatement(
-							"SELECT medications FROM PatientRecord where patient_id = ?");
-					getMED.setString(1, selectedPatient);
-					ResultSet currMED = getMED.executeQuery();
-					while (currMED.next()) {
-						if (currMED.getString("medications") == "N/A") {
-							setMED.setString(1, medUpdate.getText().trim());
-						} else {
-							setMED.setString(1, currMED.getString("medications") + ", " +
-									medUpdate.getText().trim());
-						}
-					}
-					currMED.close();
-					getMED.close();
-					setMED.setString(2, selectedPatient);
-					setMED.execute();
-					setMED.close();
-				}
-				if (!allergiesUpdate.getText().isBlank() &&
-						!allergiesUpdate.getText().isEmpty()) {
-					PreparedStatement setALG = connect.prepareStatement(
-							"UPDATE PatientRecord SET allergies = ? WHERE patient_id = ?");
-					PreparedStatement getALG = connect.prepareStatement(
-							"SELECT allergies FROM PatientRecord where patient_id = ?");
-					getALG.setString(1, selectedPatient);
-					ResultSet currALG = getALG.executeQuery();
-					while (currALG.next()) {
-						if (currALG.getString("allergies") == "N/A") {
-							setALG.setString(1, allergiesUpdate.getText().trim());
-						} else {
-							setALG.setString(1, currALG.getString("allergies") + ", " +
-									allergiesUpdate.getText().trim());
-						}
-					}
-					currALG.close();
-					getALG.close();
-					setALG.setString(2, selectedPatient);
-					setALG.execute();
-					setALG.close();
-				}
-				if (!firstNameUpdate.getText().isBlank() &&
-						!firstNameUpdate.getText().isEmpty()) {
-					PreparedStatement setFN = connect.prepareStatement(
-							"UPDATE PatientRecord SET first_name = ? WHERE patient_id = ?");
-					PreparedStatement setUFN = connect.prepareStatement(
-							"UPDATE UserType SET first_name = ? WHERE user_id = ?");
-					setUFN.setString(1, firstNameUpdate.getText().trim());
-					setUFN.setString(2, selectedPatient);
-					setFN.setString(1, firstNameUpdate.getText().trim());
-					setFN.setString(2, selectedPatient);
-					setFN.execute();
-					setUFN.execute();
-					setUFN.close();
-					setFN.close();
-				}
-				if (!lastNameUpdate.getText().isBlank() &&
-						!lastNameUpdate.getText().isEmpty()) {
-					PreparedStatement setLN = connect.prepareStatement(
-							"UPDATE PatientRecord SET last_name = ? WHERE patient_id = ?");
-					PreparedStatement setULN = connect.prepareStatement(
-							"UPDATE UserType SET last_name = ? WHERE user_id = ?");
-					setULN.setString(1, firstNameUpdate.getText().trim());
-					setULN.setString(2, selectedPatient);
-					setLN.setString(1, lastNameUpdate.getText().trim());
-					setLN.setString(2, selectedPatient);
-					setULN.execute();
-					setLN.execute();
-					setULN.close();
-					setLN.close();
-				}
-				if ((assignedDoctorUpdate.getValue() != null)) {
-					PreparedStatement updateDoctorStatement = connect.prepareStatement(
-							"UPDATE PatientRecord SET assigned_doctor = ? WHERE patient_id = ?");
-					updateDoctorStatement.setString(
-							1, assignedDoctorUpdate.getValue().substring(
-									assignedDoctorUpdate.getValue().length() - 6,
-									assignedDoctorUpdate.getValue().length()));
-					updateDoctorStatement.setString(2, selectedPatient);
-					updateDoctorStatement.execute();
-					updateDoctorStatement.close();
-				}
-				currRecord.clear();
-				updatePatientRecordText();
-			} else {
-				Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("No Data Entered");
-				alert.setHeaderText(null);
-				alert.setContentText(
-						"Please enter text into the field you wish to update.");
-				alert.showAndWait();
-			}
-			connect.close();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		PatientRecord.updateWithNurse(selectedPatient, firstNameUpdate, lastNameUpdate, dobUpdate, addressUpdate,
+				pNumUpdate, insIDUpdate, pharmUpdate, hHistoryUpdate, immuniUpdate, medUpdate,
+				allergiesUpdate, assignedDoctorUpdate);
+		currRecord.clear();
+		PatientRecord.readTo(selectedPatient, currRecord);
 	}
 
+	//Generates the combo box that allows the nurse to assign a diff doctor to the 
+	//selected patient
 	public void genADUComboBox() {
 		Connection connect;
 		assignedDoctorUpdate.getItems().clear();
@@ -804,7 +518,7 @@ public class NurseController {
 					"SELECT patient_id, first_name, last_name, address, "
 							+ "phone_number, ins_id, pharmacy, health_history,immunizations, "
 							+
-							"medications, allergies, assigned_doctor,DOB FROM PatientRecord WHERE patient_id = ?");
+					"medications, allergies, assigned_doctor,DOB FROM PatientRecord WHERE patient_id = ?");
 			statement.setString(1, selectedPatient);
 			ResultSet rs = statement.executeQuery();
 
@@ -884,172 +598,172 @@ public class NurseController {
 
 	// Team #3 ********Previous Visit Tab Method*******
 	public void pullPreviousVisit() {
-    Connection connect;
-    PvisitPname.clear();
-    Pvisitdob.clear();
-    Pvisitaddress.clear();
-    PvisitPnumber.clear();
-    PvisitInsurance.clear();
-    PvisitPpharmacy.clear();
-    if (selectedPatient != null) {
-      PatientRecord.readTo(selectedPatient, PvisitPname, Pvisitdob,
-                           Pvisitaddress, PvisitPnumber, PvisitInsurance,
-                           PvisitPpharmacy);
-      try {
-        connect =
-            DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-        // sqlite statement
+		Connection connect;
+		PvisitPname.clear();
+		Pvisitdob.clear();
+		Pvisitaddress.clear();
+		PvisitPnumber.clear();
+		PvisitInsurance.clear();
+		PvisitPpharmacy.clear();
+		if (selectedPatient != null) {
+			PatientRecord.readTo(selectedPatient, PvisitPname, Pvisitdob,
+					Pvisitaddress, PvisitPnumber, PvisitInsurance,
+					PvisitPpharmacy);
+			try {
+				connect =
+						DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+				// sqlite statement
 
-        PreparedStatement PreviousVisitstatement = connect.prepareStatement(
-            "SELECT * FROM Visit WHERE patient_id = ? AND completed IS NOT NULL");
-        PreviousVisitstatement.setString(1, selectedPatient);
-        ResultSet rs = PreviousVisitstatement.executeQuery();
-        // Clears Table data and columns
-        PrevVisitsTable.getColumns().clear();
-        PrevVisitsTable.getItems().clear();
-        // List to hold each row from query, visit data
-        List<Map<String, String>> visits = new ArrayList<>();
+				PreparedStatement PreviousVisitstatement = connect.prepareStatement(
+						"SELECT * FROM Visit WHERE patient_id = ? AND completed IS NOT NULL");
+				PreviousVisitstatement.setString(1, selectedPatient);
+				ResultSet rs = PreviousVisitstatement.executeQuery();
+				// Clears Table data and columns
+				PrevVisitsTable.getColumns().clear();
+				PrevVisitsTable.getItems().clear();
+				// List to hold each row from query, visit data
+				List<Map<String, String>> visits = new ArrayList<>();
 
-        // creates Table column and adds it to Table
-        TableColumn<String, String> visitDateCol =
-            new TableColumn<>("Visit Date");
-        visitDateCol.setCellValueFactory(
-            cellData -> new SimpleStringProperty(cellData.getValue()));
-        ObservableList<String> visitDates = FXCollections.observableArrayList();
-        PrevVisitsTable.getColumns().add(visitDateCol);
-        // Clears data from our Lists
-        PvisitPdateofvisit.clear();
-        PvisitPheight.clear();
-        PvisitPweight.clear();
-        PvisitPtemperature.clear();
-        PvisitPbloodpressure.clear();
-        PvisitPimmunizations.clear();
-        PvisitPAllergies.clear();
-        PvisitPnotes.clear();
-        PvisitPperscriptions.clear();
-        PvisitPdiagnoses.clear();
-        visitDates.clear();
-        visits.clear();
-        // Process the result set and parse into a new Hash Map for each entry
-        // of visits Array List
-        while (rs.next()) {
-          // Map to hold data for one visit
-          Map<String, String> visitData = new HashMap<>();
+				// creates Table column and adds it to Table
+				TableColumn<String, String> visitDateCol =
+						new TableColumn<>("Visit Date");
+				visitDateCol.setCellValueFactory(
+						cellData -> new SimpleStringProperty(cellData.getValue()));
+				ObservableList<String> visitDates = FXCollections.observableArrayList();
+				PrevVisitsTable.getColumns().add(visitDateCol);
+				// Clears data from our Lists
+				PvisitPdateofvisit.clear();
+				PvisitPheight.clear();
+				PvisitPweight.clear();
+				PvisitPtemperature.clear();
+				PvisitPbloodpressure.clear();
+				PvisitPimmunizations.clear();
+				PvisitPAllergies.clear();
+				PvisitPnotes.clear();
+				PvisitPperscriptions.clear();
+				PvisitPdiagnoses.clear();
+				visitDates.clear();
+				visits.clear();
+				// Process the result set and parse into a new Hash Map for each entry
+				// of visits Array List
+				while (rs.next()) {
+					// Map to hold data for one visit
+					Map<String, String> visitData = new HashMap<>();
 
-          // Retrieve data from the result set for each visit
-          visitData.put("date", rs.getString("date"));
-          visitData.put("height", rs.getString("height"));
-          visitData.put("weight", rs.getString("weight"));
-          visitData.put("temperature", rs.getString("temperature"));
-          visitData.put("blood_pressure", rs.getString("blood_pressure"));
-          visitData.put("immunization", rs.getString("immunization"));
-          visitData.put("allergies", rs.getString("allergies"));
-          visitData.put("notes", rs.getString("notes"));
-          visitData.put("prescription", rs.getString("prescription"));
-          visitData.put("visit_diag", rs.getString("visit_diag"));
+					// Retrieve data from the result set for each visit
+					visitData.put("date", rs.getString("date"));
+					visitData.put("height", rs.getString("height"));
+					visitData.put("weight", rs.getString("weight"));
+					visitData.put("temperature", rs.getString("temperature"));
+					visitData.put("blood_pressure", rs.getString("blood_pressure"));
+					visitData.put("immunization", rs.getString("immunization"));
+					visitData.put("allergies", rs.getString("allergies"));
+					visitData.put("notes", rs.getString("notes"));
+					visitData.put("prescription", rs.getString("prescription"));
+					visitData.put("visit_diag", rs.getString("visit_diag"));
 
-          // adds date into table
-          visitDates.add(visitData.get("date"));
-          PrevVisitsTable.setItems(visitDates);
-          // Add data for the current visit to the list
-          visits.add(visitData);
-        }
-        // Showing first visit in the table
+					// adds date into table
+					visitDates.add(visitData.get("date"));
+					PrevVisitsTable.setItems(visitDates);
+					// Add data for the current visit to the list
+					visits.add(visitData);
+				}
+				// Showing first visit in the table
 
-        if (visits.isEmpty()) {
-          System.out.println("Empty visits List");
-          visitDates.add("No Previous Visits to Display");
-          PrevVisitsTable.setItems(visitDates);
-        } else {
+				if (visits.isEmpty()) {
+					System.out.println("Empty visits List");
+					visitDates.add("No Previous Visits to Display");
+					PrevVisitsTable.setItems(visitDates);
+				} else {
 
-          Map<String, String> firstVisitData = visits.get(0);
-          PvisitPdateofvisit.clear();
-          PvisitPheight.clear();
-          PvisitPweight.clear();
-          PvisitPtemperature.clear();
-          PvisitPbloodpressure.clear();
-          PvisitPimmunizations.clear();
-          PvisitPAllergies.clear();
-          PvisitPnotes.clear();
-          PvisitPperscriptions.clear();
-          PvisitPdiagnoses.clear();
+					Map<String, String> firstVisitData = visits.get(0);
+					PvisitPdateofvisit.clear();
+					PvisitPheight.clear();
+					PvisitPweight.clear();
+					PvisitPtemperature.clear();
+					PvisitPbloodpressure.clear();
+					PvisitPimmunizations.clear();
+					PvisitPAllergies.clear();
+					PvisitPnotes.clear();
+					PvisitPperscriptions.clear();
+					PvisitPdiagnoses.clear();
 
-          PvisitPdateofvisit.appendText(firstVisitData.get("date"));
-          PvisitPheight.appendText(firstVisitData.get("height"));
-          PvisitPweight.appendText(firstVisitData.get("weight"));
-          PvisitPtemperature.appendText(firstVisitData.get("temperature"));
-          PvisitPbloodpressure.appendText(firstVisitData.get("blood_pressure"));
-          PvisitPimmunizations.appendText(firstVisitData.get("immunization"));
-          PvisitPAllergies.appendText(firstVisitData.get("allergies"));
-          PvisitPnotes.appendText(firstVisitData.get("notes"));
-          PvisitPperscriptions.appendText(firstVisitData.get("prescription"));
-          PvisitPdiagnoses.appendText(firstVisitData.get("visit_diag"));
+					PvisitPdateofvisit.appendText(firstVisitData.get("date"));
+					PvisitPheight.appendText(firstVisitData.get("height"));
+					PvisitPweight.appendText(firstVisitData.get("weight"));
+					PvisitPtemperature.appendText(firstVisitData.get("temperature"));
+					PvisitPbloodpressure.appendText(firstVisitData.get("blood_pressure"));
+					PvisitPimmunizations.appendText(firstVisitData.get("immunization"));
+					PvisitPAllergies.appendText(firstVisitData.get("allergies"));
+					PvisitPnotes.appendText(firstVisitData.get("notes"));
+					PvisitPperscriptions.appendText(firstVisitData.get("prescription"));
+					PvisitPdiagnoses.appendText(firstVisitData.get("visit_diag"));
 
-          // Listener for each entry in the table. when one is selected, newVal
-          // equals that date
-          PrevVisitsTable.getSelectionModel()
-              .selectedItemProperty()
-              .addListener((obs, oldVal, newVal) -> {
-                if (newVal != null) {
-                  String selectedDate = newVal; // Date selected in table
+					// Listener for each entry in the table. when one is selected, newVal
+					// equals that date
+					PrevVisitsTable.getSelectionModel()
+					.selectedItemProperty()
+					.addListener((obs, oldVal, newVal) -> {
+						if (newVal != null) {
+							String selectedDate = newVal; // Date selected in table
 
-                  // Find the index of the visit with the selected date in the
-                  // ArrayList
-                  int selectedIndex = -1;
-                  for (int i = 0; i < visits.size(); i++) {
-                    String visitDate = visits.get(i).get("date");
-                    if (visitDate.equals(selectedDate)) {
-                      selectedIndex = i;
-                      break;
-                    }
-                  }
-                  // If a visit with the selected date was found, populate the
-                  // text fields with its information
-                  if (selectedIndex != -1) {
-                    Map<String, String> selectedVisitData =
-                        visits.get(selectedIndex);
-                    // Populate text fields with selectedVisitData
-                    PvisitPdateofvisit.clear();
-                    PvisitPheight.clear();
-                    PvisitPweight.clear();
-                    PvisitPtemperature.clear();
-                    PvisitPbloodpressure.clear();
-                    PvisitPimmunizations.clear();
-                    PvisitPAllergies.clear();
-                    PvisitPnotes.clear();
-                    PvisitPperscriptions.clear();
-                    PvisitPdiagnoses.clear();
+							// Find the index of the visit with the selected date in the
+							// ArrayList
+							int selectedIndex = -1;
+							for (int i = 0; i < visits.size(); i++) {
+								String visitDate = visits.get(i).get("date");
+								if (visitDate.equals(selectedDate)) {
+									selectedIndex = i;
+									break;
+								}
+							}
+							// If a visit with the selected date was found, populate the
+							// text fields with its information
+							if (selectedIndex != -1) {
+								Map<String, String> selectedVisitData =
+										visits.get(selectedIndex);
+								// Populate text fields with selectedVisitData
+								PvisitPdateofvisit.clear();
+								PvisitPheight.clear();
+								PvisitPweight.clear();
+								PvisitPtemperature.clear();
+								PvisitPbloodpressure.clear();
+								PvisitPimmunizations.clear();
+								PvisitPAllergies.clear();
+								PvisitPnotes.clear();
+								PvisitPperscriptions.clear();
+								PvisitPdiagnoses.clear();
 
-                    PvisitPdateofvisit.appendText(
-                        selectedVisitData.get("date"));
-                    PvisitPheight.appendText(selectedVisitData.get("height"));
-                    PvisitPweight.appendText(selectedVisitData.get("weight"));
-                    PvisitPtemperature.appendText(
-                        selectedVisitData.get("temperature"));
-                    PvisitPbloodpressure.appendText(
-                        selectedVisitData.get("blood_pressure"));
-                    PvisitPimmunizations.appendText(
-                        selectedVisitData.get("immunization"));
-                    PvisitPAllergies.appendText(
-                        selectedVisitData.get("allergies"));
-                    PvisitPnotes.appendText(selectedVisitData.get("notes"));
-                    PvisitPperscriptions.appendText(
-                        selectedVisitData.get("prescription"));
-                    PvisitPdiagnoses.appendText(
-                        selectedVisitData.get("visit_diag"));
-                  }
-                }
-              });
-        }
-
-        rs.close();
-        PreviousVisitstatement.close();
-        connect.close();
-      } catch (SQLException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
+								PvisitPdateofvisit.appendText(
+										selectedVisitData.get("date"));
+								PvisitPheight.appendText(selectedVisitData.get("height"));
+								PvisitPweight.appendText(selectedVisitData.get("weight"));
+								PvisitPtemperature.appendText(
+										selectedVisitData.get("temperature"));
+								PvisitPbloodpressure.appendText(
+										selectedVisitData.get("blood_pressure"));
+								PvisitPimmunizations.appendText(
+										selectedVisitData.get("immunization"));
+								PvisitPAllergies.appendText(
+										selectedVisitData.get("allergies"));
+								PvisitPnotes.appendText(selectedVisitData.get("notes"));
+								PvisitPperscriptions.appendText(
+										selectedVisitData.get("prescription"));
+								PvisitPdiagnoses.appendText(
+										selectedVisitData.get("visit_diag"));
+							}
+						}
+					});
+				}
+				rs.close();
+				PreviousVisitstatement.close();
+				connect.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 	// Log out button method / action listener that kicks the user out back to
 	// login screen

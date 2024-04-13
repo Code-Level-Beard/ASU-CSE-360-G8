@@ -161,7 +161,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="patientRecordTab" onSelectionChanged="#patientRecordSelected" text="Patient Record">
+                  <Tab fx:id="patientRecordTab" text="Patient Record">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
