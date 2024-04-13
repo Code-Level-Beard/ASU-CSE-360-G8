@@ -84,7 +84,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <ScrollBar layoutX="960.0" layoutY="15.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="30.0" />
-                              <Text layoutX="142.0" layoutY="498.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Immunizations" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="121.0" layoutY="496.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Immunizations" textAlignment="RIGHT" wrappingWidth="136.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -305,7 +305,7 @@
                               <TextField fx:id="PvisitPbloodpressure" layoutX="650.0" layoutY="210.0" prefHeight="25.0" prefWidth="269.0" promptText="Enter blood pressure..." />
                               <TextArea fx:id="PvisitPnotes" layoutX="650.0" layoutY="633.0" prefHeight="100.0" prefWidth="269.0" promptText="Add note..." />
                               <TextField fx:id="PvisitPdateofvisit" layoutX="650.0" layoutY="50.0" prefWidth="269.0" promptText="Enter date..." />
-                              <TextField fx:id="PvisitPpharmacy" layoutX="136.0" layoutY="289.0" prefHeight="26.0" prefWidth="231.0" text="Pharmacy" />
+                              <TextField fx:id="PvisitPpharmacy" layoutX="140.0" layoutY="288.0" prefHeight="26.0" prefWidth="231.0" text="Pharmacy" />
                               <Text layoutX="500.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Visit:" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
@@ -336,12 +336,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="15.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Policy Number" textAlignment="RIGHT" wrappingWidth="115.0">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="15.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="15.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
@@ -402,7 +397,7 @@
                               <TextArea fx:id="newVisitMedNotesTxtArea" layoutX="452.0" layoutY="481.0" prefHeight="217.0" prefWidth="485.0" promptText="Add note..." />
                               <TextField fx:id="newVisitDovTxtField" layoutX="578.0" layoutY="48.0" prefWidth="228.0" promptText="Enter date..." />
                               <Button fx:id="newSaveVisitButton" layoutX="610.0" layoutY="713.0" mnemonicParsing="false" onAction="#newSaveVisitButtonOnAction" prefHeight="30.0" prefWidth="127.0" text="Save Visit" />
-                              <TextField fx:id="newVisitPtPharmTxtField" layoutX="140.0" layoutY="314.0" prefHeight="26.0" prefWidth="272.0" promptText="Pharmacy" />
+                              <TextField fx:id="newVisitPtPharmTxtField" layoutX="140.0" layoutY="272.0" prefHeight="26.0" prefWidth="272.0" promptText="Pharmacy" />
                               <Text layoutX="428.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Visit" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
@@ -423,18 +418,18 @@
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Text>
-                              <Text layoutX="15.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insurance Provider" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="-6.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insurance Provider" textAlignment="RIGHT" wrappingWidth="136.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Text>
-                              <Text layoutX="15.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="15.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Text>
                               <Line endX="6.0" endY="602.0" layoutX="413.0" layoutY="140.0" startX="6.0" startY="-141.0" />
                               <ScrollBar layoutX="960.0" layoutY="15.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="30.0" />
                               <TextArea fx:id="newVisitAlrgTxtArea" layoutX="577.0" layoutY="354.0" prefHeight="98.0" prefWidth="358.0" promptText="Add allergy..." />
-                              <Text layoutX="428.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Immunizations" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="423.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Immunizations" textAlignment="RIGHT" wrappingWidth="126.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
