@@ -368,9 +368,11 @@ public class PatientController {
 		return messageID;
 	}
 
-	//Generates the text that shows the patient their current patient record
+	// Generates the text that shows the patient their current patient record
 	public void updateText(String user) {
-		PatientRecord.readTo(user,currRecord);
+		PatientRecord.readTo(user, currRecord);
+		PatientRecord.readTo(user, PvisitPname, Pvisitdob, Pvisitaddress,
+				PvisitPnumber, PvisitInsurance, PvisitPpharmacy);
 	}
 
 	public void displayMessages(String user) {
@@ -403,7 +405,8 @@ public class PatientController {
 		}
 	}
 
-	//Allows the patient to update their DB entry of their Patient Record with new information
+	// Allows the patient to update their DB entry of their Patient Record with
+	// new information
 	@FXML
 	public void updateDB() {
 		PatientRecord.updateWith(activeUser, firstName, lastName, dob, address,
