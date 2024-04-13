@@ -5,6 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Random;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -288,7 +293,8 @@ public class PatientRecord {
       TextField[] textFields = new TextField[] {
           firstName, lastName, dob, address, phone, insurance,
           pharmacy, history, immunizations, medications, allergies };
-      if (!(isEmpty(textFields, assignedDoctor))) {
+      if (!(isEmpty(textFields, assignedDoctor)) &&
+          validDate(dob.getText().trim())) {
 
         String userId = genPatientID(firstName.getText().trim(), lastName.getText().trim());
 
@@ -359,6 +365,38 @@ public class PatientRecord {
     } catch (SQLException e1) {
       e1.printStackTrace();
     }
+  }
+
+  public static boolean patientUnderAge(String date) {
+    int targetAge = 100; // TODO
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyy");
+    LocalDate parsedDate = null;
+    try {
+      parsedDate = LocalDate.parse(date, formatter);
+    } catch (Exception e) {
+      System.err.println(
+          "Failed in patientUnderAge, someone stored the date wrong.");
+    }
+    int patientsAge = Period.between(parsedDate, LocalDate.now()).getYears();
+    return patientsAge < targetAge;
+  }
+
+  private static boolean validDate(String date) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyy");
+    try {
+      LocalDate.parse(date, formatter);
+    } catch (Exception e) {
+      Alert alert = new Alert(AlertType.WARNING);
+      alert.setTitle("Invalid Date");
+      alert.setHeaderText(null);
+      alert.setContentText(
+          "Please enter the date in the following format: MM/dd/yyy");
+      alert.showAndWait();
+      System.out.println("bad");
+      return false;
+    }
+    System.out.println("good");
+    return true;
   }
 
   static private String genPatientID(String fName, String lName) {
