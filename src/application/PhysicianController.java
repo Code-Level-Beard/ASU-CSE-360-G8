@@ -1,16 +1,26 @@
 package application;
 
 
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 import javafx.fxml.FXML;
+
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -50,6 +60,28 @@ public class PhysicianController {
 	private TextFlow messageText;
 	@FXML
 	private TextFlow messageThreadArea;
+//	Team #3 fx:id textFields and buttons
+	
+//	Team #3 fx:id textFields that get / hold the current visit data
+	@FXML
+	private TextField currVisitPtName,currVisitPtDOB,currVisitPtAdd,currVisitPtPhNum,
+					  currVisitInsID, currVisitPtPharm;
+	
+//	Team #3 fx:id buttons and textFields for save visit / complete visit
+	@FXML
+	private TextField  currVisitDateOfVisit,currVisitPtHeight,currVisitPtWeight,currVisitPtTemp,
+						currVisitPtBP;
+	
+	@FXML
+	private TextArea	currVisitPtMedNotes,currVisitPtImm,currVisitPtAlrg,currVisitPtPresc,currVisitPtDiag;
+	
+	@FXML
+	private Button currVisitCompVisitOnAction,currVisitSaveOnAction;
+	
+//	Log out button for physician controller kicks you back to the login screen
+	@FXML
+	private Button docLogOutButton;
+	
 	
 	public void displayMessages(String user) {
 		Connection connect;
@@ -163,5 +195,184 @@ public class PhysicianController {
 	public void getSelectedPatient(javafx.event.ActionEvent e) {
 		selectedPatient = pLComboBox.getValue().substring(pLComboBox.getValue().length()-6, pLComboBox.getValue().length());
 	}
+	
+	
+//	Team #3 Current Visit tab 
+	public void currVisitTabListener() {
+	    Connection connect = null;
+	    try {
+	        connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+	        
+	        // Fetching data from PatientRecord table
+	        PreparedStatement patientStatement = connect.prepareStatement(
+	                "SELECT first_name, last_name, address, phone_number, ins_id, pharmacy, DOB FROM PatientRecord WHERE patient_id = ?");
+	        patientStatement.setString(1, selectedPatient);
+	        ResultSet patientResultSet = patientStatement.executeQuery();
+
+	        // Populating PatientRecord fields
+	        if (patientResultSet.next()) { // Assuming only one record is expected
+	            currVisitPtName.setText(patientResultSet.getString("first_name") + " " + patientResultSet.getString("last_name"));
+	            currVisitPtDOB.setText(patientResultSet.getString("DOB"));
+	            currVisitPtAdd.setText(patientResultSet.getString("address"));
+	            currVisitPtPhNum.setText(patientResultSet.getString("phone_number"));
+	            currVisitInsID.setText(patientResultSet.getString("ins_id"));
+	            currVisitPtPharm.setText(patientResultSet.getString("pharmacy"));
+	        }
+
+	        patientResultSet.close();
+	        patientStatement.close();
+
+	        // Fetching data from Visit table
+	        PreparedStatement visitStatement = connect.prepareStatement(
+	                "SELECT date, height, weight, temperature, blood_pressure, immunization, allergies, notes, prescription, visit_diag FROM Visit WHERE patient_id = ? ORDER BY date DESC LIMIT 1");
+	        visitStatement.setString(1, selectedPatient);
+	        ResultSet visitResultSet = visitStatement.executeQuery();
+
+	        // Populating Visit fields
+	        if (visitResultSet.next()) { // Assuming only one record is expected
+	            currVisitDateOfVisit.setText(visitResultSet.getString("date"));
+	            currVisitPtHeight.setText(visitResultSet.getString("height"));
+	            currVisitPtWeight.setText(visitResultSet.getString("weight"));
+	            currVisitPtTemp.setText(visitResultSet.getString("temperature"));
+	            currVisitPtBP.setText(visitResultSet.getString("blood_pressure"));
+	            currVisitPtImm.setText(visitResultSet.getString("immunization"));
+	            currVisitPtAlrg.setText(visitResultSet.getString("allergies"));
+	            currVisitPtMedNotes.setText(visitResultSet.getString("notes"));
+	            currVisitPtPresc.setText(visitResultSet.getString("prescription"));
+	            currVisitPtDiag.setText(visitResultSet.getString("visit_diag"));
+	        }
+
+	        visitResultSet.close();
+	        visitStatement.close();
+	    } catch (SQLException e) {
+	        // Handle SQL exceptions
+	        e.printStackTrace();
+	    } finally {
+	        // Close the connection in the finally block
+	        try {
+	            if (connect != null) connect.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+//	Team #3 Save Visit Button / not completed visit
+	@FXML
+	public void currVisitSaveOnAction(javafx.event.ActionEvent e) {
+		  if (selectedPatient == null) {
+		        // Show a warning dialog
+		        showWarningDialog("Warning", "No patient selected.");
+		        return;
+		    }
+		Connection connect = null;
+	    try {
+	        connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+
+	        // Insert new visit record with completion status 'C'
+	        PreparedStatement insertStatement = connect.prepareStatement(
+	                "INSERT INTO Visit (patient_id, date, height, weight, temperature, blood_pressure, immunization, allergies, notes, prescription, visit_diag, completed) " +
+	                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'NC')");
+	        insertStatement.setString(1, selectedPatient);
+	        insertStatement.setString(2, currVisitDateOfVisit.getText());
+	        insertStatement.setString(3, currVisitPtHeight.getText());
+	        insertStatement.setString(4, currVisitPtWeight.getText());
+	        insertStatement.setString(5, currVisitPtTemp.getText());
+	        insertStatement.setString(6, currVisitPtBP.getText());
+	        insertStatement.setString(7, currVisitPtImm.getText());
+	        insertStatement.setString(8, currVisitPtAlrg.getText());
+	        insertStatement.setString(9, currVisitPtMedNotes.getText());
+	        insertStatement.setString(10, currVisitPtPresc.getText());
+	        insertStatement.setString(11, currVisitPtDiag.getText());
+
+	        int rowsAffected = insertStatement.executeUpdate();
+	        System.out.println("Rows affected: " + rowsAffected);
+
+	        insertStatement.close();
+	    } catch (SQLException ex) {
+	        // Handle SQL exceptions
+	        ex.printStackTrace();
+	    } finally {
+	        // Close the connection in the finally block
+	        try {
+	            if (connect != null) connect.close();
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	}
+//	Team #3 Save Completed Visit
+	@FXML
+	public void currVisitCompVisitOnAction (javafx.event.ActionEvent e) {
+		 if (selectedPatient == null) {
+		        // Show a warning dialog
+		        showWarningDialog("Warning", "No patient selected.");
+		        return;
+		    }
+		Connection connect = null;
+	    try {
+	        connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+
+	        // Insert new visit record with completion status 'C'
+	        PreparedStatement insertStatement = connect.prepareStatement(
+	                "INSERT INTO Visit (patient_id, date, height, weight, temperature, blood_pressure, immunization, allergies, notes, prescription, visit_diag, completed) " +
+	                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'C')");
+	        insertStatement.setString(1, selectedPatient);
+	        insertStatement.setString(2, currVisitDateOfVisit.getText());
+	        insertStatement.setString(3, currVisitPtHeight.getText());
+	        insertStatement.setString(4, currVisitPtWeight.getText());
+	        insertStatement.setString(5, currVisitPtTemp.getText());
+	        insertStatement.setString(6, currVisitPtBP.getText());
+	        insertStatement.setString(7, currVisitPtImm.getText());
+	        insertStatement.setString(8, currVisitPtAlrg.getText());
+	        insertStatement.setString(9, currVisitPtMedNotes.getText());
+	        insertStatement.setString(10, currVisitPtPresc.getText());
+	        insertStatement.setString(11, currVisitPtDiag.getText());
+
+	        int rowsAffected = insertStatement.executeUpdate();
+	        System.out.println("Rows affected: " + rowsAffected);
+
+	        insertStatement.close();
+	    } catch (SQLException ex) {
+	        // Handle SQL exceptions
+	        ex.printStackTrace();
+	    } finally {
+	        // Close the connection in the finally block
+	        try {
+	            if (connect != null) connect.close();
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	}
+//	Team #3 Current visit, this displays a warning box when no 
+//	patient is selected / selectedPatient = null;
+	private void showWarningDialog(String title, String content) {
+	    Platform.runLater(() -> {
+	        Alert alert = new Alert(AlertType.WARNING);
+	        alert.setTitle(title);
+	        alert.setHeaderText(null);
+	        alert.setContentText(content);
+	        alert.showAndWait();
+	    });
+	}
+	
+	public void docLogOutButtonOnAction(javafx.event.ActionEvent e) {
+		  try {
+		        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+		        Parent root = loader.load();
+		        
+		        Stage stage = new Stage();
+		        stage.setScene(new Scene(root));
+		        stage.show();
+
+		        // Close the current patient panel window
+		        Stage currentStage = (Stage) docLogOutButton.getScene().getWindow();
+		        currentStage.close();
+		    } catch (IOException et) {
+		        et.printStackTrace();
+		    }
+		}
 }
+	
+
 

@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,6 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -19,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 
 public class NurseController {
 	String activeUser;
@@ -125,12 +130,15 @@ public class NurseController {
 	private Button newSaveVisitButtonOnAction;
 
 	@FXML
-	TextField newVisitBpTxtField, newVisitImmTxtField, newVisitAlrgTxtField,
+	TextField newVisitBpTxtField,
 			newVisitDovTxtField, newVisitHeightTxtField, newVisitWeightTxtField,
 			newVisitTempTxtField;
 
 	@FXML
-	private TextArea newVisitMedNotesTxtArea;
+	private TextArea newVisitMedNotesTxtArea, newVisitImmTxtArea, newVisitAlrgTxtArea;
+//	 Log out Button for the log out functionality
+	@FXML
+	private Button nurLogOutButton;
 
 	@FXML
 	public void newPatient(javafx.event.ActionEvent e) {
@@ -700,8 +708,8 @@ public class NurseController {
 		try {
 			// Retrieve data from the text fields
 			String bloodPressure = newVisitBpTxtField.getText().trim();
-			String immunization = newVisitImmTxtField.getText().trim();
-			String allergies = newVisitAlrgTxtField.getText().trim();
+			String immunization = newVisitImmTxtArea.getText().trim();
+			String allergies = newVisitAlrgTxtArea.getText().trim();
 			String notes = newVisitMedNotesTxtArea.getText().trim();
 			String dateOfVisit = newVisitDovTxtField.getText().trim();
 			String height = newVisitHeightTxtField.getText().trim();
@@ -739,4 +747,23 @@ public class NurseController {
 			ex.printStackTrace(); // Handle exceptions appropriately
 		}
 	}
+	
+//	Log out button method / action listener that kicks the user out back to login screen
+	
+	public void nurLogOutOnAction(javafx.event.ActionEvent e) {
+		  try {
+		        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+		        Parent root = loader.load();
+		        
+		        Stage stage = new Stage();
+		        stage.setScene(new Scene(root));
+		        stage.show();
+
+		        // Close the current patient panel window
+		        Stage currentStage = (Stage) nurLogOutButton.getScene().getWindow();
+		        currentStage.close();
+		    } catch (IOException et) {
+		        et.printStackTrace();
+		    }
+		}
 }

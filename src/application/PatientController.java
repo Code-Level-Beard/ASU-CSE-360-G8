@@ -1,11 +1,15 @@
 package application;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -15,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 
 public class PatientController {
   String activeUser;
@@ -97,6 +102,10 @@ public class PatientController {
   private TextField PvisitPdiagnosis1;
   @FXML
   private TextField PvisitPdiagnosis2;
+  
+//  Button for log-out it will kick you back to the login screen
+  @FXML
+  private Button ptLogOutButton;
 
   public void pullPreviousVisit(String user) {
     activeUser = user;
@@ -242,4 +251,22 @@ public class PatientController {
     currRecord.clear();
     updateText(activeUser);
   }
-}
+  
+  public void ptLogOutOnAction(javafx.event.ActionEvent e) {
+	  try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+	        Parent root = loader.load();
+	        
+	        Stage stage = new Stage();
+	        stage.setScene(new Scene(root));
+	        stage.show();
+
+	        // Close the current patient panel window
+	        Stage currentStage = (Stage) ptLogOutButton.getScene().getWindow();
+	        currentStage.close();
+	    } catch (IOException et) {
+	        et.printStackTrace();
+	    }
+	}
+  }
+
