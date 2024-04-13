@@ -79,7 +79,7 @@ public class LoginController {
 					if (sqlType.equals("Physician")) {
 						openPhysicianPanel();
 					} else if (sqlType.equals("Nurse")) {
-						openNursePanel();
+						openNursePanel(activeUser);
 					} else if (sqlType.equals("Patient")) {
 						openPatientPanel(activeUser);
 					}
@@ -131,7 +131,7 @@ public class LoginController {
 		}
 	}
 
-	private void openNursePanel() {
+	private void openNursePanel(String activeUser) {
 		try {
 			loader = new FXMLLoader(getClass().getResource("Nurse.fxml"));
 			root = loader.load();
@@ -139,8 +139,9 @@ public class LoginController {
 			nController = loader.getController();
 			nController.genNPComboBox();
 			nController.genPLComboBox();
-			nController.displayMessages("JD0119");
-			nController.messageSelect();
+			nController.messageSelect(activeUser);
+			nController.activeUser = activeUser;
+			nController.messageSelect(activeUser);
 
 			stage = new Stage();
 			stage.setScene(new Scene(root));
@@ -163,6 +164,7 @@ public class LoginController {
 			pController.updateText(activeUser);
 			pController.displayMessages(activeUser);
 			pController.activeUser = activeUser;
+			pController.displayMessages(activeUser);
 
 			stage = new Stage();
 			stage.setScene(new Scene(root));
