@@ -313,9 +313,9 @@ public class PhysicianController {
 	 * connect.prepareStatement("SELECT message_id, sender, header, content FROM
 	 * Message WHERE patient_id = ?"); ResultSet resultSet =
 	 * statement.executeQuery();
-	 * 
+	 *
 	 * while(resultSet.next()) {
-	 * 
+	 *
 	 * Text sender = new Text();
 	 * Text content = new Text();
 	 * sender.setText(resultSet.getString("sender") +
@@ -327,7 +327,7 @@ public class PhysicianController {
 	 * //messageText.getChildren().addAll(new
 	 * Text(resultSet.getString("sender") + "\n" + "\n" +
 	 * resultSet.getString("content") + "\n" + "\n" + "\n" + "\n"));
-	 * 
+	 *
 	 * }
 	 * resultSet.close();
 	 * statement.close();
@@ -529,18 +529,6 @@ public class PhysicianController {
 		}
 	}
 
-	// Team #3 Current visit, this displays a warning box when no
-	// patient is selected / selectedPatient = null;
-	private void showWarningDialog(String title, String content) {
-		Platform.runLater(() -> {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle(title);
-			alert.setHeaderText(null);
-			alert.setContentText(content);
-			alert.showAndWait();
-		});
-	}
-
 	// Doctor Log out button
 	public void docLogOutButtonOnAction(javafx.event.ActionEvent e) {
 		try {
@@ -557,5 +545,17 @@ public class PhysicianController {
 		} catch (IOException et) {
 			et.printStackTrace();
 		}
+	}
+
+	// Team #3 Current visit, this displays a warning box when no
+	// patient is selected / selectedPatient = null;
+	private void showWarningDialog(String title, String content) {
+		Platform.runLater(() -> {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle(title);
+			alert.setHeaderText(null);
+			alert.setContentText(content);
+			alert.showAndWait();
+		});
 	}
 }

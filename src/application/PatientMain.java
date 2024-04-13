@@ -10,6 +10,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class PatientMain extends Application {
+  public static void main(String[] args) {
+    launch(args);
+  }
+
   @Override
   public void start(Stage stage) {
     String activeUser = "JD0119";
@@ -25,9 +29,5 @@ public class PatientMain extends Application {
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  public static void main(String[] args) {
-    launch(args);
   }
 }

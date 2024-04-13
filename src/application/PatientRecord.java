@@ -270,14 +270,6 @@ public class PatientRecord {
     }
   }
 
-  static private String genPatientID(String fName, String lName) {
-    Random ranInt = new Random();
-    int randomInt = ranInt.nextInt(9000);
-    randomInt += 1000;
-    String newPatientID = (fName.substring(0, 1) + lName.substring(0, 1) + randomInt);
-    return newPatientID;
-  }
-
   public static void newRecord(TextField firstName, TextField lastName,
       TextField dob, TextField address,
       TextField phone, TextField insurance,
@@ -367,6 +359,14 @@ public class PatientRecord {
     } catch (SQLException e1) {
       e1.printStackTrace();
     }
+  }
+
+  static private String genPatientID(String fName, String lName) {
+    Random ranInt = new Random();
+    int randomInt = ranInt.nextInt(9000);
+    randomInt += 1000;
+    String newPatientID = (fName.substring(0, 1) + lName.substring(0, 1) + randomInt);
+    return newPatientID;
   }
 
   private static boolean isEmpty(TextField[] textFields,
