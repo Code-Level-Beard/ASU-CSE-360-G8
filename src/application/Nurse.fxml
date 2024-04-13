@@ -383,31 +383,27 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Text layoutX="500.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Height" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="428.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Height" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Text>
-                              <Text layoutX="500.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weight" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="428.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weight" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Text>
-                              <Text layoutX="500.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperature" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="428.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Temperature" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Text>
-                              <Text layoutX="500.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Blood Pressure" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="428.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Blood Pressure" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Text>
-                              <Text layoutX="500.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Immunizations" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="428.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allergies" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Text>
-                              <Text layoutX="500.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Allergies" textAlignment="RIGHT" wrappingWidth="115.0">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font></Text>
-                              <Text layoutX="570.0" layoutY="361.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="570.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Text>
@@ -416,19 +412,15 @@
                               <TextField fx:id="newVisitPtAddTxtField" layoutX="140.0" layoutY="132.0" prefHeight="48.0" prefWidth="272.0" promptText="Street Address" />
                               <TextField fx:id="newVisitPtPhTxtField" layoutX="140.0" layoutY="194.0" prefHeight="26.0" prefWidth="272.0" promptText="(***) ***-****" />
                               <TextField fx:id="newVisitInsIdTxtField" layoutX="140.0" layoutY="234.0" prefHeight="26.0" prefWidth="272.0" promptText="Insurance Company" />
-                              <TextField fx:id="newVisitHeightTxtField" layoutX="650.0" layoutY="90.0" prefWidth="175.0" promptText="Enter height..." />
-                              <TextField fx:id="newVisitWeightTxtField" layoutX="650.0" layoutY="130.0" prefWidth="175.0" promptText="Enter weight..." />
-                              <TextField fx:id="newVisitTempTxtField" layoutX="650.0" layoutY="170.0" prefWidth="175.0" promptText="Enter temperature..." />
-                              <TextField fx:id="newVisitBpTxtField" layoutX="650.0" layoutY="210.0" prefWidth="175.0" promptText="Enter blood pressure..." />
-                              <TextField fx:id="newVisitImmTxtField" layoutX="650.0" layoutY="250.0" prefWidth="175.0" promptText="Add immunization..." />
-                              <TextField fx:id="newVisitAlrgTxtField" layoutX="650.0" layoutY="290.0" prefWidth="175.0" promptText="Add allergy..." />
-                              <TextArea fx:id="newVisitMedNotesTxtArea" layoutX="452.0" layoutY="370.0" prefHeight="217.0" prefWidth="485.0" promptText="Add note..." />
-                              <TextField fx:id="newVisitDovTxtField" layoutX="650.0" layoutY="50.0" prefWidth="175.0" promptText="Enter date..." />
-                              <Button layoutX="845.0" layoutY="291.0" mnemonicParsing="false" text="Add" />
-                              <Button layoutX="845.0" layoutY="249.0" mnemonicParsing="false" text="Add" />
-                              <Button fx:id="newSaveVisitButton" layoutX="610.0" layoutY="602.0" mnemonicParsing="false" onAction="#newSaveVisitButtonOnAction" prefHeight="30.0" prefWidth="127.0" text="Save Visit" />
+                              <TextField fx:id="newVisitHeightTxtField" layoutX="578.0" layoutY="88.0" prefWidth="228.0" promptText="Enter height..." />
+                              <TextField fx:id="newVisitWeightTxtField" layoutX="578.0" layoutY="128.0" prefWidth="228.0" promptText="Enter weight..." />
+                              <TextField fx:id="newVisitTempTxtField" layoutX="578.0" layoutY="168.0" prefWidth="228.0" promptText="Enter temperature..." />
+                              <TextField fx:id="newVisitBpTxtField" layoutX="578.0" layoutY="208.0" prefHeight="25.0" prefWidth="228.0" promptText="Enter blood pressure..." />
+                              <TextArea fx:id="newVisitMedNotesTxtArea" layoutX="452.0" layoutY="481.0" prefHeight="217.0" prefWidth="485.0" promptText="Add note..." />
+                              <TextField fx:id="newVisitDovTxtField" layoutX="578.0" layoutY="48.0" prefWidth="228.0" promptText="Enter date..." />
+                              <Button fx:id="newSaveVisitButton" layoutX="610.0" layoutY="713.0" mnemonicParsing="false" onAction="#newSaveVisitButtonOnAction" prefHeight="30.0" prefWidth="127.0" text="Save Visit" />
                               <TextField fx:id="newVisitPtPharmTxtField" layoutX="140.0" layoutY="314.0" prefHeight="26.0" prefWidth="272.0" promptText="Pharmacy" />
-                              <Text layoutX="500.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Visit" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="428.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Visit" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Text>
@@ -458,6 +450,13 @@
                                  </font></Text>
                               <Line endX="6.0" endY="602.0" layoutX="413.0" layoutY="140.0" startX="6.0" startY="-141.0" />
                               <ScrollBar layoutX="960.0" layoutY="15.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="30.0" />
+                              <TextArea fx:id="newVisitAlrgTxtArea" layoutX="577.0" layoutY="354.0" prefHeight="98.0" prefWidth="358.0" promptText="Add allergy..." />
+                              <Text layoutX="428.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Immunizations" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <TextArea fx:id="newVisitImmTxtArea" layoutX="577.0" layoutY="244.0" prefHeight="98.0" prefWidth="358.0" promptText="Add immunization..." />
                            </children>
                         </AnchorPane>
                      </content>
