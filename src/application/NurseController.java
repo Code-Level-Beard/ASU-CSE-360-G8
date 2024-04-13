@@ -315,6 +315,8 @@ public class NurseController {
 		}
 	}
 
+	//Generates the textArea of the current patient record for the selected patient
+	//also generates a combo box that allows an assigned doctor to be changed. 
 	public void patientRecordSelected() {
 		updatePatientRecordText();
 		genADUComboBox();
@@ -632,7 +634,7 @@ public class NurseController {
 
 	public void genADUComboBox() {
 		Connection connect;
-		System.out.println("Generating");
+		assignedDoctorUpdate.getItems().clear();
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 			PreparedStatement doctors = connect.prepareStatement(

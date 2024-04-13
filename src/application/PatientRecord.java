@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextArea;
@@ -101,14 +100,22 @@ public class PatientRecord {
     TextField[] textFields = new TextField[] {
         firstName, lastName, dob, address, phone, insurance,
         pharmacy, history, immunizations, medications, allergies };
-    if (isEmpty(textFields)) {
+    int numOfTextFields = textFields.length;
+    int numOfEmptyFields = 0;
+    
+    for (TextField textField: textFields) {
+    	if (textField.getText().trim().isEmpty()) {
+    		numOfEmptyFields ++;
+    	}
+    }
+    if (numOfEmptyFields == numOfTextFields) {
       Alert alert = new Alert(AlertType.WARNING);
       alert.setTitle("Form Invalid");
       alert.setHeaderText(null);
       alert.setContentText(
           "Please enter text into the field you wish to update.");
       alert.showAndWait();
-      // if any textfield empty just bail early
+      // if all textFields are empty just bail early
       return;
     }
 
@@ -117,9 +124,32 @@ public class PatientRecord {
       connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
       PreparedStatement dbCon = connect.prepareStatement(
           "update PatientRecord set first_name = ?, last_name = ?, DOB = ?, address = ?, phone_number = ?, ins_id = ?, pharmacy = ?, health_history = ?, immunizations = ?, medications = ?, allergies = ? where patient_id = ?");
+      PreparedStatement dbResS = connect.prepareStatement ("SELECT first_name, last_name, DOB, address, phone_number, ins_id, pharmacy, health_history, immunizations, medications, allergies FROM PatientRecord WHERE patient_id = ?");
+      dbResS.setString(1, userId);
+      ResultSet dbRes = dbResS.executeQuery();
       for (int i = 0; i < textFields.length; i++) {
-
-        dbCon.setString(i + 1, textFields[i].getText().trim());
+    	  
+    	  if(i == 7 || i == 8 || i == 9 || i == 10) {
+    		  //Append data in DB with new values if textField is not empty
+    		  if(textFields[i].getText().trim().isEmpty() == false) {
+    			  dbCon.setString(i + 1, dbRes.getString(i + 1) + ", " + textFields[i].getText().trim());
+    		  } 
+    		//TextField is empty, save current data back into DB
+    		  else { 
+    			  dbCon.setString(i + 1, dbRes.getString(i + 1));
+    		  }
+    	  }
+    	  //TextField does not requiring appending
+    	  else {
+    		  //Overwrite data in DB with new values if textField is not empty
+    		  if(textFields[i].getText().trim().isEmpty() == false) {
+    			  dbCon.setString(i + 1, textFields[i].getText().trim());
+    		  } 
+    		  //TextField is empty, save current data back into DB
+    		  else { 
+    			  dbCon.setString(i + 1, dbRes.getString(i + 1));
+    		  }
+    	  }
       }
       dbCon.setString(textFields.length + 1, userId);
       dbCon.execute();
@@ -129,7 +159,8 @@ public class PatientRecord {
       e1.printStackTrace();
     }
   }
-
+  
+  /* Method currently not required
   private static boolean isEmpty(TextField[] textFields) {
     for (TextField f : textFields) {
       if (f.getText().isEmpty() || f.getText().isBlank()) {
@@ -137,5 +168,6 @@ public class PatientRecord {
       }
     }
     return false;
-  }
+  } 
+  */
 }
