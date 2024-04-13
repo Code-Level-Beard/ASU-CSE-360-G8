@@ -225,11 +225,9 @@
                                  </font></Text>
                               <TextField fx:id="currVisitPtName" layoutX="140.0" layoutY="50.0" prefHeight="26.0" prefWidth="229.0" promptText="Patient Name" />
                               <TextField fx:id="currVisitPtDOB" layoutX="140.0" layoutY="90.0" prefHeight="26.0" prefWidth="230.0" promptText="**/**/****" />
-                              <TextField fx:id="currVisitPtAdd" layoutX="140.0" layoutY="130.0" prefHeight="26.0" prefWidth="229.0" promptText="Street Address" />
+                              <TextField fx:id="currVisitPtAdd" layoutX="140.0" layoutY="130.0" prefHeight="66.0" prefWidth="229.0" promptText="Street Address" />
                               <TextField fx:id="currVisitPtPhNum" layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" promptText="(***) ***-****" />
                               <TextField fx:id="currVisitInsID" layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" promptText="Insurance Company" />
-                              <TextField layoutX="140.0" layoutY="290.0" prefHeight="26.0" prefWidth="231.0" text="Policy Number" />
-                              <TextField layoutX="140.0" layoutY="170.0" prefHeight="26.0" prefWidth="229.0" text="City, State ZIP" />
                               <TextField fx:id="currVisitPtHeight" layoutX="555.0" layoutY="70.0" prefWidth="269.0" promptText="Height" />
                               <TextField fx:id="currVisitPtWeight" layoutX="555.0" layoutY="110.0" prefWidth="269.0" promptText="Weight" />
                               <TextField fx:id="currVisitPtTemp" layoutX="555.0" layoutY="150.0" prefWidth="269.0" promptText="Temperature" />
@@ -237,7 +235,7 @@
                               <TextArea fx:id="currVisitPtMedNotes" layoutX="435.0" layoutY="557.0" prefHeight="140.0" prefWidth="551.0" promptText="Add note..." />
                               <TextField fx:id="currVisitDateOfVisit" layoutX="555.0" layoutY="30.0" prefWidth="269.0" promptText="Enter date **/**/****" />
                               <Button fx:id="currVisitSave" layoutX="541.0" layoutY="710.0" mnemonicParsing="false" onAction="#currVisitSaveOnAction" prefHeight="30.0" prefWidth="127.0" text="Save Visit" />
-                              <TextField fx:id="currVisitPtPharm" layoutX="140.0" layoutY="330.0" prefHeight="26.0" prefWidth="231.0" promptText="Pharmacy" />
+                              <TextField fx:id="currVisitPtPharm" layoutX="139.0" layoutY="293.0" prefHeight="26.0" prefWidth="231.0" promptText="Pharmacy" />
                               <Text layoutX="422.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Visit:" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
@@ -262,11 +260,7 @@
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Text>
-                              <Text layoutX="15.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Policy Number" textAlignment="RIGHT" wrappingWidth="115.0">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font></Text>
-                              <Text layoutX="15.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="15.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Text>
