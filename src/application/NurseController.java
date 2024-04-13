@@ -762,7 +762,15 @@ public class NurseController {
 	//Team #3 ********Previous Visit Tab Method*******
 		public void pullPreviousVisit() {
 			Connection connect;
-			
+			PvisitPname.clear();
+		    Pvisitdob.clear();
+		    Pvisitaddress.clear();
+		    PvisitPnumber.clear();
+		    PvisitInsurance.clear();
+		    PvisitPpharmacy.clear();
+			if(selectedPatient != null) {
+				PatientRecord.readTo(selectedPatient, PvisitPname, Pvisitdob,
+				  Pvisitaddress, PvisitPnumber, PvisitInsurance, PvisitPpharmacy);
 			try {
 				connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 				//sqlite statement
@@ -782,6 +790,16 @@ public class NurseController {
 				    ObservableList<String> visitDates = FXCollections.observableArrayList();
 				    PrevVisitsTable.getColumns().add(visitDateCol);
 				    //Clears data from our Lists
+				    PvisitPdateofvisit.clear();
+					PvisitPheight.clear();
+					PvisitPweight.clear();
+					PvisitPtemperature.clear();
+					PvisitPbloodpressure.clear();
+					PvisitPimmunizations.clear();
+					PvisitPAllergies.clear();
+					PvisitPnotes.clear();
+					PvisitPperscriptions.clear();
+					PvisitPdiagnoses.clear();
 				    visitDates.clear();
 				    visits.clear();
 					// Process the result set and parse into a new Hash Map for each entry of visits Array List
@@ -888,9 +906,12 @@ public class NurseController {
 				rs.close();
 				PreviousVisitstatement.close();
 				connect.close();
-			} catch (SQLException e) {
+			}
+				catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				}
 			}
 		}
 }
+
