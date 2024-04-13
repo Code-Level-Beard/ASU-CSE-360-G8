@@ -256,33 +256,38 @@ public class PhysicianController {
 	        }
 	    }
 	}
+	
 //	Team #3 Save Visit Button / not completed visit
 	@FXML
 	public void currVisitSaveOnAction(javafx.event.ActionEvent e) {
-		  if (selectedPatient == null) {
-		        // Show a warning dialog
-		        showWarningDialog("Warning", "No patient selected.");
-		        return;
-		    }
-		Connection connect = null;
+	    // Assuming you have access to doctor_id in your controller
+	    String doctorId = activeUser;
+
+	    if (selectedPatient == null) {
+	        // Show a warning dialog
+	        showWarningDialog("Warning", "No patient selected.");
+	        return;
+	    }
+	    Connection connect = null;
 	    try {
 	        connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 
-	        // Insert new visit record with completion status 'C'
+	        // Insert new visit record with completion status 'NC'
 	        PreparedStatement insertStatement = connect.prepareStatement(
-	                "INSERT INTO Visit (patient_id, date, height, weight, temperature, blood_pressure, immunization, allergies, notes, prescription, visit_diag, completed) " +
-	                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'NC')");
+	                "INSERT INTO Visit (patient_id, doctor_id, date, height, weight, temperature, blood_pressure, immunization, allergies, notes, prescription, visit_diag, completed) " +
+	                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'NC')");
 	        insertStatement.setString(1, selectedPatient);
-	        insertStatement.setString(2, currVisitDateOfVisit.getText());
-	        insertStatement.setString(3, currVisitPtHeight.getText());
-	        insertStatement.setString(4, currVisitPtWeight.getText());
-	        insertStatement.setString(5, currVisitPtTemp.getText());
-	        insertStatement.setString(6, currVisitPtBP.getText());
-	        insertStatement.setString(7, currVisitPtImm.getText());
-	        insertStatement.setString(8, currVisitPtAlrg.getText());
-	        insertStatement.setString(9, currVisitPtMedNotes.getText());
-	        insertStatement.setString(10, currVisitPtPresc.getText());
-	        insertStatement.setString(11, currVisitPtDiag.getText());
+	        insertStatement.setString(2, doctorId);
+	        insertStatement.setString(3, currVisitDateOfVisit.getText());
+	        insertStatement.setString(4, currVisitPtHeight.getText());
+	        insertStatement.setString(5, currVisitPtWeight.getText());
+	        insertStatement.setString(6, currVisitPtTemp.getText());
+	        insertStatement.setString(7, currVisitPtBP.getText());
+	        insertStatement.setString(8, currVisitPtImm.getText());
+	        insertStatement.setString(9, currVisitPtAlrg.getText());
+	        insertStatement.setString(10, currVisitPtMedNotes.getText());
+	        insertStatement.setString(11, currVisitPtPresc.getText());
+	        insertStatement.setString(12, currVisitPtDiag.getText());
 
 	        int rowsAffected = insertStatement.executeUpdate();
 	        System.out.println("Rows affected: " + rowsAffected);
@@ -300,33 +305,37 @@ public class PhysicianController {
 	        }
 	    }
 	}
-//	Team #3 Save Completed Visit
+
 	@FXML
 	public void currVisitCompVisitOnAction (javafx.event.ActionEvent e) {
-		 if (selectedPatient == null) {
-		        // Show a warning dialog
-		        showWarningDialog("Warning", "No patient selected.");
-		        return;
-		    }
-		Connection connect = null;
+	    // Assuming you have access to doctor_id in your controller
+		String doctorId = activeUser;
+
+	    if (selectedPatient == null) {
+	        // Show a warning dialog
+	        showWarningDialog("Warning", "No patient selected.");
+	        return;
+	    }
+	    Connection connect = null;
 	    try {
 	        connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 
 	        // Insert new visit record with completion status 'C'
 	        PreparedStatement insertStatement = connect.prepareStatement(
-	                "INSERT INTO Visit (patient_id, date, height, weight, temperature, blood_pressure, immunization, allergies, notes, prescription, visit_diag, completed) " +
-	                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'C')");
+	                "INSERT INTO Visit (patient_id, doctor_id, date, height, weight, temperature, blood_pressure, immunization, allergies, notes, prescription, visit_diag, completed) " +
+	                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'C')");
 	        insertStatement.setString(1, selectedPatient);
-	        insertStatement.setString(2, currVisitDateOfVisit.getText());
-	        insertStatement.setString(3, currVisitPtHeight.getText());
-	        insertStatement.setString(4, currVisitPtWeight.getText());
-	        insertStatement.setString(5, currVisitPtTemp.getText());
-	        insertStatement.setString(6, currVisitPtBP.getText());
-	        insertStatement.setString(7, currVisitPtImm.getText());
-	        insertStatement.setString(8, currVisitPtAlrg.getText());
-	        insertStatement.setString(9, currVisitPtMedNotes.getText());
-	        insertStatement.setString(10, currVisitPtPresc.getText());
-	        insertStatement.setString(11, currVisitPtDiag.getText());
+	        insertStatement.setString(2, doctorId);
+	        insertStatement.setString(3, currVisitDateOfVisit.getText());
+	        insertStatement.setString(4, currVisitPtHeight.getText());
+	        insertStatement.setString(5, currVisitPtWeight.getText());
+	        insertStatement.setString(6, currVisitPtTemp.getText());
+	        insertStatement.setString(7, currVisitPtBP.getText());
+	        insertStatement.setString(8, currVisitPtImm.getText());
+	        insertStatement.setString(9, currVisitPtAlrg.getText());
+	        insertStatement.setString(10, currVisitPtMedNotes.getText());
+	        insertStatement.setString(11, currVisitPtPresc.getText());
+	        insertStatement.setString(12, currVisitPtDiag.getText());
 
 	        int rowsAffected = insertStatement.executeUpdate();
 	        System.out.println("Rows affected: " + rowsAffected);
@@ -344,6 +353,7 @@ public class PhysicianController {
 	        }
 	    }
 	}
+	
 //	Team #3 Current visit, this displays a warning box when no 
 //	patient is selected / selectedPatient = null;
 	private void showWarningDialog(String title, String content) {
@@ -356,6 +366,7 @@ public class PhysicianController {
 	    });
 	}
 	
+//	Doctor Log out button
 	public void docLogOutButtonOnAction(javafx.event.ActionEvent e) {
 		  try {
 		        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
