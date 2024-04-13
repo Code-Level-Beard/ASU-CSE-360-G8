@@ -45,9 +45,14 @@
                                     <Image url="@../../../../Downloads/image.png" />
                                  </image>
                               </ImageView>
-                              <Button fx:id="selectPatient" layoutX="500.0" layoutY="333.0" mnemonicParsing="false" onAction="#getSelectedPatient" prefHeight="30.0" prefWidth="127.0" text="Select" />
+                              <Button fx:id="selectPatient" layoutX="465.0" layoutY="341.0" mnemonicParsing="false" onAction="#getSelectedPatient" prefHeight="30.0" prefWidth="127.0" text="Select" />
                               <ComboBox fx:id="selPLDoctor" layoutX="453.0" layoutY="214.0" onAction="#getDoctor" prefWidth="150.0" />
                               <ComboBox fx:id="selPLPatient" layoutX="453.0" layoutY="272.0" prefWidth="150.0" />
+                              <Button fx:id="nurLogOutButton" layoutX="465.0" layoutY="406.0" mnemonicParsing="false" onAction="#nurLogOutOnAction" prefHeight="30.0" prefWidth="127.0" style="-fx-background-color: #1976bbff;" text="Log - Out" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                     </content>
@@ -56,14 +61,18 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextArea layoutX="390.0" layoutY="595.0" prefHeight="116.0" prefWidth="505.0" promptText="Type new message here..." />
-                              <Button layoutX="905.0" layoutY="685.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="81.0" text="Send" />
+                              <TextArea fx:id="composeMessage" layoutX="390.0" layoutY="595.0" prefHeight="116.0" prefWidth="505.0" promptText="Type new message here..." />
+                              <Button fx:id="sendButton" layoutX="905.0" layoutY="685.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="81.0" text="Send" />
                               <Line endX="20.0" endY="596.0" layoutX="328.0" layoutY="146.0" startX="20.0" startY="-150.0" />
                               <Line endX="550.0" layoutX="450.0" layoutY="573.0" startX="-100.0" />
-                              <TextFlow fx:id="messageThreadArea" layoutX="43.0" layoutY="33.0" prefHeight="716.0" prefWidth="253.0" />
                               <ScrollPane layoutX="363.0" layoutY="17.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="544.0" prefWidth="625.0">
                                  <content>
                                     <TextFlow fx:id="messageText" prefHeight="521.0" prefWidth="600.0" />
+                                 </content>
+                              </ScrollPane>
+                              <ScrollPane layoutX="29.0" layoutY="17.0" prefHeight="725.0" prefWidth="297.0">
+                                 <content>
+                                    <TextFlow fx:id="messageThreadArea" prefHeight="716.0" prefWidth="253.0" />
                                  </content>
                               </ScrollPane>
                            </children>
@@ -152,7 +161,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="patientRecordTab" onSelectionChanged="#updatePatientRecordText" text="Patient Record">
+                  <Tab fx:id="patientRecordTab" onSelectionChanged="#patientRecordSelected" text="Patient Record">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -322,12 +331,17 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="16.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insurance Provider" textAlignment="RIGHT" wrappingWidth="113.0">
+                              <Text layoutX="15.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Insurance Provider" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="15.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
+                              <Text layoutX="15.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Policy Number" textAlignment="RIGHT" wrappingWidth="115.0">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="15.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacy" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
