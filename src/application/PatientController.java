@@ -71,50 +71,15 @@ public class PatientController {
   private TextFlow messageText;
   // Previous Visits Tab
   @FXML
-  private TextArea PvisitPnotes;
+  private TextField PvisitPdateofvisit, PvisitPheight, PvisitPweight, PvisitPtemperature, PvisitPbloodpressure, PvisitPname, Pvisitdob,
+  Pvisitaddress, PvisitPnumber, PvisitInsurance, PvisitPpharmacy;
   @FXML
-  private TextField PvisitPname;
-  @FXML
-  private TextField Pvisitdob;
-  @FXML
-  private TextField Pvisitaddress;
-  @FXML
-  private TextField PvisitPnumber;
-  @FXML
-  private TextField PvisitInsurance;
-  @FXML
-  private TextField PvisitPheight;
-  @FXML
-  private TextField PvisitPweight;
-  @FXML
-  private TextField PvisitPtemperature;
-  @FXML
-  private TextField PvisitPbloodpressure;
-  @FXML
-  private TextField PvisitPimmunization1;
-  @FXML
-  private TextField PvisitPAllergy1;
-  @FXML
-  private TextField PvisitPdateofvisit;
-  @FXML
-  private TextField PvisitPpharmacy;
-  @FXML
-  private TextField PvisitPimmunization2;
-  @FXML
-  private TextField PvisitPallergy2;
-  @FXML
-  private TextField PvisitPperscription1;
-  @FXML
-  private TextField PvisitPperscription2;
-  @FXML
-  private TextField PvisitPdiagnosis1;
-  @FXML
-  private TextField PvisitPdiagnosis2;
-
+  private TextArea PvisitPimmunizations, PvisitPAllergies, PvisitPperscriptions, PvisitPdiagnoses, PvisitPnotes;
   @FXML
 	private Tab PrevVisitTab;
   @FXML
   private TableView<String> PrevVisitsTable;
+  
 //Team #3 ********Previous Visit Tab Method*******
 	public void pullPreviousVisit() {
 		Connection connect;
@@ -174,22 +139,22 @@ public class PatientController {
 				PvisitPweight.clear();
 				PvisitPtemperature.clear();
 				PvisitPbloodpressure.clear();
-				PvisitPimmunization1.clear();
-				PvisitPAllergy1.clear();
+				PvisitPimmunizations.clear();
+				PvisitPAllergies.clear();
 				PvisitPnotes.clear();
-				PvisitPperscription1.clear();
-				PvisitPdiagnosis1.clear();
+				PvisitPperscriptions.clear();
+				PvisitPdiagnoses.clear();
 				
 				PvisitPdateofvisit.appendText(firstVisitData.get("date"));
 				PvisitPheight.appendText(firstVisitData.get("height"));
 				PvisitPweight.appendText(firstVisitData.get("weight"));
 				PvisitPtemperature.appendText(firstVisitData.get("temperature"));
 				PvisitPbloodpressure.appendText(firstVisitData.get("blood_pressure"));
-				PvisitPimmunization1.appendText(firstVisitData.get("immunization"));
-				PvisitPAllergy1.appendText(firstVisitData.get("allergies"));
+				PvisitPimmunizations.appendText(firstVisitData.get("immunization"));
+				PvisitPAllergies.appendText(firstVisitData.get("allergies"));
 				PvisitPnotes.appendText(firstVisitData.get("notes"));
-				PvisitPperscription1.appendText(firstVisitData.get("prescription"));
-				PvisitPdiagnosis1.appendText(firstVisitData.get("visit_diag"));
+				PvisitPperscriptions.appendText(firstVisitData.get("prescription"));
+				PvisitPdiagnoses.appendText(firstVisitData.get("visit_diag"));
 				
 				//Listener for each entry in the table. when one is selected, newVal equals that date
 				PrevVisitsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
@@ -214,22 +179,22 @@ public class PatientController {
 		    				PvisitPweight.clear();
 		    				PvisitPtemperature.clear();
 		    				PvisitPbloodpressure.clear();
-		    				PvisitPimmunization1.clear();
-		    				PvisitPAllergy1.clear();
+		    				PvisitPimmunizations.clear();
+		    				PvisitPAllergies.clear();
 		    				PvisitPnotes.clear();
-		    				PvisitPperscription1.clear();
-		    				PvisitPdiagnosis1.clear();
+		    				PvisitPperscriptions.clear();
+		    				PvisitPdiagnoses.clear();
 		    				
 		    				PvisitPdateofvisit.appendText(selectedVisitData.get("date"));
 		    				PvisitPheight.appendText(selectedVisitData.get("height"));
 		    				PvisitPweight.appendText(selectedVisitData.get("weight"));
 		    				PvisitPtemperature.appendText(selectedVisitData.get("temperature"));
 		    				PvisitPbloodpressure.appendText(selectedVisitData.get("blood_pressure"));
-		    				PvisitPimmunization1.appendText(selectedVisitData.get("immunization"));
-		    				PvisitPAllergy1.appendText(selectedVisitData.get("allergies"));
+		    				PvisitPimmunizations.appendText(selectedVisitData.get("immunization"));
+		    				PvisitPAllergies.appendText(selectedVisitData.get("allergies"));
 		    				PvisitPnotes.appendText(selectedVisitData.get("notes"));
-		    				PvisitPperscription1.appendText(selectedVisitData.get("prescription"));
-		    				PvisitPdiagnosis1.appendText(selectedVisitData.get("visit_diag"));
+		    				PvisitPperscriptions.appendText(selectedVisitData.get("prescription"));
+		    				PvisitPdiagnoses.appendText(selectedVisitData.get("visit_diag"));
 		                }
 		             
 		            }
