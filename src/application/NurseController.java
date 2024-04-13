@@ -632,6 +632,7 @@ public class NurseController {
 
 	public void genADUComboBox() {
 		Connection connect;
+		System.out.println("Generating");
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 			PreparedStatement doctors = connect.prepareStatement(

@@ -131,6 +131,7 @@ public class LoginController {
 		}
 	}
 
+	//Method to open NurseController
 	private void openNursePanel() {
 		try {
 			loader = new FXMLLoader(getClass().getResource("Nurse.fxml"));
@@ -154,6 +155,7 @@ public class LoginController {
 		}
 	}
 
+	//Method to open PatientController
 	private void openPatientPanel(String activeUser) {
 		try {
 			loader = new FXMLLoader(getClass().getResource("Patient.fxml"));
