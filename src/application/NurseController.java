@@ -579,7 +579,6 @@ public class NurseController {
 				// Showing first visit in the table
 
 				if (visits.isEmpty()) {
-					System.out.println("Empty visits List");
 					visitDates.add("No Previous Visits to Display");
 					PrevVisitsTable.setItems(visitDates);
 				} else {
