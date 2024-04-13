@@ -37,24 +37,27 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 public class NurseController {
-	String activeUser, selectedPatient, selectedDoctor, newPatientID, messageID,
-	nurseName;
+	String activeUser, selectedPatient, selectedDoctor, userId, messageID,
+			nurseName;
 	Integer messageNum;
 	@FXML
 	private Button newPatient, selectPatient, sendButton;
 	@FXML
-	private ComboBox<String> assignedDoctorUpdate, selDoctor, selPLDoctor, selPLPatient;
+	private ComboBox<String> assignedDoctorUpdate, selDoctor, selPLDoctor,
+			selPLPatient;
 	@FXML
-	private Tab messageTab,newPatientTab, patientListTab, patientRecordTab, prevVisitTab;
+	private Tab messageTab, newPatientTab, patientListTab, patientRecordTab,
+			prevVisitTab;
 	@FXML
 	private TextArea currRecord, selectedPatientRecord, composeMessage;
 	@FXML
-	private TextField address, addressUpdate, allergies, allergiesUpdate, dob, dobUpdate,
-	firstName, firstNameUpdate, hHistory, hHistoryUpdate, immuni, immuniUpdate,insID,
-	insIDUpdate, lastName, lastNameUpdate, med, medUpdate, pNum, pNumUpdate, pharm, pharmUpdate,
-	pharmUpdateprevVisitNameTxtField, prevVisitDobTxtField,
-	prevVisitPtAddTxtField, prevVisitPtPhTxtField, prevVisitInsIdTxtField,
-	prevVisitPtPharmTxtField;
+	private TextField address, addressUpdate, allergies, allergiesUpdate, dob,
+			dobUpdate, firstName, firstNameUpdate, hHistory, hHistoryUpdate, immuni,
+			immuniUpdate, insID, insIDUpdate, lastName, lastNameUpdate, med,
+			medUpdate, pNum, pNumUpdate, pharm, pharmUpdate,
+			pharmUpdateprevVisitNameTxtField, prevVisitDobTxtField,
+			prevVisitPtAddTxtField, prevVisitPtPhTxtField, prevVisitInsIdTxtField,
+			prevVisitPtPharmTxtField;
 
 	@FXML
 	private TextFlow messageText, messageThreadArea;
@@ -65,8 +68,8 @@ public class NurseController {
 	// it in the text Field on New Visit tab
 	@FXML
 	private TextField newVisitNameTxtField, newVisitDobTxtField,
-	newVisitPtAddTxtField, newVisitPtPhTxtField, newVisitInsIdTxtField,
-	newVisitPtPharmTxtField;
+			newVisitPtAddTxtField, newVisitPtPhTxtField, newVisitInsIdTxtField,
+			newVisitPtPharmTxtField;
 
 	// Team #3 fx:id TextFields that are writing to the visit table in the SQL
 	// database
@@ -75,11 +78,11 @@ public class NurseController {
 
 	@FXML
 	TextField newVisitBpTxtField, newVisitDovTxtField, newVisitHeightTxtField,
-	newVisitWeightTxtField, newVisitTempTxtField;
+			newVisitWeightTxtField, newVisitTempTxtField;
 
 	@FXML
 	private TextArea newVisitMedNotesTxtArea, newVisitImmTxtArea,
-	newVisitAlrgTxtArea;
+			newVisitAlrgTxtArea;
 	// Log out Button for the log out functionality
 	@FXML
 	private Button nurLogOutButton;
@@ -87,113 +90,18 @@ public class NurseController {
 	// Previous Visits Tab
 	@FXML
 	private TextField PvisitPdateofvisit, PvisitPheight, PvisitPweight,
-	PvisitPtemperature, PvisitPbloodpressure, PvisitPname, Pvisitdob,
-	Pvisitaddress, PvisitPnumber, PvisitInsurance, PvisitPpharmacy;
+			PvisitPtemperature, PvisitPbloodpressure, PvisitPname, Pvisitdob,
+			Pvisitaddress, PvisitPnumber, PvisitInsurance, PvisitPpharmacy;
 	@FXML
 	private TextArea PvisitPimmunizations, PvisitPAllergies, PvisitPperscriptions,
-	PvisitPdiagnoses, PvisitPnotes;
+			PvisitPdiagnoses, PvisitPnotes;
 	@FXML
 	private TableView<String> PrevVisitsTable;
 
 	@FXML
 	public void newPatient(javafx.event.ActionEvent e) {
-		Connection connect;
-		try {
-			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-			PreparedStatement newPatientStatement = connect.prepareStatement(
-					"INSERT INTO PatientRecord (first_name, last_name, address,"
-							+ "phone_number, ins_id, pharmacy, health_history,immunizations,"
-							+
-					" medications, allergies, assigned_doctor,DOB,patient_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			if (!((dob.getText().isBlank() && dob.getText().isEmpty()) &&
-					(address.getText().isBlank() && address.getText().isEmpty()) &&
-					(pNum.getText().isBlank() && pNum.getText().isEmpty()) &&
-					(insID.getText().isBlank() && insID.getText().isEmpty()) &&
-					(immuni.getText().isBlank() && immuni.getText().isEmpty()) &&
-					(hHistory.getText().isBlank() && hHistory.getText().isEmpty()) &&
-					(med.getText().isBlank() && med.getText().isEmpty()) &&
-					(allergies.getText().isBlank() && allergies.getText().isEmpty()) &&
-					(firstName.getText().isBlank() && firstName.getText().isEmpty()) &&
-					(lastName.getText().isBlank() && lastName.getText().isEmpty()))) {
-				newPatientStatement.setString(1, firstName.getText().trim());
-				newPatientStatement.setString(2, lastName.getText().trim());
-				newPatientStatement.setString(3, address.getText().trim());
-				newPatientStatement.setString(4, pNum.getText().trim());
-				newPatientStatement.setString(5, insID.getText().trim());
-				newPatientStatement.setString(6, pharm.getText().trim());
-				newPatientStatement.setString(7, hHistory.getText().trim());
-				newPatientStatement.setString(8, immuni.getText().trim());
-				newPatientStatement.setString(9, med.getText().trim());
-				newPatientStatement.setString(10, allergies.getText().trim());
-				newPatientStatement.setString(11, selDoctor.getValue().substring(
-						selDoctor.getValue().length() - 6,
-						selDoctor.getValue().length()));
-				newPatientStatement.setString(12, dob.getText().trim());
-				newPatientStatement.setString(13,
-						genPatientID(firstName.getText().trim(),
-								lastName.getText().trim()));
-
-				PreparedStatement newPatientUser = connect.prepareStatement(
-						"INSERT INTO UserType (user_id, user_type, first_name, last_name) VALUES (?,?,?,?)");
-				newPatientUser.setString(1, newPatientID);
-				newPatientUser.setString(2, "Patient");
-				newPatientUser.setString(3, firstName.getText().trim());
-				newPatientUser.setString(4, lastName.getText().trim());
-
-				PreparedStatement newPatientLogin = connect.prepareStatement(
-						"INSERT INTO Login (user_id, user_type, password) VALUES (?,?,?)");
-				newPatientLogin.setString(1, newPatientID);
-				newPatientLogin.setString(2, "Patient");
-				newPatientLogin.setString(3, newPatientID);
-
-				Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Share Username and Password with Patient");
-				alert.setHeaderText(null);
-				alert.setContentText(
-						"Please inform the patient of their username and password\nUsername: " +
-								newPatientID + "\nUsername: " + newPatientID);
-				alert.showAndWait();
-
-				newPatientUser.executeUpdate();
-				newPatientLogin.executeUpdate();
-				newPatientStatement.executeUpdate();
-				newPatientLogin.close();
-				newPatientUser.close();
-				newPatientStatement.close();
-				connect.close();
-				firstName.clear();
-				lastName.clear();
-				address.clear();
-				pNum.clear();
-				insID.clear();
-				pharm.clear();
-				hHistory.clear();
-				immuni.clear();
-				med.clear();
-				allergies.clear();
-				dob.clear();
-			} else {
-				Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("No Data Entered");
-				alert.setHeaderText(null);
-				alert.setContentText(
-						"Please enter text into each field. If there is nothing to enter, enter N/A");
-				alert.showAndWait();
-			}
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	}
-
-	public String genPatientID(String fName, String lName) {
-		Random ranInt = new Random();
-		int randomInt = ranInt.nextInt(9000);
-		randomInt += 1000;
-
-		newPatientID = (fName.substring(0, 1) + lName.substring(0, 1) + randomInt);
-
-		return newPatientID;
+		PatientRecord.newRecord(firstName, lastName, dob, address, pNum, insID,
+				pharm, hHistory, immuni, med, allergies, selDoctor);
 	}
 
 	public void genNPComboBox() {
@@ -279,8 +187,9 @@ public class NurseController {
 		}
 	}
 
-	//Generates the textArea of the current patient record for the selected patient
-	//also generates a combo box that allows an assigned doctor to be changed. 
+	// Generates the textArea of the current patient record for the selected
+	// patient also generates a combo box that allows an assigned doctor to be
+	// changed.
 	public void patientRecordSelected() {
 		updatePatientRecordText();
 		genADUComboBox();
@@ -289,14 +198,14 @@ public class NurseController {
 	public void updatePatientRecordText() {
 		currRecord.clear();
 		PatientRecord.readTo(selectedPatient, currRecord);
-		//PatientRecord.readTo(selectedPatient, prevVisitNameTxtField,
-		//	prevVisitDobTxtField, prevVisitPtAddTxtField,
-		//prevVisitPtPhTxtField, prevVisitInsIdTxtField,
-		//prevVisitPtPharmTxtField);
-		//PatientRecord.readTo(selectedPatient, newVisitNameTxtField,
-		//	newVisitDobTxtField, newVisitPtAddTxtField,
-		//newVisitPtPhTxtField, newVisitInsIdTxtField,
-		//newVisitPtPharmTxtField);
+		// PatientRecord.readTo(selectedPatient, prevVisitNameTxtField,
+		// prevVisitDobTxtField, prevVisitPtAddTxtField,
+		// prevVisitPtPhTxtField, prevVisitInsIdTxtField,
+		// prevVisitPtPharmTxtField);
+		// PatientRecord.readTo(selectedPatient, newVisitNameTxtField,
+		// newVisitDobTxtField, newVisitPtAddTxtField,
+		// newVisitPtPhTxtField, newVisitInsIdTxtField,
+		// newVisitPtPharmTxtField);
 	}
 
 	@FXML
@@ -338,7 +247,7 @@ public class NurseController {
 						composeMessage.clear();
 						messageText.getChildren().clear();
 						displayMessages(patient); // call display message to properly
-						// display the newly-sent text
+																			// display the newly-sent text
 					} else {
 						Alert alert = new Alert(AlertType.WARNING);
 						alert.setTitle("No Message Entered");
@@ -473,18 +382,19 @@ public class NurseController {
 		}
 	}
 
-	//Updates the SelectedPatients Patient Record in the DB
+	// Updates the SelectedPatients Patient Record in the DB
 	@FXML
 	public void updateDB(javafx.event.ActionEvent e) {
-		PatientRecord.updateWithNurse(selectedPatient, firstNameUpdate, lastNameUpdate, dobUpdate, addressUpdate,
-				pNumUpdate, insIDUpdate, pharmUpdate, hHistoryUpdate, immuniUpdate, medUpdate,
-				allergiesUpdate, assignedDoctorUpdate);
+		PatientRecord.updateWithNurse(
+				selectedPatient, firstNameUpdate, lastNameUpdate, dobUpdate,
+				addressUpdate, pNumUpdate, insIDUpdate, pharmUpdate, hHistoryUpdate,
+				immuniUpdate, medUpdate, allergiesUpdate, assignedDoctorUpdate);
 		currRecord.clear();
 		PatientRecord.readTo(selectedPatient, currRecord);
 	}
 
-	//Generates the combo box that allows the nurse to assign a diff doctor to the 
-	//selected patient
+	// Generates the combo box that allows the nurse to assign a diff doctor to
+	// the selected patient
 	public void genADUComboBox() {
 		Connection connect;
 		assignedDoctorUpdate.getItems().clear();
@@ -518,7 +428,7 @@ public class NurseController {
 					"SELECT patient_id, first_name, last_name, address, "
 							+ "phone_number, ins_id, pharmacy, health_history,immunizations, "
 							+
-					"medications, allergies, assigned_doctor,DOB FROM PatientRecord WHERE patient_id = ?");
+							"medications, allergies, assigned_doctor,DOB FROM PatientRecord WHERE patient_id = ?");
 			statement.setString(1, selectedPatient);
 			ResultSet rs = statement.executeQuery();
 
@@ -610,8 +520,7 @@ public class NurseController {
 					Pvisitaddress, PvisitPnumber, PvisitInsurance,
 					PvisitPpharmacy);
 			try {
-				connect =
-						DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+				connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 				// sqlite statement
 
 				PreparedStatement PreviousVisitstatement = connect.prepareStatement(
@@ -625,8 +534,7 @@ public class NurseController {
 				List<Map<String, String>> visits = new ArrayList<>();
 
 				// creates Table column and adds it to Table
-				TableColumn<String, String> visitDateCol =
-						new TableColumn<>("Visit Date");
+				TableColumn<String, String> visitDateCol = new TableColumn<>("Visit Date");
 				visitDateCol.setCellValueFactory(
 						cellData -> new SimpleStringProperty(cellData.getValue()));
 				ObservableList<String> visitDates = FXCollections.observableArrayList();
@@ -702,58 +610,57 @@ public class NurseController {
 					// Listener for each entry in the table. when one is selected, newVal
 					// equals that date
 					PrevVisitsTable.getSelectionModel()
-					.selectedItemProperty()
-					.addListener((obs, oldVal, newVal) -> {
-						if (newVal != null) {
-							String selectedDate = newVal; // Date selected in table
+							.selectedItemProperty()
+							.addListener((obs, oldVal, newVal) -> {
+								if (newVal != null) {
+									String selectedDate = newVal; // Date selected in table
 
-							// Find the index of the visit with the selected date in the
-							// ArrayList
-							int selectedIndex = -1;
-							for (int i = 0; i < visits.size(); i++) {
-								String visitDate = visits.get(i).get("date");
-								if (visitDate.equals(selectedDate)) {
-									selectedIndex = i;
-									break;
+									// Find the index of the visit with the selected date in the
+									// ArrayList
+									int selectedIndex = -1;
+									for (int i = 0; i < visits.size(); i++) {
+										String visitDate = visits.get(i).get("date");
+										if (visitDate.equals(selectedDate)) {
+											selectedIndex = i;
+											break;
+										}
+									}
+									// If a visit with the selected date was found, populate the
+									// text fields with its information
+									if (selectedIndex != -1) {
+										Map<String, String> selectedVisitData = visits.get(selectedIndex);
+										// Populate text fields with selectedVisitData
+										PvisitPdateofvisit.clear();
+										PvisitPheight.clear();
+										PvisitPweight.clear();
+										PvisitPtemperature.clear();
+										PvisitPbloodpressure.clear();
+										PvisitPimmunizations.clear();
+										PvisitPAllergies.clear();
+										PvisitPnotes.clear();
+										PvisitPperscriptions.clear();
+										PvisitPdiagnoses.clear();
+
+										PvisitPdateofvisit.appendText(
+												selectedVisitData.get("date"));
+										PvisitPheight.appendText(selectedVisitData.get("height"));
+										PvisitPweight.appendText(selectedVisitData.get("weight"));
+										PvisitPtemperature.appendText(
+												selectedVisitData.get("temperature"));
+										PvisitPbloodpressure.appendText(
+												selectedVisitData.get("blood_pressure"));
+										PvisitPimmunizations.appendText(
+												selectedVisitData.get("immunization"));
+										PvisitPAllergies.appendText(
+												selectedVisitData.get("allergies"));
+										PvisitPnotes.appendText(selectedVisitData.get("notes"));
+										PvisitPperscriptions.appendText(
+												selectedVisitData.get("prescription"));
+										PvisitPdiagnoses.appendText(
+												selectedVisitData.get("visit_diag"));
+									}
 								}
-							}
-							// If a visit with the selected date was found, populate the
-							// text fields with its information
-							if (selectedIndex != -1) {
-								Map<String, String> selectedVisitData =
-										visits.get(selectedIndex);
-								// Populate text fields with selectedVisitData
-								PvisitPdateofvisit.clear();
-								PvisitPheight.clear();
-								PvisitPweight.clear();
-								PvisitPtemperature.clear();
-								PvisitPbloodpressure.clear();
-								PvisitPimmunizations.clear();
-								PvisitPAllergies.clear();
-								PvisitPnotes.clear();
-								PvisitPperscriptions.clear();
-								PvisitPdiagnoses.clear();
-
-								PvisitPdateofvisit.appendText(
-										selectedVisitData.get("date"));
-								PvisitPheight.appendText(selectedVisitData.get("height"));
-								PvisitPweight.appendText(selectedVisitData.get("weight"));
-								PvisitPtemperature.appendText(
-										selectedVisitData.get("temperature"));
-								PvisitPbloodpressure.appendText(
-										selectedVisitData.get("blood_pressure"));
-								PvisitPimmunizations.appendText(
-										selectedVisitData.get("immunization"));
-								PvisitPAllergies.appendText(
-										selectedVisitData.get("allergies"));
-								PvisitPnotes.appendText(selectedVisitData.get("notes"));
-								PvisitPperscriptions.appendText(
-										selectedVisitData.get("prescription"));
-								PvisitPdiagnoses.appendText(
-										selectedVisitData.get("visit_diag"));
-							}
-						}
-					});
+							});
 				}
 				rs.close();
 				PreviousVisitstatement.close();
