@@ -20,7 +20,7 @@ public class NurseMain extends Application {
       controller.genNPComboBox();
       controller.genPLComboBox();
       controller.displayMessages("JD0119");
-      controller.messageSelect();
+      controller.messageSelect(controller.activeUser);
       stage.setScene(new Scene(root));
       stage.show();
     } catch (IOException e) {

@@ -1,24 +1,40 @@
 package application;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 
 public class NurseController {
 	String activeUser;
@@ -28,6 +44,12 @@ public class NurseController {
 	String selectedDoctor;
 
 	String newPatientID;
+
+	String messageID;
+
+	Integer messageNum;
+
+	String nurseName;
 
 	@FXML
 	private Button newPatient;
@@ -103,6 +125,10 @@ public class NurseController {
 	private TextFlow messageText;
 	@FXML
 	private TextFlow messageThreadArea;
+	@FXML
+	private TextArea composeMessage;
+	@FXML
+	private Button sendButton;
 
 	@FXML
 	private TextField prevVisitNameTxtField, prevVisitDobTxtField,
@@ -125,12 +151,26 @@ public class NurseController {
 	private Button newSaveVisitButtonOnAction;
 
 	@FXML
-	TextField newVisitBpTxtField, newVisitImmTxtField, newVisitAlrgTxtField,
-			newVisitDovTxtField, newVisitHeightTxtField, newVisitWeightTxtField,
-			newVisitTempTxtField;
+	TextField newVisitBpTxtField, newVisitDovTxtField, newVisitHeightTxtField,
+			newVisitWeightTxtField, newVisitTempTxtField;
 
 	@FXML
-	private TextArea newVisitMedNotesTxtArea;
+	private TextArea newVisitMedNotesTxtArea, newVisitImmTxtArea,
+			newVisitAlrgTxtArea;
+	// Log out Button for the log out functionality
+	@FXML
+	private Button nurLogOutButton;
+
+	// Previous Visits Tab
+	@FXML
+	private TextField PvisitPdateofvisit, PvisitPheight, PvisitPweight,
+			PvisitPtemperature, PvisitPbloodpressure, PvisitPname, Pvisitdob,
+			Pvisitaddress, PvisitPnumber, PvisitInsurance, PvisitPpharmacy;
+	@FXML
+	private TextArea PvisitPimmunizations, PvisitPAllergies, PvisitPperscriptions,
+			PvisitPdiagnoses, PvisitPnotes;
+	@FXML
+	private TableView<String> PrevVisitsTable;
 
 	@FXML
 	public void newPatient(javafx.event.ActionEvent e) {
@@ -335,10 +375,103 @@ public class NurseController {
 				newVisitPtPharmTxtField);
 	}
 
+	@FXML
+	public void sendMessage(String user, String patient) {
+		Connection connectNurse;
+		try {
+			connectNurse = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement nurseStatement = connectNurse.prepareStatement(
+					"SELECT first_name, last_name FROM UserType where user_id = ?");
+			nurseStatement.setString(1, user);
+			ResultSet resultSet = nurseStatement.executeQuery();
+			nurseName = resultSet.getString("first_name") + " " +
+					resultSet.getString("last_name");
+			resultSet.close();
+			nurseStatement.close();
+			connectNurse.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		EventHandler<ActionEvent> send = new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				Connection connectMessage;
+				try {
+					// Bottom connection + query to add the new message to the database
+					connectMessage = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+					PreparedStatement newMessageStatement = connectMessage.prepareStatement(
+							"INSERT INTO Message (patient_id, message_id, sender, header, content) VALUES (?, ?, ?, ?, ?)");
+					if (!(composeMessage.getText().isBlank() &&
+							composeMessage.getText().isEmpty())) {
+						newMessageStatement.setString(1, patient); // insert patientID
+						newMessageStatement.setString(2, genMessageID(patient));
+						newMessageStatement.setString(3, nurseName); // insert sender
+						newMessageStatement.setString(4, "read"); // insert header
+						newMessageStatement.setString(5, composeMessage.getText().trim());
+						newMessageStatement.executeUpdate();
+						newMessageStatement.close();
+						connectMessage.close();
+						composeMessage.clear();
+						messageText.getChildren().clear();
+						displayMessages(patient); // call display message to properly
+																			// display the newly-sent text
+					} else {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setTitle("No Message Entered");
+						alert.setHeaderText(null);
+						alert.setContentText("Enter a message before attempting to send");
+						alert.showAndWait();
+					}
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		};
+		sendButton.setOnAction(send);
+	}
+
+	public String genMessageID(String patient) {
+		// load previous message's ID and increment by 1
+		Connection connection;
+		messageNum = 0;
+		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement statement = connection.prepareStatement(
+					"SELECT message_id FROM Message WHERE patient_id = ?");
+			statement.setString(1, patient);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				try {
+					messageNum = Integer.valueOf(resultSet.getString("message_id"));
+				} catch (NumberFormatException e) {
+					messageID = "0";
+				}
+			}
+			resultSet.close();
+			statement.close();
+			connection.close();
+			if ("0".equals(messageID)) {
+				System.out.println(messageID); // test output
+				return messageID;
+			} else {
+				messageNum = messageNum + 1;
+				messageID = String.valueOf(messageNum);
+				System.out.println(messageID); // test output
+				return messageID;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println(messageID); // test output
+		return messageID;
+	}
+
 	public void displayMessages(String user) {
 		messageText.getChildren().clear();
 		Connection connect;
-		// composeMessage.setText("test");
+		Connection connectUpdate;
+
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 			PreparedStatement statement = connect.prepareStatement(
@@ -354,10 +487,16 @@ public class NurseController {
 				content.setText(resultSet.getString("content") + "\n\n\n");
 				content.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
 				messageText.getChildren().addAll(sender, content);
-				// messageText.getChildren().addAll(new
-				// Text(resultSet.getString("sender") + "\n" + "\n" +
-				// resultSet.getString("content") + "\n" + "\n" + "\n" + "\n"));
 			}
+
+			connectUpdate = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement updateRead = connectUpdate.prepareStatement(
+					"UPDATE Message SET header = ? WHERE patient_id = ?");
+			updateRead.setString(1, "read");
+			updateRead.setString(2, user);
+			updateRead.execute();
+			updateRead.close();
+
 			resultSet.close();
 			statement.close();
 			connect.close();
@@ -365,9 +504,11 @@ public class NurseController {
 			// TODO error message
 			e.printStackTrace();
 		}
+		messageSelect(activeUser);
 	}
 
-	public void messageSelect() {
+	public void messageSelect(String activeUser) {
+		messageThreadArea.getChildren().clear();
 		Connection connect;
 		// composeMessage.setText("test");
 		try {
@@ -388,6 +529,7 @@ public class NurseController {
 				sender.setFocusTraversable(false);
 				sender.setOnAction(e -> {
 					displayMessages(patient);
+					sendMessage(activeUser, patient);
 				});
 				if (resultSet.getString("header").equals("new")) {
 					unread.setText("NEW");
@@ -397,9 +539,6 @@ public class NurseController {
 				} else {
 					messageThreadArea.getChildren().addAll(sender, spacer);
 				}
-				// messageText.getChildren().addAll(new
-				// Text(resultSet.getString("sender") + "\n" + "\n" +
-				// resultSet.getString("content") + "\n" + "\n" + "\n" + "\n"));
 			}
 			resultSet.close();
 			statement.close();
@@ -703,8 +842,8 @@ public class NurseController {
 		try {
 			// Retrieve data from the text fields
 			String bloodPressure = newVisitBpTxtField.getText().trim();
-			String immunization = newVisitImmTxtField.getText().trim();
-			String allergies = newVisitAlrgTxtField.getText().trim();
+			String immunization = newVisitImmTxtArea.getText().trim();
+			String allergies = newVisitAlrgTxtArea.getText().trim();
 			String notes = newVisitMedNotesTxtArea.getText().trim();
 			String dateOfVisit = newVisitDovTxtField.getText().trim();
 			String height = newVisitHeightTxtField.getText().trim();
@@ -740,6 +879,195 @@ public class NurseController {
 
 		} catch (SQLException ex) {
 			ex.printStackTrace(); // Handle exceptions appropriately
+		}
+	}
+
+	// Team #3 ********Previous Visit Tab Method*******
+	public void pullPreviousVisit() {
+    Connection connect;
+    PvisitPname.clear();
+    Pvisitdob.clear();
+    Pvisitaddress.clear();
+    PvisitPnumber.clear();
+    PvisitInsurance.clear();
+    PvisitPpharmacy.clear();
+    if (selectedPatient != null) {
+      PatientRecord.readTo(selectedPatient, PvisitPname, Pvisitdob,
+                           Pvisitaddress, PvisitPnumber, PvisitInsurance,
+                           PvisitPpharmacy);
+      try {
+        connect =
+            DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+        // sqlite statement
+
+        PreparedStatement PreviousVisitstatement = connect.prepareStatement(
+            "SELECT * FROM Visit WHERE patient_id = ? AND completed IS NOT NULL");
+        PreviousVisitstatement.setString(1, selectedPatient);
+        ResultSet rs = PreviousVisitstatement.executeQuery();
+        // Clears Table data and columns
+        PrevVisitsTable.getColumns().clear();
+        PrevVisitsTable.getItems().clear();
+        // List to hold each row from query, visit data
+        List<Map<String, String>> visits = new ArrayList<>();
+
+        // creates Table column and adds it to Table
+        TableColumn<String, String> visitDateCol =
+            new TableColumn<>("Visit Date");
+        visitDateCol.setCellValueFactory(
+            cellData -> new SimpleStringProperty(cellData.getValue()));
+        ObservableList<String> visitDates = FXCollections.observableArrayList();
+        PrevVisitsTable.getColumns().add(visitDateCol);
+        // Clears data from our Lists
+        PvisitPdateofvisit.clear();
+        PvisitPheight.clear();
+        PvisitPweight.clear();
+        PvisitPtemperature.clear();
+        PvisitPbloodpressure.clear();
+        PvisitPimmunizations.clear();
+        PvisitPAllergies.clear();
+        PvisitPnotes.clear();
+        PvisitPperscriptions.clear();
+        PvisitPdiagnoses.clear();
+        visitDates.clear();
+        visits.clear();
+        // Process the result set and parse into a new Hash Map for each entry
+        // of visits Array List
+        while (rs.next()) {
+          // Map to hold data for one visit
+          Map<String, String> visitData = new HashMap<>();
+
+          // Retrieve data from the result set for each visit
+          visitData.put("date", rs.getString("date"));
+          visitData.put("height", rs.getString("height"));
+          visitData.put("weight", rs.getString("weight"));
+          visitData.put("temperature", rs.getString("temperature"));
+          visitData.put("blood_pressure", rs.getString("blood_pressure"));
+          visitData.put("immunization", rs.getString("immunization"));
+          visitData.put("allergies", rs.getString("allergies"));
+          visitData.put("notes", rs.getString("notes"));
+          visitData.put("prescription", rs.getString("prescription"));
+          visitData.put("visit_diag", rs.getString("visit_diag"));
+
+          // adds date into table
+          visitDates.add(visitData.get("date"));
+          PrevVisitsTable.setItems(visitDates);
+          // Add data for the current visit to the list
+          visits.add(visitData);
+        }
+        // Showing first visit in the table
+
+        if (visits.isEmpty()) {
+          System.out.println("Empty visits List");
+          visitDates.add("No Previous Visits to Display");
+          PrevVisitsTable.setItems(visitDates);
+        } else {
+
+          Map<String, String> firstVisitData = visits.get(0);
+          PvisitPdateofvisit.clear();
+          PvisitPheight.clear();
+          PvisitPweight.clear();
+          PvisitPtemperature.clear();
+          PvisitPbloodpressure.clear();
+          PvisitPimmunizations.clear();
+          PvisitPAllergies.clear();
+          PvisitPnotes.clear();
+          PvisitPperscriptions.clear();
+          PvisitPdiagnoses.clear();
+
+          PvisitPdateofvisit.appendText(firstVisitData.get("date"));
+          PvisitPheight.appendText(firstVisitData.get("height"));
+          PvisitPweight.appendText(firstVisitData.get("weight"));
+          PvisitPtemperature.appendText(firstVisitData.get("temperature"));
+          PvisitPbloodpressure.appendText(firstVisitData.get("blood_pressure"));
+          PvisitPimmunizations.appendText(firstVisitData.get("immunization"));
+          PvisitPAllergies.appendText(firstVisitData.get("allergies"));
+          PvisitPnotes.appendText(firstVisitData.get("notes"));
+          PvisitPperscriptions.appendText(firstVisitData.get("prescription"));
+          PvisitPdiagnoses.appendText(firstVisitData.get("visit_diag"));
+
+          // Listener for each entry in the table. when one is selected, newVal
+          // equals that date
+          PrevVisitsTable.getSelectionModel()
+              .selectedItemProperty()
+              .addListener((obs, oldVal, newVal) -> {
+                if (newVal != null) {
+                  String selectedDate = newVal; // Date selected in table
+
+                  // Find the index of the visit with the selected date in the
+                  // ArrayList
+                  int selectedIndex = -1;
+                  for (int i = 0; i < visits.size(); i++) {
+                    String visitDate = visits.get(i).get("date");
+                    if (visitDate.equals(selectedDate)) {
+                      selectedIndex = i;
+                      break;
+                    }
+                  }
+                  // If a visit with the selected date was found, populate the
+                  // text fields with its information
+                  if (selectedIndex != -1) {
+                    Map<String, String> selectedVisitData =
+                        visits.get(selectedIndex);
+                    // Populate text fields with selectedVisitData
+                    PvisitPdateofvisit.clear();
+                    PvisitPheight.clear();
+                    PvisitPweight.clear();
+                    PvisitPtemperature.clear();
+                    PvisitPbloodpressure.clear();
+                    PvisitPimmunizations.clear();
+                    PvisitPAllergies.clear();
+                    PvisitPnotes.clear();
+                    PvisitPperscriptions.clear();
+                    PvisitPdiagnoses.clear();
+
+                    PvisitPdateofvisit.appendText(
+                        selectedVisitData.get("date"));
+                    PvisitPheight.appendText(selectedVisitData.get("height"));
+                    PvisitPweight.appendText(selectedVisitData.get("weight"));
+                    PvisitPtemperature.appendText(
+                        selectedVisitData.get("temperature"));
+                    PvisitPbloodpressure.appendText(
+                        selectedVisitData.get("blood_pressure"));
+                    PvisitPimmunizations.appendText(
+                        selectedVisitData.get("immunization"));
+                    PvisitPAllergies.appendText(
+                        selectedVisitData.get("allergies"));
+                    PvisitPnotes.appendText(selectedVisitData.get("notes"));
+                    PvisitPperscriptions.appendText(
+                        selectedVisitData.get("prescription"));
+                    PvisitPdiagnoses.appendText(
+                        selectedVisitData.get("visit_diag"));
+                  }
+                }
+              });
+        }
+
+        rs.close();
+        PreviousVisitstatement.close();
+        connect.close();
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+
+	// Log out button method / action listener that kicks the user out back to
+	// login screen
+
+	public void nurLogOutOnAction(javafx.event.ActionEvent e) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+			Parent root = loader.load();
+
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.show();
+
+			// Close the current patient panel window
+			Stage currentStage = (Stage) nurLogOutButton.getScene().getWindow();
+			currentStage.close();
+		} catch (IOException et) {
+			et.printStackTrace();
 		}
 	}
 }
