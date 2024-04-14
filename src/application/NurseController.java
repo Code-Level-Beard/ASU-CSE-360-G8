@@ -344,28 +344,29 @@ public class NurseController {
 		messageThreadArea.getChildren().clear();
 		Connection connectMessage;
 		Connection connectRecord;
-		
+
 		try {
 
 			connectMessage = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 			connectRecord = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-			
+
 			PreparedStatement statementMessage = connectMessage.prepareStatement(
 					"SELECT patient_id, MAX(message_id), sender, header FROM Message GROUP BY patient_id");
 			ResultSet resultSetMessage = statementMessage.executeQuery();
-			
+
 			while (resultSetMessage.next()) {
-				
+
 				PreparedStatement statementRecord = connectRecord.prepareStatement(
 						"SELECT first_name, last_name FROM PatientRecord WHERE patient_id = ?");
-				statementRecord.setString(1,  resultSetMessage.getString("patient_id"));
+				statementRecord.setString(1, resultSetMessage.getString("patient_id"));
 				ResultSet resultSetRecord = statementRecord.executeQuery();
-				
+
 				Hyperlink sender = new Hyperlink();
 				Hyperlink unread = new Hyperlink();
 				Text spacer = new Text("\n");
 				String patient = resultSetMessage.getString("patient_id");
-				sender.setText(resultSetRecord.getString("first_name") + " " + resultSetRecord.getString("last_name") + "\n\n\n");
+				sender.setText(resultSetRecord.getString("first_name") + " " +
+						resultSetRecord.getString("last_name") + "\n\n\n");
 				sender.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
 				sender.setFocusTraversable(false);
 				sender.setOnAction(e -> {
@@ -382,9 +383,8 @@ public class NurseController {
 				}
 				resultSetRecord.close();
 				statementRecord.close();
-				
 			}
-			
+
 			resultSetMessage.close();
 			statementMessage.close();
 			connectRecord.close();
@@ -475,51 +475,11 @@ public class NurseController {
 	// ******
 	@FXML
 	public void newSaveVisitButtonOnAction(javafx.event.ActionEvent e) {
-
-		try {
-			// Retrieve data from the text fields
-			String bloodPressure = newVisitBpTxtField.getText().trim();
-			String immunization = newVisitImmTxtArea.getText().trim();
-			String allergies = newVisitAlrgTxtArea.getText().trim();
-			String notes = newVisitMedNotesTxtArea.getText().trim();
-			String dateOfVisit = newVisitDovTxtField.getText().trim();
-			String height = newVisitHeightTxtField.getText().trim();
-			String weight = newVisitWeightTxtField.getText().trim();
-			String temperature = newVisitTempTxtField.getText().trim();
-
-			// Establish a connection to the database
-			Connection connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-
-			// Prepare a SQL INSERT statement for Visit table
-			PreparedStatement insertVisit = connect.prepareStatement(
-					"INSERT INTO Visit (patient_id, doctor_id, date, height, weight, temperature, blood_pressure, immunization, allergies, notes,completed, prescription, visit_diag) "
-							+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-			// Set parameters for the prepared statement
-			insertVisit.setString(1, selectedPatient); // Using the current patient ID
-			insertVisit.setString(2, selectedDoctor); // Using the current doctor ID
-			insertVisit.setString(3, dateOfVisit);
-			insertVisit.setString(4, height);
-			insertVisit.setString(5, weight);
-			insertVisit.setString(6, temperature);
-			insertVisit.setString(7, bloodPressure);
-			insertVisit.setString(8, immunization);
-			insertVisit.setString(9, allergies);
-			insertVisit.setString(10, notes);
-			insertVisit.setString(11, "NC");
-			insertVisit.setString(12, "UNK");
-			insertVisit.setString(13, "UNK");
-
-			// Execute the INSERT statement into DB
-			insertVisit.executeUpdate();
-
-			// Closes out insert statements / closes DB connection
-			insertVisit.close();
-			connect.close();
-
-		} catch (SQLException ex) {
-			ex.printStackTrace(); // Handle exceptions appropriately
-		}
+		VisitRecord.newRecord(selectedPatient, selectedDoctor, newVisitDovTxtField,
+				newVisitHeightTxtField, newVisitWeightTxtField,
+				newVisitTempTxtField, newVisitBpTxtField,
+				newVisitImmTxtArea, newVisitAlrgTxtArea,
+				newVisitMedNotesTxtArea);
 	}
 
 	// Team #3 ********Previous Visit Tab Method*******
