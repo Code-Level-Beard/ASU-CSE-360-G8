@@ -48,6 +48,15 @@ public class VisitRecord {
       insertVisit.setString(12, "UNK");
       insertVisit.setString(13, "UNK");
 
+      date.clear();
+      height.clear();
+      weight.clear();
+      temperature.clear();
+      bloodPressure.clear();
+      immunizations.clear();
+      allergies.clear();
+      notes.clear();
+
       // Execute the INSERT statement into DB
       insertVisit.executeUpdate();
 
@@ -60,13 +69,12 @@ public class VisitRecord {
     }
   }
 
-  public static void readTo(String patientId, TextField date,
-      TextField weight, TextField height,
-      TextField pharmacy, TextField temperature,
-      TextField bloodPressure, TextArea immunizations,
-      TextArea prescriptions, TextArea diagnoses,
-      TextArea allergies, TextArea notes,
-      TableView<String> visitList) {
+  public static void readTo(String patientId, TextField date, TextField weight,
+      TextField height, TextField pharmacy,
+      TextField temperature, TextField bloodPressure,
+      TextArea immunizations, TextArea prescriptions,
+      TextArea diagnoses, TextArea allergies,
+      TextArea notes, TableView<String> visitList) {
     Connection connect;
     try {
       connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
