@@ -21,7 +21,6 @@ public class DocMain extends Application {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("Doctor.fxml"));
       Parent root = loader.load();
       PhysicianController controller = loader.getController();
-      controller.displayMessages(activeUser);
       controller.activeUser = activeUser;
       controller.genPLPatientComboBox();
       stage.setScene(new Scene(root));

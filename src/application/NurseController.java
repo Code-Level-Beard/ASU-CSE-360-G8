@@ -342,29 +342,37 @@ public class NurseController {
 
 	public void messageSelect(String activeUser) {
 		messageThreadArea.getChildren().clear();
-		Connection connect;
-		// composeMessage.setText("test");
+		Connection connectMessage;
+		Connection connectRecord;
+		
 		try {
 
-			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-			PreparedStatement statement = connect.prepareStatement(
+			connectMessage = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			connectRecord = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			
+			PreparedStatement statementMessage = connectMessage.prepareStatement(
 					"SELECT patient_id, MAX(message_id), sender, header FROM Message GROUP BY patient_id");
-			ResultSet resultSet = statement.executeQuery();
-
-			while (resultSet.next()) {
-
+			ResultSet resultSetMessage = statementMessage.executeQuery();
+			
+			while (resultSetMessage.next()) {
+				
+				PreparedStatement statementRecord = connectRecord.prepareStatement(
+						"SELECT first_name, last_name FROM PatientRecord WHERE patient_id = ?");
+				statementRecord.setString(1,  resultSetMessage.getString("patient_id"));
+				ResultSet resultSetRecord = statementRecord.executeQuery();
+				
 				Hyperlink sender = new Hyperlink();
 				Hyperlink unread = new Hyperlink();
 				Text spacer = new Text("\n");
-				String patient = resultSet.getString("patient_id");
-				sender.setText(resultSet.getString("sender") + "\n\n\n");
+				String patient = resultSetMessage.getString("patient_id");
+				sender.setText(resultSetRecord.getString("first_name") + " " + resultSetRecord.getString("last_name") + "\n\n\n");
 				sender.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
 				sender.setFocusTraversable(false);
 				sender.setOnAction(e -> {
 					displayMessages(patient);
 					sendMessage(activeUser, patient);
 				});
-				if (resultSet.getString("header").equals("new")) {
+				if (resultSetMessage.getString("header").equals("new")) {
 					unread.setText("NEW");
 					unread.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 					unread.setFocusTraversable(false);
@@ -372,10 +380,15 @@ public class NurseController {
 				} else {
 					messageThreadArea.getChildren().addAll(sender, spacer);
 				}
+				resultSetRecord.close();
+				statementRecord.close();
+				
 			}
-			resultSet.close();
-			statement.close();
-			connect.close();
+			
+			resultSetMessage.close();
+			statementMessage.close();
+			connectRecord.close();
+			connectMessage.close();
 		} catch (SQLException e) {
 			// TODO error message
 			e.printStackTrace();
