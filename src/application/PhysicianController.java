@@ -446,20 +446,20 @@ public class PhysicianController {
 
 			// Insert new visit record with completion status 'NC'
 			PreparedStatement insertStatement = connect.prepareStatement(
-					"INSERT INTO Visit (patient_id, doctor_id, date, height, weight, temperature, blood_pressure, immunization, allergies, notes, prescription, visit_diag, completed) "
-							+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'NC')");
-			insertStatement.setString(1, selectedPatient);
-			insertStatement.setString(2, doctorId);
-			insertStatement.setString(3, currVisitDateOfVisit.getText());
-			insertStatement.setString(4, currVisitPtHeight.getText());
-			insertStatement.setString(5, currVisitPtWeight.getText());
-			insertStatement.setString(6, currVisitPtTemp.getText());
-			insertStatement.setString(7, currVisitPtBP.getText());
-			insertStatement.setString(8, currVisitPtImm.getText());
-			insertStatement.setString(9, currVisitPtAlrg.getText());
-			insertStatement.setString(10, currVisitPtMedNotes.getText());
-			insertStatement.setString(11, currVisitPtPresc.getText());
-			insertStatement.setString(12, currVisitPtDiag.getText());
+					"Update Visit SET doctor_id = ?, date = ?, height = ?, weight = ?, temperature = ?, blood_pressure = ?, immunization = ?, "
+					+ "allergies = ?, notes = ?, prescription = ?, visit_diag = ?, completed = ? WHERE patient_id = ?");
+			insertStatement.setString(12, selectedPatient);
+			insertStatement.setString(1, doctorId);
+			insertStatement.setString(2, currVisitDateOfVisit.getText());
+			insertStatement.setString(3, currVisitPtHeight.getText());
+			insertStatement.setString(4, currVisitPtWeight.getText());
+			insertStatement.setString(5, currVisitPtTemp.getText());
+			insertStatement.setString(6, currVisitPtBP.getText());
+			insertStatement.setString(7, currVisitPtImm.getText());
+			insertStatement.setString(8, currVisitPtAlrg.getText());
+			insertStatement.setString(9, currVisitPtMedNotes.getText());
+			insertStatement.setString(10, currVisitPtPresc.getText());
+			insertStatement.setString(11, currVisitPtDiag.getText());
 			int rowsAffected = insertStatement.executeUpdate();
 			System.out.println("Rows affected: " + rowsAffected);
 
