@@ -69,6 +69,8 @@ INSERT INTO "Login" VALUES ('AS3475','AS3475','Patient');
 INSERT INTO "Login" VALUES ('TD4298','TD4298','Nurse');
 INSERT INTO "Login" VALUES ('SF2157','SF2157','Patient');
 INSERT INTO "Login" VALUES ('as2259','as2259','Patient');
+INSERT INTO "Login" VALUES ('TT3725','TT3725','Patient');
+INSERT INTO "Login" VALUES ('JC8075','JC8075','Patient');
 INSERT INTO "UserType" VALUES ('JD1256','Physician','Jane','Doe');
 INSERT INTO "UserType" VALUES ('JS1298','Physician','Joe','Smith');
 INSERT INTO "UserType" VALUES ('BB0918','Patient','Bob','Builder');
@@ -131,4 +133,6 @@ INSERT INTO "PatientRecord" VALUES ('BB0918','Bob','Builder','1234 Cartoon Lane 
 INSERT INTO "PatientRecord" VALUES ('JM2103','Joe','McTester','Imaginary Land','480-456-4567','Aetna 123456789','Costco Chandler','N/A','TDAP 2024','N/A','Bugs','MC0117','4/7/2024');
 INSERT INTO "PatientRecord" VALUES ('SF2157','Sally','Fields','123 Cookie Cutter Lane Tempe, Az 85284','480-266-5437','BlueCross 123456789','Walmart','Diabetes','N/A','Insulin 20mg','Hard Cookies','MC0117','04/20/1969');
 INSERT INTO "PatientRecord" VALUES ('as2259','asld;fjksdf','sa''dkjg''sk','Test Tempe,Az 85301','480-123-4567','Aetna 123456789','Walgreens','N/A','N/A','N/A','N/A','JS1298','4/8/2023');
+INSERT INTO "PatientRecord" VALUES ('TT3725','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','MC0117','TEST JM');
+INSERT INTO "PatientRecord" VALUES ('JC8075','John','Cena','5674Arena Way','546-763-YCSM','The Rock','China','Bing Chilling','Ice Cream','Chairs','Weaklings','MC0117','01/11/1956');
 COMMIT;
