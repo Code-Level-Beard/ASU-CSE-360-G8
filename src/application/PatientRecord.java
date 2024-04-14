@@ -208,7 +208,6 @@ public class PatientRecord {
       alert.showAndWait();
       return;
     }
-
     // At least one of the fields is not empty
     Connection connect;
     try {
@@ -225,7 +224,6 @@ public class PatientRecord {
       dbResS.setString(1, userId);
       ResultSet dbRes = dbResS.executeQuery();
       for (int i = 0; i < textFields.length + 1; i++) {
-        System.out.println("Trying " + i + " " + dbRes.getString(i + 1));
         // Data should be appended, not overwritten
         if (i == 7 || i == 8 || i == 9 || i == 10) {
           // Append data in DB with new values if textField is not empty
@@ -255,7 +253,6 @@ public class PatientRecord {
         else {
           // Overwrite data in DB with new values if textField is not empty
           if (textFields[i].getText().trim().isEmpty() == false) {
-            System.out.println("Found Text at " + i);
             dbCon.setString(i + 1, textFields[i].getText().trim());
           }
           // TextField is empty, save current data back into DB

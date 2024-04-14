@@ -492,8 +492,8 @@ public class NurseController {
 
 			// Prepare a SQL INSERT statement for Visit table
 			PreparedStatement insertVisit = connect.prepareStatement(
-					"INSERT INTO Visit (patient_id, doctor_id, date, height, weight, temperature, blood_pressure, immunization, allergies, notes) "
-							+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					"INSERT INTO Visit (patient_id, doctor_id, date, height, weight, temperature, blood_pressure, immunization, allergies, notes,completed, prescription, visit_diag) "
+							+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			// Set parameters for the prepared statement
 			insertVisit.setString(1, selectedPatient); // Using the current patient ID
@@ -506,6 +506,9 @@ public class NurseController {
 			insertVisit.setString(8, immunization);
 			insertVisit.setString(9, allergies);
 			insertVisit.setString(10, notes);
+			insertVisit.setString(11, "NC");
+			insertVisit.setString(12, "UNK");
+			insertVisit.setString(13, "UNK");
 
 			// Execute the INSERT statement into DB
 			insertVisit.executeUpdate();

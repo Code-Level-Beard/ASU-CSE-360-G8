@@ -641,7 +641,7 @@ public class PhysicianController {
 			// Insert new visit record with completion status 'C'
 			PreparedStatement insertStatement = connect.prepareStatement(
 					"UPDATE Visit SET completed = ? WHERE patient_id = ?");
-			insertStatement.setString(1, "c");
+			insertStatement.setString(1, "C");
 			insertStatement.setString(2, selectedPatient);
 			;
 
