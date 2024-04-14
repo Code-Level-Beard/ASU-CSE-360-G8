@@ -108,25 +108,11 @@ public class PatientController {
 	@FXML
 	private TextField PvisitPbloodpressure;
 	@FXML
-	private TextField PvisitPimmunization1;
-	@FXML
-	private TextField PvisitPAllergy1;
-	@FXML
 	private TextField PvisitPdateofvisit;
 	@FXML
 	private TextField PvisitPpharmacy;
-	@FXML
-	private TextField PvisitPimmunization2;
-	@FXML
-	private TextField PvisitPallergy2;
-	@FXML
-	private TextField PvisitPperscription1;
-	@FXML
-	private TextField PvisitPperscription2;
-	@FXML
-	private TextField PvisitPdiagnosis1;
-	@FXML
-	private TextField PvisitPdiagnosis2;
+
+	
 
 	// Team #3 ********Previous Visit Tab Method*******
 	public void pullPreviousVisit() {
@@ -181,7 +167,6 @@ public class PatientController {
 			// Showing first visit in the table
 
 			if (visits.isEmpty()) {
-				System.out.println("Empty visits List");
 				visitDates.add("No Previous Visits to Display");
 				PrevVisitsTable.setItems(visitDates);
 			} else {

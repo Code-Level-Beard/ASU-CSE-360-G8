@@ -165,13 +165,13 @@
                               <TextField fx:id="Pvisitaddress" layoutX="140.0" layoutY="130.0" prefHeight="61.0" prefWidth="229.0" text="Street Address" />
                               <TextField fx:id="PvisitPnumber" layoutX="140.0" layoutY="210.0" prefHeight="26.0" prefWidth="230.0" text="(***) ***-****" />
                               <TextField fx:id="PvisitInsurance" layoutX="140.0" layoutY="250.0" prefHeight="26.0" prefWidth="231.0" text="Insurance Company" />
-                              <TextField fx:id="PvisitPheight" layoutX="650.0" layoutY="90.0" prefWidth="175.0" promptText="Enter height..." text="Height" />
-                              <TextField fx:id="PvisitPweight" layoutX="650.0" layoutY="130.0" prefWidth="175.0" promptText="Enter weight..." text="Weight" />
-                              <TextField fx:id="PvisitPtemperature" layoutX="650.0" layoutY="170.0" prefWidth="175.0" promptText="Enter temperature..." text="Temperature" />
-                              <TextField fx:id="PvisitPbloodpressure" layoutX="650.0" layoutY="210.0" prefWidth="175.0" promptText="Enter blood pressure..." text="Blood pressure" />
+                              <TextField fx:id="PvisitPheight" layoutX="650.0" layoutY="90.0" prefWidth="175.0" promptText="Enter height..." />
+                              <TextField fx:id="PvisitPweight" layoutX="650.0" layoutY="130.0" prefWidth="175.0" promptText="Enter weight..." />
+                              <TextField fx:id="PvisitPtemperature" layoutX="650.0" layoutY="170.0" prefWidth="175.0" promptText="Enter temperature..." />
+                              <TextField fx:id="PvisitPbloodpressure" layoutX="650.0" layoutY="210.0" prefWidth="175.0" promptText="Enter blood pressure..." />
                               <TextField fx:id="PvisitPimmunization1" layoutX="650.0" layoutY="250.0" prefWidth="175.0" promptText="Add immunization..." text="Visit Immunization 1" />
-                              <TextArea fx:id="PvisitPnotes" layoutX="650.0" layoutY="633.0" prefHeight="100.0" prefWidth="268.0" promptText="Add note..." text="Visit notes" />
-                              <TextField fx:id="PvisitPdateofvisit" layoutX="650.0" layoutY="50.0" prefWidth="175.0" promptText="Enter date..." text="**/**/****" />
+                              <TextArea fx:id="PvisitPnotes" layoutX="650.0" layoutY="633.0" prefHeight="100.0" prefWidth="268.0" promptText="Add note..." />
+                              <TextField fx:id="PvisitPdateofvisit" layoutX="650.0" layoutY="50.0" prefWidth="175.0" promptText="Enter date..." />
                               <TextField fx:id="PvisitPpharmacy" layoutX="140.0" layoutY="291.0" prefHeight="26.0" prefWidth="231.0" text="Pharmacy" />
                               <Text layoutX="519.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Visit:" textAlignment="RIGHT" wrappingWidth="115.0">
                                  <font>
