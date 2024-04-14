@@ -69,177 +69,16 @@ INSERT INTO "Login" VALUES ('AS3475','AS3475','Patient');
 INSERT INTO "Login" VALUES ('TD4298','TD4298','Nurse');
 INSERT INTO "Login" VALUES ('SF2157','SF2157','Patient');
 INSERT INTO "Login" VALUES ('as2259','as2259','Patient');
-INSERT INTO "Login" VALUES ('TT3725','TT3725','Patient');
 INSERT INTO "UserType" VALUES ('JD1256','Physician','Jane','Doe');
 INSERT INTO "UserType" VALUES ('JS1298','Physician','Joe','Smith');
 INSERT INTO "UserType" VALUES ('BB0918','Patient','Bob','Builder');
 INSERT INTO "UserType" VALUES ('JW0470','Nurse','John','Wick');
 INSERT INTO "UserType" VALUES ('MC0117','Physician','Master','Chief');
-INSERT INTO "UserType" VALUES ('JD0119','Patient','Joshua','Decker');
+INSERT INTO "UserType" VALUES ('JD0119','Patient','Josh','Decker');
 INSERT INTO "UserType" VALUES ('AS3475','Patient','Agent','Smith');
 INSERT INTO "UserType" VALUES ('TD4298','Nurse','Tyler','Durden');
 INSERT INTO "UserType" VALUES ('SF2157','Patient','Sally','Fields');
 INSERT INTO "UserType" VALUES ('as2259','Patient','asld;fjksdf','sa''dkjg''sk');
-INSERT INTO "Visit" VALUES ('AS3475','JS1298','08/07/1998',6,7,34,234,'Goats','Fvvdsws','Gamers','Dogs','Too Sauced','True');
-INSERT INTO "Visit" VALUES ('AS3475','JS1298','78/78/7654','10''11',340,456,456,'Godzilla','KingKong','He is Him.','Prozac','Ketchup','c');
-INSERT INTO "UserType" VALUES ('TT3725','Patient','TEST JM','TEST JM');
-INSERT INTO "Visit" VALUES ('SF2157','MC0117','4/12/2024','6''2',11,2,2,2,2,'NOTE.NOTE.NOTE',NULL,NULL,NULL);
-INSERT INTO "Visit" VALUES ('SF2157','MC0117','4/13/2024',6,3,3,3,3,3,'NOTES,NOTES,NOTES',NULL,NULL,NULL);
-INSERT INTO "Visit" VALUES ('SF2157','MC0117','4/14/2025',666666666,'ASDFASDF','ASDFASDFASDF','ASDFASDFASDF','ASDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF','ASDFASDFASDFASDFAFDAF','D',NULL,NULL,NULL);
-INSERT INTO "Visit" VALUES ('SF2157','MC0117','ADFASF','ADFASF','ASDFASF','ASDFASF','ADFASF','ASDFAF','ASDFAS','D
-D
-D
-D
-D
-D
-DD
-D
-
-DD
-D
-D
-D
-
-DD
-D
-D
-D
-D
-D
-D
-DD
-
-D
-D
-D
-D',NULL,NULL,NULL);
-INSERT INTO "Visit" VALUES ('BB0918','MC0117','4/12/2024','6 '' 3',111,222,22222,'1. Imunization 1. Imunization 1. Imunization 1. Imunization
-1. Imunization 1. Imunization 1. Imunization 1. Imunization 
-1. Imunization 1. Imunization 1. Imunization','1. allergy  1. allergy  1. allergy  1. allergy  1. allergy  1. allergy 
-1. allergy  1. allergy  1. allergy  1. allergy  
-1. allergy  1. allergy','dssdfsfsdfasdfsf','1.) Hammer nails 10x per each hour
-2.) Saw 5 boards x each day
-3.) Hammer nails 10x per each hour
-Hammer nails 10x per each hour
-Hammer nails 10x per each hour
-Hammer nails 10x per each hour','Has constructionitis
-Has constructionitis
-Has constructionitis
-Has constructionitis
-Has constructionitis
-Has constructionitis
-Has constructionitis','C');
-INSERT INTO "Visit" VALUES ('BB0918','MC0117','4/12/2024','6 '' 3',111,222,22222,'1. Imunization 1. Imunization 1. Imunization 1. Imunization
-1. Imunization 1. Imunization 1. Imunization 1. Imunization 
-1. Imunization 1. Imunization 1. Imunization','1. allergy  1. allergy  1. allergy  1. allergy  1. allergy  1. allergy 
-1. allergy  1. allergy  1. allergy  1. allergy  
-1. allergy  1. allergy','dssdfsfsdfasdfsf','1.) Hammer nails 10x per each hour
-2.) Saw 5 boards x each day
-3.) Hammer nails 10x per each hour
-Hammer nails 10x per each hour
-Hammer nails 10x per each hour
-Hammer nails 10x per each hour','Has constructionitis
-Has constructionitis
-Has constructionitis
-Has constructionitis
-Has constructionitis
-Has constructionitis
-Has constructionitis','C');
-INSERT INTO "Visit" VALUES ('BB0918',NULL,'4/12/2024','5''0',1,2,3,'1. Imunization 1. Imunization 1. Imunization 1. Imunization
-1. Imunization 1. Imunization 1. Imunization 1. Imunization 
-1. Imunization 1. Imunization 1. Imunization','1. allergy  1. allergy  1. allergy  1. allergy  1. allergy  1. allergy 
-1. allergy  1. allergy  1. allergy  1. allergy  
-1. allergy  1. allergy','dssdfsfsdfasdfsf
-dssdfsfsdfasdfsf
-dssdfsfsdfasdfsf
-dssdfsfsdfasdfsfdssdfsfsdfasdfsf
-dssdfsfsdfasdfsf
-dssdfsfsdfasdfsf
-','1.) Hammer nails 10x per each hour
-2.) Saw 5 boards x each day
-3.) Hammer nails 10x per each hour
-Hammer nails 10x per each hour
-Hammer nails 10x per each hour
-Hammer nails 10x per each hour','Has constructionitis
-Has constructionitis
-Has constructionitis
-Has constructionitis
-Has constructionitis
-Has constructionitis
-Has constructionitis','C');
-INSERT INTO "Visit" VALUES ('BB0918',NULL,'4/12/2024','TEST NC function','TEST NC function','TEST NC function','TEST NC function','','','........','
-','','NC');
-INSERT INTO "Visit" VALUES ('TT3725','MC0117','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM
-TEST JM
-TEST JM
-TEST JM
-TEST JM
-TEST JM
-TEST JM','TEST JM
-TEST JMTEST JM
-TEST JM
-TEST JMTEST JMTEST JM
-
-TEST JM
-TEST JM
-TEST JM','TEST JM',NULL,NULL,NULL);
-INSERT INTO "Visit" VALUES ('TT3725',NULL,'TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM
-TEST JM
-TEST JM
-TEST JM
-TEST JM
-TEST JM
-TEST JM','TEST JM
-TEST JMTEST JM
-TEST JM
-TEST JMTEST JMTEST JM
-
-TEST JM
-TEST JM
-TEST JM','TEST JM','TEST JM
-TEST JM
-TEST JM
-TEST JM
-TEST JM','
-TEST JM
-TEST JM
-TEST JM
-TEST JM
-TEST JM','C');
-INSERT INTO "Visit" VALUES ('TT3725','your_doctor_id','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM
-TEST JM
-TEST JM
-TEST JM
-TEST JM
-TEST JM
-TEST JM','TEST JM
-TEST JMTEST JM
-TEST JM
-TEST JMTEST JMTEST JM
-
-TEST JM
-TEST JM
-TEST JM','TEST JM','TEST JMTEST JM
-','TEST JMTEST JM','C');
-INSERT INTO "Visit" VALUES ('TT3725','MC0117','TEST UPDATE / DEBUG','TEST UPDATE / DEBUG','TEST UPDATE / DEBUG','TEST UPDATE / DEBUG','TEST UPDATE / DEBUG','TEST JM
-TEST JM
-TEST JM
-TEST JM
-TEST JM
-TEST JM
-TEST JM','TEST JM
-TEST JMTEST JM
-TEST JM
-TEST JMTEST JMTEST JM
-
-TEST JM
-TEST JM
-TEST JM','TEST UPDATE / DEBUG','TEST UPDATE / DEBUG
-TEST UPDATE / DEBUG
-TEST UPDATE / DEBUG
-','TEST UPDATE / DEBUG
-TEST UPDATE / DEBUG
-TEST UPDATE / DEBUG','C');
 INSERT INTO "Message" VALUES ('JD0119',1,'Doctor','','read','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
 INSERT INTO "Message" VALUES ('JD0119',2,'Nurse',NULL,'read','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
 INSERT INTO "Message" VALUES ('JD0119',3,'Patient',NULL,'read','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
@@ -262,11 +101,34 @@ INSERT INTO "Message" VALUES ('AS3475',7,'Agent Smith',NULL,'read','Awesome?');
 INSERT INTO "Message" VALUES ('AS3475',8,'John Wick',NULL,'read','Hello, my name is John Wick');
 INSERT INTO "Message" VALUES ('AS3475',9,'John Wick',NULL,'read','Yay');
 INSERT INTO "Message" VALUES ('JD0119',9,'John Wick',NULL,'read','Nice to meet you');
+INSERT INTO "Message" VALUES ('JD0119',10,'Josh Decker',NULL,'read','Nice to meet you too Mr. Wick');
+INSERT INTO "Message" VALUES ('JD0119',11,'John Wick',NULL,'read','I need guns...LOT''S of guns!');
+INSERT INTO "Message" VALUES ('JD0119',12,'Josh Decker',NULL,'read','If you want peace Mr. WIck, best prepare for war!');
+INSERT INTO "Message" VALUES ('SF2157',5,'John Wick',NULL,'read','Message 5');
+INSERT INTO "Message" VALUES ('SF2157',6,'John Wick',NULL,'read','A long message');
+INSERT INTO "Message" VALUES ('SF2157',7,'John Wick',NULL,'read','Let me see if scrolling is working');
+INSERT INTO "Message" VALUES ('SF2157',8,'John Wick',NULL,'read','Okay');
+INSERT INTO "Message" VALUES ('SF2157',9,'John Wick',NULL,'read','Almost there');
+INSERT INTO "Message" VALUES ('SF2157',10,'John Wick',NULL,'read','Nice');
+INSERT INTO "Message" VALUES ('AS3475',10,'Agent Smith',NULL,'read','Nice');
+INSERT INTO "Message" VALUES ('AS3475',11,'Agent Smith',NULL,'read','? what ?');
+INSERT INTO "Message" VALUES ('AS3475',12,'Agent Smith',NULL,'read','Nice');
+INSERT INTO "Message" VALUES ('AS3475',13,'Agent Smith',NULL,'read','Nice again');
+INSERT INTO "Message" VALUES ('AS3475',14,'Agent Smith',NULL,'read','Awesome');
+INSERT INTO "Message" VALUES ('AS3475',15,'Agent Smith',NULL,'read','Cool');
+INSERT INTO "Message" VALUES ('AS3475',16,'Agent Smith',NULL,'read','It is working');
+INSERT INTO "Message" VALUES ('AS3475',17,'John Wick',NULL,'read','Nice');
+INSERT INTO "Message" VALUES ('SF2157',11,'John Wick',NULL,'read','Hello Sally');
+INSERT INTO "Message" VALUES ('JD0119',13,'John Wick',NULL,'read','Hello Josh');
+INSERT INTO "Message" VALUES ('SF2157',12,'Master Chief',NULL,'read','Hello Sally');
+INSERT INTO "Message" VALUES ('SF2157',13,'Master Chief',NULL,'read','This is Doctor Master Chief');
+INSERT INTO "Message" VALUES ('BB0918',1,'Master Chief',NULL,'read','Hello Bob');
+INSERT INTO "Message" VALUES ('BB0918',2,'Master Chief',NULL,'read','Dr. Master Chief here');
+INSERT INTO "Message" VALUES ('BB0918',3,'Master Chief',NULL,'read','M.D.');
 INSERT INTO "PatientRecord" VALUES ('JD0119','Josh','Decker','1234 Street Tempe, AZ','480-000-0119','Aetna 123456789','CVS Tempe','Left Knee Pain','Fair weather fans','Aspirin 400mg','LA Fans','JD1256','11/05/1988');
 INSERT INTO "PatientRecord" VALUES ('AS3475','Agent','Smith','The Matirx','480-789-1234','Blue Cross 527895','3/31/1999','Tendency to split','The One','Red Pill','Neo','JS1298','3/31/1999');
 INSERT INTO "PatientRecord" VALUES ('BB0918','Bob','Builder','1234 Cartoon Lane Tempe, Az','480-123-4567','HomeDepot 123456789','Walgreens Mesa','Headache','Tetanus','None','Unbuilt Stuff','MC0117','4/12/1999');
 INSERT INTO "PatientRecord" VALUES ('JM2103','Joe','McTester','Imaginary Land','480-456-4567','Aetna 123456789','Costco Chandler','N/A','TDAP 2024','N/A','Bugs','MC0117','4/7/2024');
 INSERT INTO "PatientRecord" VALUES ('SF2157','Sally','Fields','123 Cookie Cutter Lane Tempe, Az 85284','480-266-5437','BlueCross 123456789','Walmart','Diabetes','N/A','Insulin 20mg','Hard Cookies','MC0117','04/20/1969');
 INSERT INTO "PatientRecord" VALUES ('as2259','asld;fjksdf','sa''dkjg''sk','Test Tempe,Az 85301','480-123-4567','Aetna 123456789','Walgreens','N/A','N/A','N/A','N/A','JS1298','4/8/2023');
-INSERT INTO "PatientRecord" VALUES ('TT3725','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','TEST JM','MC0117','TEST JM');
 COMMIT;
