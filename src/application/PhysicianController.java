@@ -37,28 +37,40 @@ public class PhysicianController {
 
   Integer messageNum;
 
-  @FXML private Button sendButton;
+  @FXML
+  private Button sendButton;
 
-  @FXML private TextArea composeMessage;
+  @FXML
+  private TextArea composeMessage;
 
-  @FXML ComboBox<String> pLComboBox;
+  @FXML
+  ComboBox<String> pLComboBox;
 
-  @FXML Button selPatient;
+  @FXML
+  Button selPatient;
 
-  @FXML TextArea patientRecord;
+  @FXML
+  TextArea patientRecord;
 
-  @FXML private Tab patientListTab;
+  @FXML
+  private Tab patientListTab;
 
-  @FXML private Tab messageTab;
+  @FXML
+  private Tab messageTab;
 
-  @FXML private Tab patientRecordTab;
+  @FXML
+  private Tab patientRecordTab;
 
-  @FXML private Tab prevVisitTab;
+  @FXML
+  private Tab prevVisitTab;
 
-  @FXML private Tab currVisitTab;
+  @FXML
+  private Tab currVisitTab;
 
-  @FXML private TextFlow messageText;
-  @FXML private TextFlow messageThreadArea;
+  @FXML
+  private TextFlow messageText;
+  @FXML
+  private TextFlow messageThreadArea;
   // Team #3 fx:id textFields and buttons
 
   // Team #3 fx:id textFields that get / hold the current visit data
@@ -75,11 +87,13 @@ public class PhysicianController {
   private TextArea currVisitPtMedNotes, currVisitPtImm, currVisitPtAlrg,
       currVisitPtPresc, currVisitPtDiag;
 
-  @FXML private Button currVisitCompVisitOnAction, currVisitSaveOnAction;
+  @FXML
+  private Button currVisitCompVisitOnAction, currVisitSaveOnAction;
 
   // Log out button for physician controller kicks you back to the login
   // screen
-  @FXML private Button docLogOutButton;
+  @FXML
+  private Button docLogOutButton;
 
   // Previous Visits Tab
   @FXML
@@ -89,7 +103,8 @@ public class PhysicianController {
   @FXML
   private TextArea PvisitPimmunizations, PvisitPAllergies, PvisitPperscriptions,
       PvisitPdiagnoses, PvisitPnotes;
-  @FXML private TableView<String> PrevVisitsTable;
+  @FXML
+  private TableView<String> PrevVisitsTable;
 
   // Team #3 ********Previous Visit Tab Method*******
   public void pullPreviousVisit() {
@@ -97,8 +112,7 @@ public class PhysicianController {
     if (selectedPatient != null) {
       updatePreviousVisitInfo();
       try {
-        connect =
-            DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+        connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
         // sqlite statement
 
         PreparedStatement PreviousVisitstatement = connect.prepareStatement(
@@ -122,8 +136,7 @@ public class PhysicianController {
         List<Map<String, String>> visits = new ArrayList<>();
 
         // creates Table column and adds it to Table
-        TableColumn<String, String> visitDateCol =
-            new TableColumn<>("Visit Date");
+        TableColumn<String, String> visitDateCol = new TableColumn<>("Visit Date");
         visitDateCol.setCellValueFactory(
             cellData -> new SimpleStringProperty(cellData.getValue()));
         ObservableList<String> visitDates = FXCollections.observableArrayList();
@@ -206,8 +219,7 @@ public class PhysicianController {
                   // If a visit with the selected date was found, populate the
                   // text fields with its information
                   if (selectedIndex != -1) {
-                    Map<String, String> selectedVisitData =
-                        visits.get(selectedIndex);
+                    Map<String, String> selectedVisitData = visits.get(selectedIndex);
                     // Populate text fields with selectedVisitData
                     PvisitPdateofvisit.clear();
                     PvisitPheight.clear();
@@ -254,7 +266,7 @@ public class PhysicianController {
 
   public void updatePreviousVisitInfo() {
     PatientRecord.readTo(selectedPatient, PvisitPname, Pvisitdob, Pvisitaddress,
-                         PvisitPnumber, PvisitInsurance, PvisitPpharmacy);
+        PvisitPnumber, PvisitInsurance, PvisitPpharmacy);
   }
 
   public void updateText() {
@@ -267,8 +279,7 @@ public class PhysicianController {
     Connection connectDoc;
     Connection connectDocID;
     try {
-      connectDoc =
-          DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+      connectDoc = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
       PreparedStatement docStatement = connectDoc.prepareStatement(
           "SELECT assigned_doctor FROM PatientRecord where patient_id = ?");
       docStatement.setString(1, patient);
@@ -277,14 +288,13 @@ public class PhysicianController {
       resultSet.close();
       docStatement.close();
       connectDoc.close();
-      connectDocID =
-          DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+      connectDocID = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
       PreparedStatement docIDStatement = connectDocID.prepareStatement(
           "SELECT first_name, last_name FROM UserType where user_id = ?");
       docIDStatement.setString(1, docID);
       ResultSet resultSet2 = docIDStatement.executeQuery();
       docName = resultSet2.getString("first_name") + " " +
-                resultSet2.getString("last_name");
+          resultSet2.getString("last_name");
       resultSet2.close();
       docIDStatement.close();
       connectDocID.close();
@@ -297,16 +307,15 @@ public class PhysicianController {
         Connection connectMessage;
         try {
           // Bottom connection + query to add the new message to the database
-          connectMessage =
-              DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+          connectMessage = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
           PreparedStatement newMessageStatement = connectMessage.prepareStatement(
               "INSERT INTO Message (patient_id, message_id, sender, header, content) VALUES (?, ?, ?, ?, ?)");
           if (!(composeMessage.getText().isBlank() &&
-                composeMessage.getText().isEmpty())) {
+              composeMessage.getText().isEmpty())) {
             newMessageStatement.setString(1, patient); // insert patientID
             newMessageStatement.setString(2, genMessageID(patient));
             newMessageStatement.setString(3, docName); // insert sender
-            newMessageStatement.setString(4, "read");  // insert header
+            newMessageStatement.setString(4, "read"); // insert header
             newMessageStatement.setString(5, composeMessage.getText().trim());
             newMessageStatement.executeUpdate();
             newMessageStatement.close();
@@ -335,8 +344,7 @@ public class PhysicianController {
     Connection connection;
     messageNum = 0;
     try {
-      connection =
-          DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+      connection = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
       PreparedStatement statement = connection.prepareStatement(
           "SELECT message_id FROM Message WHERE patient_id = ?");
       statement.setString(1, patient);
@@ -374,8 +382,7 @@ public class PhysicianController {
     Connection connectUpdate;
 
     try {
-      connect =
-          DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+      connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
       PreparedStatement statement = connect.prepareStatement(
           "SELECT message_id, sender, content FROM Message WHERE patient_id = ?");
       statement.setString(1, user);
@@ -392,8 +399,7 @@ public class PhysicianController {
         messageText.getChildren().addAll(sender, content);
       }
 
-      connectUpdate =
-          DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+      connectUpdate = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
       PreparedStatement updateRead = connectUpdate.prepareStatement(
           "UPDATE Message SET header = ? WHERE patient_id = ?");
       updateRead.setString(1, "read");
@@ -417,10 +423,8 @@ public class PhysicianController {
     Connection connectMessage;
 
     try {
-      connectRecord =
-          DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-      connectMessage =
-          DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+      connectRecord = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+      connectMessage = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 
       PreparedStatement statementRecord = connectRecord.prepareStatement(
           "SELECT patient_id, first_name, last_name  FROM PatientRecord WHERE assigned_doctor = ?");
@@ -479,8 +483,7 @@ public class PhysicianController {
     pLComboBox.getItems().clear();
     Connection connect;
     try {
-      connect =
-          DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+      connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
       PreparedStatement patients = connect.prepareStatement(
           "SELECT first_name, last_name, patient_id FROM PatientRecord WHERE assigned_doctor = ?");
       patients.setString(1, activeUser);
@@ -488,8 +491,8 @@ public class PhysicianController {
       while (patientList.next()) {
         pLComboBox.getItems().add(
             patientList.getString("first_name") + " " +
-            patientList.getString("last_name") +
-            " Patient ID: " + patientList.getString("patient_id"));
+                patientList.getString("last_name") +
+                " Patient ID: " + patientList.getString("patient_id"));
       }
       patientList.close();
       patients.close();
@@ -510,8 +513,7 @@ public class PhysicianController {
   public void currVisitTabListener() {
     Connection connect = null;
     try {
-      connect =
-          DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+      connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 
       // Fetching data from PatientRecord table
       PreparedStatement patientStatement = connect.prepareStatement(
@@ -522,7 +524,7 @@ public class PhysicianController {
       // Populating PatientRecord fields
       if (patientResultSet.next()) { // Assuming only one record is expected
         currVisitPtName.setText(patientResultSet.getString("first_name") + " " +
-                                patientResultSet.getString("last_name"));
+            patientResultSet.getString("last_name"));
         currVisitPtDOB.setText(patientResultSet.getString("DOB"));
         currVisitPtAdd.setText(patientResultSet.getString("address"));
         currVisitPtPhNum.setText(patientResultSet.getString("phone_number"));
@@ -582,14 +584,13 @@ public class PhysicianController {
     }
     Connection connect = null;
     try {
-      connect =
-          DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+      connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 
       // Insert new visit record with completion status 'NC'
       PreparedStatement insertStatement = connect.prepareStatement(
           "Update Visit SET doctor_id = ?, date = ?, height = ?, weight = ?, temperature = ?, blood_pressure = ?, immunization = ?, "
-          +
-          "allergies = ?, notes = ?, prescription = ?, visit_diag = ?, completed = ? WHERE patient_id = ?");
+              +
+              "allergies = ?, notes = ?, prescription = ?, visit_diag = ?, completed = ? WHERE patient_id = ?");
       insertStatement.setString(1, doctorId);
       insertStatement.setString(2, currVisitDateOfVisit.getText());
       insertStatement.setString(3, currVisitPtHeight.getText());
@@ -635,8 +636,7 @@ public class PhysicianController {
     }
     Connection connect = null;
     try {
-      connect =
-          DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+      connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 
       // Insert new visit record with completion status 'C'
       PreparedStatement insertStatement = connect.prepareStatement(
@@ -647,6 +647,17 @@ public class PhysicianController {
 
       int rowsAffected = insertStatement.executeUpdate();
       System.out.println("Rows affected: " + rowsAffected);
+
+      currVisitDateOfVisit.clear();
+      currVisitPtHeight.clear();
+      currVisitPtWeight.clear();
+      currVisitPtTemp.clear();
+      currVisitPtBP.clear();
+      currVisitPtImm.clear();
+      currVisitPtAlrg.clear();
+      currVisitPtMedNotes.clear();
+      currVisitPtPresc.clear();
+      currVisitPtDiag.clear();
 
       insertStatement.close();
     } catch (SQLException ex) {
@@ -674,7 +685,7 @@ public class PhysicianController {
       stage.show();
 
       // Close the current patient panel window
-      Stage currentStage = (Stage)docLogOutButton.getScene().getWindow();
+      Stage currentStage = (Stage) docLogOutButton.getScene().getWindow();
       currentStage.close();
     } catch (IOException et) {
       et.printStackTrace();
