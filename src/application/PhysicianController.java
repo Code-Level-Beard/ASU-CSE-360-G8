@@ -22,6 +22,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -265,9 +266,16 @@ public class PhysicianController {
 				PvisitPnumber, PvisitInsurance, PvisitPpharmacy);
 	}
 
-	public void displayMessages(String user) {
+	public void updateText() {
+		patientRecord.clear();
+		PatientRecord.readTo(selectedPatient, patientRecord);
+	}
+
+	 public void displayMessages(String user) {
+		messageText.getChildren().clear();
 		Connection connect;
-		// composeMessage.setText("test");
+		Connection connectUpdate;
+		
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 			PreparedStatement statement = connect.prepareStatement(
@@ -284,10 +292,17 @@ public class PhysicianController {
 				content.setText(resultSet.getString("content") + "\n\n\n");
 				content.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
 				messageText.getChildren().addAll(sender, content);
-				// messageText.getChildren().addAll(new
-				// Text(resultSet.getString("sender") + "\n" + "\n" +
-				// resultSet.getString("content") + "\n" + "\n" + "\n" + "\n"));
+
 			}
+			
+			connectUpdate = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement updateRead = connectUpdate.prepareStatement(
+					"UPDATE Message SET header = ? WHERE patient_id = ?");
+			updateRead.setString(1, "read");
+			updateRead.setString(2, user);
+			updateRead.execute();
+			updateRead.close();
+			
 			resultSet.close();
 			statement.close();
 			connect.close();
@@ -295,49 +310,74 @@ public class PhysicianController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+		messageSelect(activeUser);
+	} 
+	 
+	public void messageSelect(String user) {
+		messageThreadArea.getChildren().clear();
+		Connection connectRecord;
+		Connection connectMessage;
+		
+		try {
+			connectRecord = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			connectMessage = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			
+			PreparedStatement statementRecord = connectRecord.prepareStatement("SELECT patient_id, first_name, last_name  FROM PatientRecord WHERE assigned_doctor = ?");
+			statementRecord.setString(1, user);
+			ResultSet resultSetRecord = statementRecord.executeQuery();
+			
+			
 
-	public void updateText() {
-		patientRecord.clear();
-		PatientRecord.readTo(selectedPatient, patientRecord);
-	}
+			
+			while(resultSetRecord.next()) {
 
-	/*
-	 * public void messageSelect() {
-	 * Connection connect;
-	 * //composeMessage.setText("test");
-	 * try {
-	 * connect =
-	 * DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-	 * PreparedStatement statement =
-	 * connect.prepareStatement("SELECT message_id, sender, header, content FROM
-	 * Message WHERE patient_id = ?"); ResultSet resultSet =
-	 * statement.executeQuery();
-	 *
-	 * while(resultSet.next()) {
-	 *
-	 * Text sender = new Text();
-	 * Text content = new Text();
-	 * sender.setText(resultSet.getString("sender") +
-	 * "\n"); sender.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
-	 * content.setText(resultSet.getString("content")
-	 * + "\n\n\n"); content.setFont(Font.font("Verdana", FontWeight.NORMAL, 12));
-	 * messageText.getChildren().addAll(sender,
-	 * content);
-	 * //messageText.getChildren().addAll(new
-	 * Text(resultSet.getString("sender") + "\n" + "\n" +
-	 * resultSet.getString("content") + "\n" + "\n" + "\n" + "\n"));
-	 *
-	 * }
-	 * resultSet.close();
-	 * statement.close();
-	 * connect.close();
-	 * } catch(SQLException e) {
-	 * // TODO error message
-	 * e.printStackTrace();
-	 * }
-	 * }
-	 */
+				PreparedStatement statementMessage = connectMessage.prepareStatement("SELECT MAX(message_id), sender, header, content FROM Message WHERE patient_id = ?");
+				statementMessage.setString(1,  resultSetRecord.getString("patient_id"));
+				ResultSet resultSetMessage = statementMessage.executeQuery();
+				String patientID = resultSetRecord.getString("patient_id");
+				String patientFirst = resultSetRecord.getString("first_name");
+				String patientLast = resultSetRecord.getString("last_name");
+				
+				while(resultSetMessage.next()) {
+					
+					Hyperlink sender = new Hyperlink();
+					Hyperlink unread = new Hyperlink();
+					Text spacer = new Text("\n");
+		
+					sender.setText(patientFirst + " " + patientLast + "\n\n\n");
+					sender.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
+					sender.setFocusTraversable(false);
+					sender.setOnAction(e -> {
+						displayMessages(patientID);
+						
+					});
+					if (resultSetMessage.getString("header").equals("new")) {
+						unread.setText("NEW");
+						unread.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+						unread.setFocusTraversable(false);
+						messageThreadArea.getChildren().addAll(unread, sender, spacer);
+					} else {
+						messageThreadArea.getChildren().addAll(sender, spacer);
+					}
+					
+				}
+				
+				resultSetMessage.close();
+				statementMessage.close();
+				
+			}
+			
+			resultSetRecord.close();
+			statementRecord.close();
+			connectRecord.close();
+			connectMessage.close();
+			
+		} catch(SQLException e) {
+			// TODO error message
+			e.printStackTrace();
+		}
+	} 
+	 
 	public void genPLPatientComboBox() {
 		pLComboBox.getItems().clear();
 		Connection connect;

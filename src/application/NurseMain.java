@@ -22,7 +22,6 @@ public class NurseMain extends Application {
       NurseController controller = loader.getController();
       controller.genNPComboBox();
       controller.genPLComboBox();
-      controller.displayMessages("JD0119");
       controller.messageSelect(controller.activeUser);
       stage.setScene(new Scene(root));
       stage.show();

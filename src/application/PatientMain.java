@@ -22,7 +22,6 @@ public class PatientMain extends Application {
       Parent root = loader.load();
       PatientController controller = loader.getController();
       controller.updateText(activeUser);
-      controller.displayMessages(activeUser);
       controller.activeUser = activeUser;
       stage.setScene(new Scene(root));
       stage.show();
