@@ -14,20 +14,14 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -38,6 +32,16 @@ public class PhysicianController {
 	String activeUser;
 
 	String selectedPatient;
+
+	String docID, docName, messageID;
+
+	Integer messageNum;
+
+	@FXML
+	private Button sendButton;
+
+	@FXML
+	private TextArea composeMessage;
 
 	@FXML
 	ComboBox<String> pLComboBox;
@@ -271,11 +275,112 @@ public class PhysicianController {
 		PatientRecord.readTo(selectedPatient, patientRecord);
 	}
 
-	 public void displayMessages(String user) {
+	@FXML
+	public void sendMessage(String patient) {
+		Connection connectDoc;
+		Connection connectDocID;
+		try {
+			connectDoc = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement docStatement = connectDoc.prepareStatement(
+					"SELECT assigned_doctor FROM PatientRecord where patient_id = ?");
+			docStatement.setString(1, patient);
+			ResultSet resultSet = docStatement.executeQuery();
+			docID = resultSet.getString("assigned_doctor");
+			resultSet.close();
+			docStatement.close();
+			connectDoc.close();
+			connectDocID = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement docIDStatement = connectDocID.prepareStatement("SELECT first_name, last_name FROM UserType where user_id = ?");
+			docIDStatement.setString(1, docID);
+			ResultSet resultSet2 = docIDStatement.executeQuery();
+			docName = resultSet2.getString("first_name") + " " + resultSet2.getString("last_name");
+			resultSet2.close();
+			docIDStatement.close();
+			connectDocID.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		EventHandler<ActionEvent> send = new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				Connection connectMessage;
+				try {
+					// Bottom connection + query to add the new message to the database
+					connectMessage = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+					PreparedStatement newMessageStatement = connectMessage.prepareStatement(
+							"INSERT INTO Message (patient_id, message_id, sender, header, content) VALUES (?, ?, ?, ?, ?)");
+					if (!(composeMessage.getText().isBlank() &&
+							composeMessage.getText().isEmpty())) {
+						newMessageStatement.setString(1, patient); // insert patientID
+						newMessageStatement.setString(2, genMessageID(patient));
+						newMessageStatement.setString(3, docName); // insert sender
+						newMessageStatement.setString(4, "read"); // insert header
+						newMessageStatement.setString(5, composeMessage.getText().trim());
+						newMessageStatement.executeUpdate();
+						newMessageStatement.close();
+						connectMessage.close();
+						composeMessage.clear();
+						messageText.getChildren().clear();
+						displayMessages(patient); // call display message to properly
+						// display the newly-sent text
+					} else {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setTitle("No Message Entered");
+						alert.setHeaderText(null);
+						alert.setContentText("Enter a message before attempting to send");
+						alert.showAndWait();
+					}
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		};
+		sendButton.setOnAction(send);
+	}
+
+	public String genMessageID(String patient) {
+		// load previous message's ID and increment by 1
+		Connection connection;
+		messageNum = 0;
+		try {
+			connection = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
+			PreparedStatement statement = connection.prepareStatement(
+					"SELECT message_id FROM Message WHERE patient_id = ?");
+			statement.setString(1, patient);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				try {
+					messageNum = Integer.valueOf(resultSet.getString("message_id"));
+				} catch (NumberFormatException e) {
+					messageID = "0";
+				}
+			}
+			resultSet.close();
+			statement.close();
+			connection.close();
+			if ("0".equals(messageID)) {
+				System.out.println(messageID); // test output
+				return messageID;
+			} else {
+				messageNum = messageNum + 1;
+				messageID = String.valueOf(messageNum);
+				System.out.println(messageID); // test output
+				return messageID;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println(messageID); // test output
+		return messageID;
+	}
+
+
+	public void displayMessages(String user) {
 		messageText.getChildren().clear();
 		Connection connect;
 		Connection connectUpdate;
-		
+
 		try {
 			connect = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 			PreparedStatement statement = connect.prepareStatement(
@@ -294,7 +399,7 @@ public class PhysicianController {
 				messageText.getChildren().addAll(sender, content);
 
 			}
-			
+
 			connectUpdate = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 			PreparedStatement updateRead = connectUpdate.prepareStatement(
 					"UPDATE Message SET header = ? WHERE patient_id = ?");
@@ -302,7 +407,7 @@ public class PhysicianController {
 			updateRead.setString(2, user);
 			updateRead.execute();
 			updateRead.close();
-			
+
 			resultSet.close();
 			statement.close();
 			connect.close();
@@ -311,24 +416,24 @@ public class PhysicianController {
 			e.printStackTrace();
 		}
 		messageSelect(activeUser);
-	} 
-	 
+	}
+
 	public void messageSelect(String user) {
 		messageThreadArea.getChildren().clear();
 		Connection connectRecord;
 		Connection connectMessage;
-		
+
 		try {
 			connectRecord = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 			connectMessage = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-			
+
 			PreparedStatement statementRecord = connectRecord.prepareStatement("SELECT patient_id, first_name, last_name  FROM PatientRecord WHERE assigned_doctor = ?");
 			statementRecord.setString(1, user);
 			ResultSet resultSetRecord = statementRecord.executeQuery();
-			
-			
 
-			
+
+
+
 			while(resultSetRecord.next()) {
 
 				PreparedStatement statementMessage = connectMessage.prepareStatement("SELECT MAX(message_id), sender, header, content FROM Message WHERE patient_id = ?");
@@ -337,21 +442,21 @@ public class PhysicianController {
 				String patientID = resultSetRecord.getString("patient_id");
 				String patientFirst = resultSetRecord.getString("first_name");
 				String patientLast = resultSetRecord.getString("last_name");
-				
+
 				while(resultSetMessage.next()) {
-					
+
 					Hyperlink sender = new Hyperlink();
 					Hyperlink unread = new Hyperlink();
 					Text spacer = new Text("\n");
-		
+
 					sender.setText(patientFirst + " " + patientLast + "\n\n\n");
 					sender.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
 					sender.setFocusTraversable(false);
 					sender.setOnAction(e -> {
 						displayMessages(patientID);
-						
+						sendMessage(patientID);
 					});
-					if (resultSetMessage.getString("header").equals("new")) {
+					if ("new".equals(resultSetMessage.getString("header"))) {
 						unread.setText("NEW");
 						unread.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
 						unread.setFocusTraversable(false);
@@ -359,25 +464,26 @@ public class PhysicianController {
 					} else {
 						messageThreadArea.getChildren().addAll(sender, spacer);
 					}
-					
+
 				}
-				
+
 				resultSetMessage.close();
 				statementMessage.close();
-				
+
 			}
-			
+
 			resultSetRecord.close();
 			statementRecord.close();
 			connectRecord.close();
 			connectMessage.close();
-			
+
 		} catch(SQLException e) {
 			// TODO error message
 			e.printStackTrace();
 		}
-	} 
-	 
+	}
+
+
 	public void genPLPatientComboBox() {
 		pLComboBox.getItems().clear();
 		Connection connect;
