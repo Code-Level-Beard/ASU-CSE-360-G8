@@ -76,16 +76,16 @@ public class PhysicianController {
 	// Team #3 fx:id textFields that get / hold the current visit data
 	@FXML
 	private TextField currVisitPtName, currVisitPtDOB, currVisitPtAdd,
-			currVisitPtPhNum, currVisitInsID, currVisitPtPharm;
+	currVisitPtPhNum, currVisitInsID, currVisitPtPharm;
 
 	// Team #3 fx:id buttons and textFields for save visit / complete visit
 	@FXML
 	private TextField currVisitDateOfVisit, currVisitPtHeight, currVisitPtWeight,
-			currVisitPtTemp, currVisitPtBP;
+	currVisitPtTemp, currVisitPtBP;
 
 	@FXML
 	private TextArea currVisitPtMedNotes, currVisitPtImm, currVisitPtAlrg,
-			currVisitPtPresc, currVisitPtDiag;
+	currVisitPtPresc, currVisitPtDiag;
 
 	@FXML
 	private Button currVisitCompVisitOnAction, currVisitSaveOnAction;
@@ -98,11 +98,11 @@ public class PhysicianController {
 	// Previous Visits Tab
 	@FXML
 	private TextField PvisitPdateofvisit, PvisitPheight, PvisitPweight,
-			PvisitPtemperature, PvisitPbloodpressure, PvisitPname, Pvisitdob,
-			Pvisitaddress, PvisitPnumber, PvisitInsurance, PvisitPpharmacy;
+	PvisitPtemperature, PvisitPbloodpressure, PvisitPname, Pvisitdob,
+	Pvisitaddress, PvisitPnumber, PvisitInsurance, PvisitPpharmacy;
 	@FXML
 	private TextArea PvisitPimmunizations, PvisitPAllergies, PvisitPperscriptions,
-			PvisitPdiagnoses, PvisitPnotes;
+	PvisitPdiagnoses, PvisitPnotes;
 	@FXML
 	private TableView<String> PrevVisitsTable;
 
@@ -201,57 +201,57 @@ public class PhysicianController {
 					// Listener for each entry in the table. when one is selected, newVal
 					// equals that date
 					PrevVisitsTable.getSelectionModel()
-							.selectedItemProperty()
-							.addListener((obs, oldVal, newVal) -> {
-								if (newVal != null) {
-									String selectedDate = newVal; // Date selected in table
+					.selectedItemProperty()
+					.addListener((obs, oldVal, newVal) -> {
+						if (newVal != null) {
+							String selectedDate = newVal; // Date selected in table
 
-									// Find the index of the visit with the selected date in the
-									// ArrayList
-									int selectedIndex = -1;
-									for (int i = 0; i < visits.size(); i++) {
-										String visitDate = visits.get(i).get("date");
-										if (visitDate.equals(selectedDate)) {
-											selectedIndex = i;
-											break;
-										}
-									}
-									// If a visit with the selected date was found, populate the
-									// text fields with its information
-									if (selectedIndex != -1) {
-										Map<String, String> selectedVisitData = visits.get(selectedIndex);
-										// Populate text fields with selectedVisitData
-										PvisitPdateofvisit.clear();
-										PvisitPheight.clear();
-										PvisitPweight.clear();
-										PvisitPtemperature.clear();
-										PvisitPbloodpressure.clear();
-										PvisitPimmunizations.clear();
-										PvisitPAllergies.clear();
-										PvisitPnotes.clear();
-										PvisitPperscriptions.clear();
-										PvisitPdiagnoses.clear();
-
-										PvisitPdateofvisit.appendText(
-												selectedVisitData.get("date"));
-										PvisitPheight.appendText(selectedVisitData.get("height"));
-										PvisitPweight.appendText(selectedVisitData.get("weight"));
-										PvisitPtemperature.appendText(
-												selectedVisitData.get("temperature"));
-										PvisitPbloodpressure.appendText(
-												selectedVisitData.get("blood_pressure"));
-										PvisitPimmunizations.appendText(
-												selectedVisitData.get("immunization"));
-										PvisitPAllergies.appendText(
-												selectedVisitData.get("allergies"));
-										PvisitPnotes.appendText(selectedVisitData.get("notes"));
-										PvisitPperscriptions.appendText(
-												selectedVisitData.get("prescription"));
-										PvisitPdiagnoses.appendText(
-												selectedVisitData.get("visit_diag"));
-									}
+							// Find the index of the visit with the selected date in the
+							// ArrayList
+							int selectedIndex = -1;
+							for (int i = 0; i < visits.size(); i++) {
+								String visitDate = visits.get(i).get("date");
+								if (visitDate.equals(selectedDate)) {
+									selectedIndex = i;
+									break;
 								}
-							});
+							}
+							// If a visit with the selected date was found, populate the
+							// text fields with its information
+							if (selectedIndex != -1) {
+								Map<String, String> selectedVisitData = visits.get(selectedIndex);
+								// Populate text fields with selectedVisitData
+								PvisitPdateofvisit.clear();
+								PvisitPheight.clear();
+								PvisitPweight.clear();
+								PvisitPtemperature.clear();
+								PvisitPbloodpressure.clear();
+								PvisitPimmunizations.clear();
+								PvisitPAllergies.clear();
+								PvisitPnotes.clear();
+								PvisitPperscriptions.clear();
+								PvisitPdiagnoses.clear();
+
+								PvisitPdateofvisit.appendText(
+										selectedVisitData.get("date"));
+								PvisitPheight.appendText(selectedVisitData.get("height"));
+								PvisitPweight.appendText(selectedVisitData.get("weight"));
+								PvisitPtemperature.appendText(
+										selectedVisitData.get("temperature"));
+								PvisitPbloodpressure.appendText(
+										selectedVisitData.get("blood_pressure"));
+								PvisitPimmunizations.appendText(
+										selectedVisitData.get("immunization"));
+								PvisitPAllergies.appendText(
+										selectedVisitData.get("allergies"));
+								PvisitPnotes.appendText(selectedVisitData.get("notes"));
+								PvisitPperscriptions.appendText(
+										selectedVisitData.get("prescription"));
+								PvisitPdiagnoses.appendText(
+										selectedVisitData.get("visit_diag"));
+							}
+						}
+					});
 				}
 
 				rs.close();
@@ -593,7 +593,7 @@ public class PhysicianController {
 			// Insert new visit record with completion status 'NC'
 			PreparedStatement insertStatement = connect.prepareStatement(
 					"Update Visit SET doctor_id = ?, date = ?, height = ?, weight = ?, temperature = ?, blood_pressure = ?, immunization = ?, "
-					+ "allergies = ?, notes = ?, prescription = ?, visit_diag = ?, completed = ? WHERE patient_id = ?");
+							+ "allergies = ?, notes = ?, prescription = ?, visit_diag = ?, completed = ? WHERE patient_id = ?");
 			insertStatement.setString(12, selectedPatient);
 			insertStatement.setString(1, doctorId);
 			insertStatement.setString(2, currVisitDateOfVisit.getText());
@@ -640,10 +640,10 @@ public class PhysicianController {
 
 			// Insert new visit record with completion status 'C'
 			PreparedStatement insertStatement = connect.prepareStatement(
-					"UPDATE Visit SET completed = ? WHERE patient_id = ?");
+					"UPDATE Visit SET completed = ? WHERE patient_id = ? AND date = ?");
 			insertStatement.setString(1, "C");
 			insertStatement.setString(2, selectedPatient);
-			;
+			insertStatement.setString(3, currVisitDateOfVisit.getText());
 
 			int rowsAffected = insertStatement.executeUpdate();
 			System.out.println("Rows affected: " + rowsAffected);

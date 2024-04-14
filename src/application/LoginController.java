@@ -20,19 +20,19 @@ import javafx.stage.Stage;
 
 public class LoginController {
 	public String activeUser;
-	
+
 	public Parent root;
-	
+
 	public Stage stage;
-	
+
 	public Stage currentStage;
-	
+
 	public FXMLLoader loader;
-	
+
 	public PatientController pController;
-	
+
 	public NurseController nController;
-	
+
 	public PhysicianController phyController;
 
 	@FXML
@@ -49,7 +49,7 @@ public class LoginController {
 
 	@FXML
 	private Button loginButton;
-	
+
 	@FXML
 	private TextField nField;
 
@@ -65,13 +65,13 @@ public class LoginController {
 			PreparedStatement statement = connect.prepareStatement("SELECT user_id, password, user_type FROM Login WHERE user_id = ?");
 			String username = usernameTextField.getText();
 			String password = passwordTextField.getText();
-			
+
 			statement.setString(1, username);
-			
+
 			ResultSet resultSet = statement.executeQuery();
 
 			if (resultSet.next()) {
-				
+
 				String sqlPWD = resultSet.getString("password");
 				if (password.equals(sqlPWD)) {
 					activeUser = username;
@@ -112,14 +112,14 @@ public class LoginController {
 		try {
 			loader = new FXMLLoader(getClass().getResource("Doctor.fxml"));
 			root = loader.load();
-			
+
 			phyController = loader.getController();
-			
-			
+
+
 			phyController.activeUser = activeUser;
 			phyController.genPLPatientComboBox();
 			phyController.messageSelect(activeUser);
-			
+
 			stage = new Stage();
 			stage.setScene(new Scene(root));
 			stage.show();
@@ -136,7 +136,7 @@ public class LoginController {
 		try {
 			loader = new FXMLLoader(getClass().getResource("Nurse.fxml"));
 			root = loader.load();
-			
+
 			nController = loader.getController();
 			nController.genNPComboBox();
 			nController.genPLComboBox();
@@ -161,12 +161,12 @@ public class LoginController {
 		try {
 			loader = new FXMLLoader(getClass().getResource("Patient.fxml"));
 			root = loader.load();
-			
+
 			pController = loader.getController();
 			pController.updateText(activeUser);
 			pController.displayMessages(activeUser);
 			pController.activeUser = activeUser;
-			
+
 
 			stage = new Stage();
 			stage.setScene(new Scene(root));
@@ -175,7 +175,7 @@ public class LoginController {
 			// Close the current login window
 			currentStage = (Stage) loginButton.getScene().getWindow();
 			currentStage.close();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

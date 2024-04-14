@@ -38,26 +38,26 @@ import javafx.stage.Stage;
 
 public class NurseController {
 	String activeUser, selectedPatient, selectedDoctor, userId, messageID,
-			nurseName;
+	nurseName;
 	Integer messageNum;
 	@FXML
 	private Button newPatient, selectPatient, sendButton;
 	@FXML
 	private ComboBox<String> assignedDoctorUpdate, selDoctor, selPLDoctor,
-			selPLPatient;
+	selPLPatient;
 	@FXML
 	private Tab messageTab, newPatientTab, patientListTab, patientRecordTab,
-			prevVisitTab;
+	prevVisitTab;
 	@FXML
 	private TextArea currRecord, selectedPatientRecord, composeMessage;
 	@FXML
 	private TextField address, addressUpdate, allergies, allergiesUpdate, dob,
-			dobUpdate, firstName, firstNameUpdate, hHistory, hHistoryUpdate, immuni,
-			immuniUpdate, insID, insIDUpdate, lastName, lastNameUpdate, med,
-			medUpdate, pNum, pNumUpdate, pharm, pharmUpdate,
-			pharmUpdateprevVisitNameTxtField, prevVisitDobTxtField,
-			prevVisitPtAddTxtField, prevVisitPtPhTxtField, prevVisitInsIdTxtField,
-			prevVisitPtPharmTxtField;
+	dobUpdate, firstName, firstNameUpdate, hHistory, hHistoryUpdate, immuni,
+	immuniUpdate, insID, insIDUpdate, lastName, lastNameUpdate, med,
+	medUpdate, pNum, pNumUpdate, pharm, pharmUpdate,
+	pharmUpdateprevVisitNameTxtField, prevVisitDobTxtField,
+	prevVisitPtAddTxtField, prevVisitPtPhTxtField, prevVisitInsIdTxtField,
+	prevVisitPtPharmTxtField;
 
 	@FXML
 	private TextFlow messageText, messageThreadArea;
@@ -68,8 +68,8 @@ public class NurseController {
 	// it in the text Field on New Visit tab
 	@FXML
 	private TextField newVisitNameTxtField, newVisitDobTxtField,
-			newVisitPtAddTxtField, newVisitPtPhTxtField, newVisitInsIdTxtField,
-			newVisitPtPharmTxtField;
+	newVisitPtAddTxtField, newVisitPtPhTxtField, newVisitInsIdTxtField,
+	newVisitPtPharmTxtField;
 
 	// Team #3 fx:id TextFields that are writing to the visit table in the SQL
 	// database
@@ -78,11 +78,11 @@ public class NurseController {
 
 	@FXML
 	TextField newVisitBpTxtField, newVisitDovTxtField, newVisitHeightTxtField,
-			newVisitWeightTxtField, newVisitTempTxtField;
+	newVisitWeightTxtField, newVisitTempTxtField;
 
 	@FXML
 	private TextArea newVisitMedNotesTxtArea, newVisitImmTxtArea,
-			newVisitAlrgTxtArea;
+	newVisitAlrgTxtArea;
 	// Log out Button for the log out functionality
 	@FXML
 	private Button nurLogOutButton;
@@ -90,11 +90,11 @@ public class NurseController {
 	// Previous Visits Tab
 	@FXML
 	private TextField PvisitPdateofvisit, PvisitPheight, PvisitPweight,
-			PvisitPtemperature, PvisitPbloodpressure, PvisitPname, Pvisitdob,
-			Pvisitaddress, PvisitPnumber, PvisitInsurance, PvisitPpharmacy;
+	PvisitPtemperature, PvisitPbloodpressure, PvisitPname, Pvisitdob,
+	Pvisitaddress, PvisitPnumber, PvisitInsurance, PvisitPpharmacy;
 	@FXML
 	private TextArea PvisitPimmunizations, PvisitPAllergies, PvisitPperscriptions,
-			PvisitPdiagnoses, PvisitPnotes;
+	PvisitPdiagnoses, PvisitPnotes;
 	@FXML
 	private TableView<String> PrevVisitsTable;
 
@@ -156,10 +156,15 @@ public class NurseController {
 	}
 
 	@FXML
-	public void getSelectedPatient(javafx.event.ActionEvent e) {
+	public void getSelectedPatient(javafx.event.ActionEvent e) throws SQLException {
 		selectedPatient = selPLPatient.getValue().substring(
 				selPLPatient.getValue().length() - 6, selPLPatient.getValue().length());
 		patientRecordSelected();
+		if (PatientRecord.patientUnderAge(selectedPatient) == true) {
+			TextFieldController.lockField(newVisitBpTxtField);
+		} else {
+			TextFieldController.unlockField(newVisitBpTxtField);
+		}
 	}
 
 	public void genPLPatientComboBox() {
@@ -247,7 +252,7 @@ public class NurseController {
 						composeMessage.clear();
 						messageText.getChildren().clear();
 						displayMessages(patient); // call display message to properly
-																			// display the newly-sent text
+						// display the newly-sent text
 					} else {
 						Alert alert = new Alert(AlertType.WARNING);
 						alert.setTitle("No Message Entered");
@@ -344,23 +349,23 @@ public class NurseController {
 		messageThreadArea.getChildren().clear();
 		Connection connectMessage;
 		Connection connectRecord;
-		
+
 		try {
 
 			connectMessage = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
 			connectRecord = DriverManager.getConnection("jdbc:sqlite:./MainDatabase.sqlite");
-			
+
 			PreparedStatement statementMessage = connectMessage.prepareStatement(
 					"SELECT patient_id, MAX(message_id), sender, header FROM Message GROUP BY patient_id");
 			ResultSet resultSetMessage = statementMessage.executeQuery();
-			
+
 			while (resultSetMessage.next()) {
-				
+
 				PreparedStatement statementRecord = connectRecord.prepareStatement(
 						"SELECT first_name, last_name FROM PatientRecord WHERE patient_id = ?");
 				statementRecord.setString(1,  resultSetMessage.getString("patient_id"));
 				ResultSet resultSetRecord = statementRecord.executeQuery();
-				
+
 				Hyperlink sender = new Hyperlink();
 				Hyperlink unread = new Hyperlink();
 				Text spacer = new Text("\n");
@@ -382,9 +387,9 @@ public class NurseController {
 				}
 				resultSetRecord.close();
 				statementRecord.close();
-				
+
 			}
-			
+
 			resultSetMessage.close();
 			statementMessage.close();
 			connectRecord.close();
@@ -441,7 +446,7 @@ public class NurseController {
 					"SELECT patient_id, first_name, last_name, address, "
 							+ "phone_number, ins_id, pharmacy, health_history,immunizations, "
 							+
-							"medications, allergies, assigned_doctor,DOB FROM PatientRecord WHERE patient_id = ?");
+					"medications, allergies, assigned_doctor,DOB FROM PatientRecord WHERE patient_id = ?");
 			statement.setString(1, selectedPatient);
 			ResultSet rs = statement.executeQuery();
 
@@ -494,6 +499,8 @@ public class NurseController {
 			PreparedStatement insertVisit = connect.prepareStatement(
 					"INSERT INTO Visit (patient_id, doctor_id, date, height, weight, temperature, blood_pressure, immunization, allergies, notes,completed, prescription, visit_diag) "
 							+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+			//Grab the patients age and check against age req. Under 12 no BP taken
 
 			// Set parameters for the prepared statement
 			insertVisit.setString(1, selectedPatient); // Using the current patient ID
@@ -625,57 +632,57 @@ public class NurseController {
 					// Listener for each entry in the table. when one is selected, newVal
 					// equals that date
 					PrevVisitsTable.getSelectionModel()
-							.selectedItemProperty()
-							.addListener((obs, oldVal, newVal) -> {
-								if (newVal != null) {
-									String selectedDate = newVal; // Date selected in table
+					.selectedItemProperty()
+					.addListener((obs, oldVal, newVal) -> {
+						if (newVal != null) {
+							String selectedDate = newVal; // Date selected in table
 
-									// Find the index of the visit with the selected date in the
-									// ArrayList
-									int selectedIndex = -1;
-									for (int i = 0; i < visits.size(); i++) {
-										String visitDate = visits.get(i).get("date");
-										if (visitDate.equals(selectedDate)) {
-											selectedIndex = i;
-											break;
-										}
-									}
-									// If a visit with the selected date was found, populate the
-									// text fields with its information
-									if (selectedIndex != -1) {
-										Map<String, String> selectedVisitData = visits.get(selectedIndex);
-										// Populate text fields with selectedVisitData
-										PvisitPdateofvisit.clear();
-										PvisitPheight.clear();
-										PvisitPweight.clear();
-										PvisitPtemperature.clear();
-										PvisitPbloodpressure.clear();
-										PvisitPimmunizations.clear();
-										PvisitPAllergies.clear();
-										PvisitPnotes.clear();
-										PvisitPperscriptions.clear();
-										PvisitPdiagnoses.clear();
-
-										PvisitPdateofvisit.appendText(
-												selectedVisitData.get("date"));
-										PvisitPheight.appendText(selectedVisitData.get("height"));
-										PvisitPweight.appendText(selectedVisitData.get("weight"));
-										PvisitPtemperature.appendText(
-												selectedVisitData.get("temperature"));
-										PvisitPbloodpressure.appendText(
-												selectedVisitData.get("blood_pressure"));
-										PvisitPimmunizations.appendText(
-												selectedVisitData.get("immunization"));
-										PvisitPAllergies.appendText(
-												selectedVisitData.get("allergies"));
-										PvisitPnotes.appendText(selectedVisitData.get("notes"));
-										PvisitPperscriptions.appendText(
-												selectedVisitData.get("prescription"));
-										PvisitPdiagnoses.appendText(
-												selectedVisitData.get("visit_diag"));
-									}
+							// Find the index of the visit with the selected date in the
+							// ArrayList
+							int selectedIndex = -1;
+							for (int i = 0; i < visits.size(); i++) {
+								String visitDate = visits.get(i).get("date");
+								if (visitDate.equals(selectedDate)) {
+									selectedIndex = i;
+									break;
 								}
-							});
+							}
+							// If a visit with the selected date was found, populate the
+							// text fields with its information
+							if (selectedIndex != -1) {
+								Map<String, String> selectedVisitData = visits.get(selectedIndex);
+								// Populate text fields with selectedVisitData
+								PvisitPdateofvisit.clear();
+								PvisitPheight.clear();
+								PvisitPweight.clear();
+								PvisitPtemperature.clear();
+								PvisitPbloodpressure.clear();
+								PvisitPimmunizations.clear();
+								PvisitPAllergies.clear();
+								PvisitPnotes.clear();
+								PvisitPperscriptions.clear();
+								PvisitPdiagnoses.clear();
+
+								PvisitPdateofvisit.appendText(
+										selectedVisitData.get("date"));
+								PvisitPheight.appendText(selectedVisitData.get("height"));
+								PvisitPweight.appendText(selectedVisitData.get("weight"));
+								PvisitPtemperature.appendText(
+										selectedVisitData.get("temperature"));
+								PvisitPbloodpressure.appendText(
+										selectedVisitData.get("blood_pressure"));
+								PvisitPimmunizations.appendText(
+										selectedVisitData.get("immunization"));
+								PvisitPAllergies.appendText(
+										selectedVisitData.get("allergies"));
+								PvisitPnotes.appendText(selectedVisitData.get("notes"));
+								PvisitPperscriptions.appendText(
+										selectedVisitData.get("prescription"));
+								PvisitPdiagnoses.appendText(
+										selectedVisitData.get("visit_diag"));
+							}
+						}
+					});
 				}
 				rs.close();
 				PreviousVisitstatement.close();

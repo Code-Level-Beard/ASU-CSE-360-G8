@@ -43,7 +43,7 @@ public class PatientController {
 	// Previous Visits Tab
 	@FXML
 	private TextArea PvisitPimmunizations, PvisitPAllergies, PvisitPperscriptions,
-			PvisitPdiagnoses;
+	PvisitPdiagnoses;
 	@FXML
 	private Tab PrevVisitTab;
 	@FXML
@@ -112,7 +112,7 @@ public class PatientController {
 	@FXML
 	private TextField PvisitPpharmacy;
 
-	
+
 
 	// Team #3 ********Previous Visit Tab Method*******
 	public void pullPreviousVisit() {
@@ -303,7 +303,7 @@ public class PatientController {
 				connectMessage.close();
 				composeMessage.clear();
 				displayMessages(activeUser); // call display message to properly display
-																			// the newly-sent text
+				// the newly-sent text
 			} else {
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle("No Message Entered");
