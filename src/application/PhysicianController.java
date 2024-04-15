@@ -105,6 +105,8 @@ public class PhysicianController {
       PvisitPdiagnoses, PvisitPnotes;
   @FXML
   private TableView<String> PrevVisitsTable;
+  @FXML
+  private ScrollPane messageTextSP;
 
   // Team #3 ********Previous Visit Tab Method*******
   public void pullPreviousVisit() {
@@ -416,6 +418,9 @@ public class PhysicianController {
       e.printStackTrace();
     }
     messageSelect(activeUser);
+    messageTextSP.layout();
+    messageTextSP.setVvalue(1.0f);
+    
   }
 
   public void messageSelect(String user) {
@@ -644,20 +649,21 @@ public class PhysicianController {
     		  "Update Visit SET doctor_id = ?, date = ?, height = ?, weight = ?, temperature = ?, blood_pressure = ?, immunization = ?, "
                       +
                       "allergies = ?, notes = ?, prescription = ?, visit_diag = ?, completed = ? WHERE patient_id = ? AND completed = ?");
-              insertStatement.setString(1, doctorId);
-              insertStatement.setString(2, currVisitDateOfVisit.getText());
-              insertStatement.setString(3, currVisitPtHeight.getText());
-              insertStatement.setString(4, currVisitPtWeight.getText());
-              insertStatement.setString(5, currVisitPtTemp.getText());
-              insertStatement.setString(6, currVisitPtBP.getText());
-              insertStatement.setString(7, currVisitPtImm.getText());
-              insertStatement.setString(8, currVisitPtAlrg.getText());
-              insertStatement.setString(9, currVisitPtMedNotes.getText());
-              insertStatement.setString(10, currVisitPtPresc.getText());
-              insertStatement.setString(11, currVisitPtDiag.getText());
-              insertStatement.setString(12, "C");
-              insertStatement.setString(13, selectedPatient);
-              insertStatement.setString(14, "NC");
+    	      insertStatement.setString(1, doctorId);
+    	      insertStatement.setString(2, currVisitDateOfVisit.getText());
+    	      insertStatement.setString(3, currVisitPtHeight.getText());
+    	      insertStatement.setString(4, currVisitPtWeight.getText());
+    	      insertStatement.setString(5, currVisitPtTemp.getText());
+    	      insertStatement.setString(6, currVisitPtBP.getText());
+    	      insertStatement.setString(7, currVisitPtImm.getText());
+    	      insertStatement.setString(8, currVisitPtAlrg.getText());
+    	      insertStatement.setString(9, currVisitPtMedNotes.getText());
+    	      insertStatement.setString(10, currVisitPtPresc.getText());
+    	      insertStatement.setString(11, currVisitPtDiag.getText());
+    	      insertStatement.setString(12, "C");
+    	      insertStatement.setString(13, selectedPatient);
+    	      insertStatement.setString(14, "NC");
+
       int rowsAffected = insertStatement.executeUpdate();
       System.out.println("Rows affected: " + rowsAffected);
 

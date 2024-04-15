@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -111,6 +112,8 @@ public class PatientController {
 	private TextField PvisitPdateofvisit;
 	@FXML
 	private TextField PvisitPpharmacy;
+	@FXML
+	private ScrollPane messageTextSP;
 
 	// Team #3 ********Previous Visit Tab Method*******
 	public void pullPreviousVisit() {
@@ -242,6 +245,8 @@ public class PatientController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		messageTextSP.layout();
+		messageTextSP.setVvalue(1.0f);
 	}
 
 	// Allows the patient to update their DB entry of their Patient Record with
