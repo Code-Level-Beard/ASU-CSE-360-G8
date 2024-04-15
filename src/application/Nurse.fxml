@@ -65,7 +65,7 @@
                               <Button fx:id="sendButton" layoutX="905.0" layoutY="685.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="81.0" text="Send" />
                               <Line endX="20.0" endY="596.0" layoutX="328.0" layoutY="146.0" startX="20.0" startY="-150.0" />
                               <Line endX="550.0" layoutX="450.0" layoutY="573.0" startX="-100.0" />
-                              <ScrollPane layoutX="363.0" layoutY="17.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="544.0" prefWidth="625.0">
+                              <ScrollPane fx:id="messageTextSP" layoutX="363.0" layoutY="17.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="544.0" prefWidth="625.0">
                                  <content>
                                     <TextFlow fx:id="messageText" prefHeight="521.0" prefWidth="600.0" />
                                  </content>

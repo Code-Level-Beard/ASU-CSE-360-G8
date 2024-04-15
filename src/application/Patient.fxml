@@ -236,7 +236,7 @@
                                     <Image url="@../../../../Downloads/image.png" />
                                  </image>
                               </ImageView>
-                              <ScrollPane layoutX="107.0" layoutY="54.0" prefHeight="498.0" prefWidth="766.0">
+                              <ScrollPane fx:id="messageTextSP" layoutX="107.0" layoutY="54.0" prefHeight="498.0" prefWidth="766.0">
                                  <content>
                                     <TextFlow id="messageText" fx:id="messageText" prefHeight="483.0" prefWidth="746.0" />
                                  </content>

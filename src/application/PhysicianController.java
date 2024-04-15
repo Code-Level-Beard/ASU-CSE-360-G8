@@ -105,6 +105,8 @@ public class PhysicianController {
       PvisitPdiagnoses, PvisitPnotes;
   @FXML
   private TableView<String> PrevVisitsTable;
+  @FXML
+  private ScrollPane messageTextSP;
 
   // Team #3 ********Previous Visit Tab Method*******
   public void pullPreviousVisit() {
@@ -415,6 +417,9 @@ public class PhysicianController {
       e.printStackTrace();
     }
     messageSelect(activeUser);
+    messageTextSP.layout();
+    messageTextSP.setVvalue(1.0f);
+    
   }
 
   public void messageSelect(String user) {
