@@ -25,6 +25,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -97,6 +98,8 @@ public class NurseController {
 	PvisitPdiagnoses, PvisitPnotes;
 	@FXML
 	private TableView<String> PrevVisitsTable;
+	@FXML
+	private ScrollPane messageTextSP;
 
 	@FXML
 	public void newPatient(javafx.event.ActionEvent e) {
@@ -335,6 +338,8 @@ public class NurseController {
 			e.printStackTrace();
 		}
 		messageSelect(activeUser);
+		messageTextSP.layout();
+		messageTextSP.setVvalue(1.0f);
 	}
 
 	public void messageSelect(String activeUser) {
