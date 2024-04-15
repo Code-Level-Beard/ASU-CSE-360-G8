@@ -116,8 +116,9 @@ public class PhysicianController {
         // sqlite statement
 
         PreparedStatement PreviousVisitstatement = connect.prepareStatement(
-            "SELECT * FROM Visit WHERE patient_id = ? AND completed IS NOT NULL");
+            "SELECT * FROM Visit WHERE patient_id = ? AND completed = ?");
         PreviousVisitstatement.setString(1, selectedPatient);
+        PreviousVisitstatement.setString(2, "C");
         ResultSet rs = PreviousVisitstatement.executeQuery();
         // Clears Table data and columns
         PvisitPdateofvisit.clear();
@@ -640,11 +641,23 @@ public class PhysicianController {
 
       // Insert new visit record with completion status 'C'
       PreparedStatement insertStatement = connect.prepareStatement(
-          "UPDATE Visit SET completed = ? WHERE patient_id = ? AND date = ?");
-      insertStatement.setString(1, "C");
-      insertStatement.setString(2, selectedPatient);
-      insertStatement.setString(3, currVisitDateOfVisit.getText());
-
+    		  "Update Visit SET doctor_id = ?, date = ?, height = ?, weight = ?, temperature = ?, blood_pressure = ?, immunization = ?, "
+                      +
+                      "allergies = ?, notes = ?, prescription = ?, visit_diag = ?, completed = ? WHERE patient_id = ? AND completed = ?");
+              insertStatement.setString(1, doctorId);
+              insertStatement.setString(2, currVisitDateOfVisit.getText());
+              insertStatement.setString(3, currVisitPtHeight.getText());
+              insertStatement.setString(4, currVisitPtWeight.getText());
+              insertStatement.setString(5, currVisitPtTemp.getText());
+              insertStatement.setString(6, currVisitPtBP.getText());
+              insertStatement.setString(7, currVisitPtImm.getText());
+              insertStatement.setString(8, currVisitPtAlrg.getText());
+              insertStatement.setString(9, currVisitPtMedNotes.getText());
+              insertStatement.setString(10, currVisitPtPresc.getText());
+              insertStatement.setString(11, currVisitPtDiag.getText());
+              insertStatement.setString(12, "C");
+              insertStatement.setString(13, selectedPatient);
+              insertStatement.setString(14, "NC");
       int rowsAffected = insertStatement.executeUpdate();
       System.out.println("Rows affected: " + rowsAffected);
 

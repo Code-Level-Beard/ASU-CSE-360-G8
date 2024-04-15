@@ -81,8 +81,9 @@ public class VisitRecord {
       // sqlite statement
 
       PreparedStatement sqlStatement = connect.prepareStatement(
-          "SELECT * FROM Visit WHERE patient_id = ? AND completed IS NOT NULL");
+          "SELECT * FROM Visit WHERE patient_id = ? AND completed = ?");
       sqlStatement.setString(1, patientId);
+      sqlStatement.setString(2, "C");
       ResultSet rs = sqlStatement.executeQuery();
       // Clears Table data and columns
       visitList.getColumns().clear();
