@@ -45,8 +45,8 @@ public class VisitRecord {
       insertVisit.setString(9, allergies.getText().trim());
       insertVisit.setString(10, notes.getText().trim());
       insertVisit.setString(11, "NC");
-      insertVisit.setString(12, "UNK");
-      insertVisit.setString(13, "UNK");
+      insertVisit.setString(12, "Physician Requirement");
+      insertVisit.setString(13, "Physician Requirement");
 
       date.clear();
       height.clear();
