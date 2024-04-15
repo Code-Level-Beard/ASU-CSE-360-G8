@@ -647,8 +647,8 @@ public class PhysicianController {
       // Insert new visit record with completion status 'C'
       PreparedStatement insertStatement = connect.prepareStatement(
     		  "Update Visit SET doctor_id = ?, date = ?, height = ?, weight = ?, temperature = ?, blood_pressure = ?, immunization = ?, "
-                      +
-                      "allergies = ?, notes = ?, prescription = ?, visit_diag = ?, completed = ? WHERE patient_id = ? AND completed = ?");
+    	              +
+    	              "allergies = ?, notes = ?, prescription = ?, visit_diag = ?, completed = ? WHERE patient_id = ? AND completed = ?");
     	      insertStatement.setString(1, doctorId);
     	      insertStatement.setString(2, currVisitDateOfVisit.getText());
     	      insertStatement.setString(3, currVisitPtHeight.getText());
